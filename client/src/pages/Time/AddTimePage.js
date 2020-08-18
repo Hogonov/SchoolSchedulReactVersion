@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {AuthContext} from "../context/AuthContext";
-import {useMessage} from "../hooks/message.hook";
-import {useHttp} from "../hooks/http.hook";
+import {AuthContext} from "../../context/AuthContext";
+import {useMessage} from "../../hooks/message.hook";
+import {useHttp} from "../../hooks/http.hook";
 import Select from "react-select";
 import Grid from "@material-ui/core/Grid";
 

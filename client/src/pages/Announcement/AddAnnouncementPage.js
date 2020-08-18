@@ -1,61 +1,39 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useParams} from 'react-router-dom';
-import {useHttp} from "../hooks/http.hook";
-import {AuthContext} from "../context/AuthContext";
-import {Loader} from "../components/Loader";
-import {UserCard} from "../components/UserCard";
-import {useMessage} from "../hooks/message.hook";
-import DatePicker from "react-datepicker"
+import {useHttp} from "../../hooks/http.hook";
+import {AuthContext} from "../../context/AuthContext";
+import {Loader} from "../../components/Loader";
+import {useMessage} from "../../hooks/message.hook";
 
 
-export const DetailAnnouncementPage = () => {
+export const AddAnnouncementPage = () => {
     const message = useMessage();
     const {token} = useContext(AuthContext);
     const {loading, request, error, clearError} = useHttp();
     const [announcement, setAnnouncement] = useState({name: '', text: '', deleteDate: new Date()});
-    const announcementId = useParams().id;
+    const userId = useParams().id;
 
-
-    const getAnnouncement = useCallback(async () => {
-        try {
-            const fetched = await request(`/api/announcement/get_data/${announcementId}`, 'GET', null, {Authorization: `Bearer ${token}`});
-            console.log(fetched);
-            setAnnouncement(fetched);
-            console.log(announcement);
-        } catch (e) {
-            console.log(e);
-        }
-    }, [token, announcementId, request]);
-
-    useEffect(() => {
-        getAnnouncement();
-    }, [getAnnouncement]);
 
     useEffect(() => {
         message(error);
         clearError()
     }, [error, message, clearError]);
 
-
-
     useEffect(() => {
         window.M.updateTextFields()
     }, []);
 
     const changeHandler = event => {
-        setAnnouncement({...announcement, [event.target.name]: event.target.value});
-        console.log(announcement);
+        setAnnouncement({...announcement, [event.target.name]: event.target.value})
     };
 
     if (loading) {
         return <Loader/>
     }
 
-
-
     const sendHandler = async () => {
         try {
-            const data = await request(`/api/announcement/edit/${announcementId}`, 'PUT', {...announcement}, {Authorization: `Bearer ${token}`});
+            const data = await request('/api/announcement/add', 'POST', {...announcement}, {Authorization: `Bearer ${token}`});
             message(data.message);
         } catch (e) {
         }
@@ -71,7 +49,7 @@ export const DetailAnnouncementPage = () => {
                         <div className="card-content white-text">
                             <span className="card-title">Добавление объявлений</span>
                             <h1/>
-                            <div className="input-group">
+                            <div className="input-field">
                                 <label htmlFor="name" className="white-text">Название</label>
                                 <input
                                     placeholder="Введите название объявления"
@@ -90,7 +68,8 @@ export const DetailAnnouncementPage = () => {
                                     placeholder="Введите тест объявления"
                                     id="text"
                                     name="text"
-                                    className="form-control white-text"
+                                    className="form-control white-text border-white"
+                                    rows="5"
                                     style={{resize: 'vertical', borderColor: 'white'}}
                                     value={announcement.text}
                                     onChange={changeHandler}

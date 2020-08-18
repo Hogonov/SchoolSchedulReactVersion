@@ -14,54 +14,55 @@ const Director = require('../models/Director');
 const SpecialDate = require('../models/SpecialDate');
 const crypto = require('crypto');
 const fs = require('fs');
-const multer  = require('multer');
-const upload = multer({ dest: 'public/images/Dir' });
+const multer = require('multer');
+const upload = multer({dest: 'public/images/Dir'});
 const router = Router();
 
 //api/dir/add
 router.post('/add', auth,
     [
         check('name', 'Некорректный login').exists(),
-        check('text', 'Минимальная длина пароля 6 символов').isLength({min: 6})
+        check('text', 'Минимальная длина пароля 6 символов').exists()
     ],
-    async (req,res) => {
-    try {
-        const errors = validationResult(req);
+    async (req, res) => {
+        try {
+            const errors = validationResult(req);
 
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array(),
-                message: 'Некорректный данные при регистрации'
+            if (!errors.isEmpty()) {
+                return res.status(400).json({
+                    errors: errors.array(),
+                    message: 'Некорректный данные при регистрации'
+                });
+            }
+            let id;
+            const {name, text} = req.body;
+            const user = await User.findById(req.user.userId);
+            const candidateArr = await Director.find({school: user.school});
+            candidateArr.forEach(candidate => {
+                fs.unlink(candidate.image, async (e) => {
+                    if (e) throw e;
+                    await Director.findByIdAndRemove(candidate.id);
+                });
+
             });
-        }
-        let id;
-        const {name, text} = req.body;
-        const user = await User.findById(req.user.userId);
-       /* const candidate = Director.findOne({name: name, school: user.school});
-        if(candidate) {
-            console.log('gg', candidate);
-            const dir = new Director({_id: candidate.id, name, text, school: user.school});
-            id = candidate.id;
-            await Director.findByIdAndUpdate({_id: candidate.id}, dir);
-        } else {}*/
+
             const dir = new Director({name: name, text: text, school: user.school});
             const savedDir = await dir.save();
 
-        res.status(200).json({message: 'OK', id: savedDir.id})
+            res.status(200).json({message: 'OK', id: savedDir.id})
 
-    } catch (e) {
-       // console.log(e);
-        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
-    }
-});
+        } catch (e) {
+            console.log(e);
+            res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+        }
+    });
 
 //api/dir/add_file
 router.put('/add_file/:id', upload.single('image'), auth, async (req, res) => {
     try {
         const image = {...req.file, path: req.file.path + '.png'};
-        console.log(image);
-        fs.rename(req.file.path, image.path, function(err) {
-            if ( err ) console.log('ERROR: ' + err);
+        fs.rename(req.file.path, image.path, function (err) {
+            if (err) console.log('ERROR: ' + err);
         });
         const id = req.params.id;
 
@@ -90,9 +91,8 @@ router.get('/get/:id', async (req, res) => {
 
         const dir = await Director.findById(req.params.id);
         res.setHeader("Content-Type", "image/png");
-        console.log("work");
-        fs.readFile(dir.image, function(error, image){
-            if(error) throw error;
+        fs.readFile(dir.image, function (error, image) {
+            if (error) throw error;
 
             res.end(image);
         });
@@ -117,7 +117,7 @@ router.get('/get_data/:id', async (req, res) => {
     }
 });
 
-
+//api/dir/get_all
 
 
 module.exports = router;

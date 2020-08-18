@@ -1,24 +1,27 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {AuthContext} from "../context/AuthContext";
-import {useMessage} from "../hooks/message.hook";
-import {useHttp} from "../hooks/http.hook";
+import {AuthContext} from "../../context/AuthContext";
+import {useMessage} from "../../hooks/message.hook";
+import {useHttp} from "../../hooks/http.hook";
 import axios from "axios";
 
-export const AddAdPage = () => {
+export const AddDirPage = () => {
 
     const auth = useContext(AuthContext);
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
     const [form, setForm] = useState({
-        name: '', imageName: ''
+        name: '', text: '', imageName: ''
     });
     const [image, setImage] = useState();
 
     const changeHandler = event => {
         try {
             setForm({...form, [event.target.name]: event.target.value});
+            console.log(form);
+            console.log(image);
         } catch (e) {
+            console.log(e)
         }
     };
     const changeFileHandler = event => {
@@ -45,15 +48,17 @@ export const AddAdPage = () => {
             let formData = new FormData();
             formData.append('image', image.image);
 
-            const data = await request('/api/ad/add', 'POST', {...form}, {Authorization: `Bearer ${auth.token}`});
-            const dataFile = await axios.put(`/api/ad/add_file/${data.id}`, formData, {
+            const data = await request('/api/dir/add', 'POST', {...form}, {Authorization: `Bearer ${auth.token}`});
+            const dataFile = await axios.put(`/api/dir/add_file/${data.id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${auth.token}`
                 },
+
             });
             message(dataFile.data.message)
         } catch (e) {
+            console.log(e);
         }
     };
 
@@ -68,7 +73,7 @@ export const AddAdPage = () => {
                             <h1/>
                             <div className="input-field">
                                 <input
-                                    placeholder="Введите название"
+                                    placeholder="Введите ФИО директора"
                                     id="name"
                                     type="text"
                                     name="name"
@@ -76,10 +81,23 @@ export const AddAdPage = () => {
                                     value={form.name}
                                     onChange={changeHandler}
                                 />
-                                <label htmlFor="name">Название</label>
+                                <label htmlFor="name">ФИО</label>
                             </div>
                             <h1/>
-                            <label className="white-text">Картинка</label>
+                            <div className="input-field">
+                                <input
+                                    placeholder="Введите текст"
+                                    id="text"
+                                    type="text"
+                                    name="text"
+                                    className="yellow-input"
+                                    value={form.text}
+                                    onChange={changeHandler}
+                                />
+                                <label htmlFor="text">Текст</label>
+                            </div>
+                            <h1/>
+                            <label className="white-text">Фотография</label>
                             <div style={{marginTop: 10}}>
                                 <input
                                     id="image"
@@ -100,7 +118,7 @@ export const AddAdPage = () => {
                             disabled={loading}
                             onClick={addDirHandler}
                         >
-                            Добавить рекламу
+                            Добавить директора
                         </button>
                     </div>
                 </div>

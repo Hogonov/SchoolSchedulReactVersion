@@ -1,22 +1,23 @@
 import React from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
-import {ViewPage} from './pages/ViewPage'
+import {ViewPage} from './pages/View/ViewPage'
 import {MainPage} from './pages/MainPage'
-import {DetailPage} from './pages/DetailPage'
-import {AuthPage} from './pages/AuthPage'
-import {AddDataPage} from './pages/AddDataPage'
-import {AdminOfficePage} from './pages/AdminOfficePage'
-import {AddSchoolPage} from "./pages/AddSchoolPage";
-import {UsersPage} from "./pages/UsersPage";
-import {AddUserPage} from "./pages/AddUserPage";
+import {DetailPage} from './pages/User/DetailPage'
+import {AuthPage} from './pages/User/AuthPage'
+import {AddClassPage} from './pages/Class/AddClassPage'
+import {AdminOfficePage} from './pages/Admin/AdminOfficePage'
+import {AddSchoolPage} from "./pages/School/AddSchoolPage";
+import {UsersPage} from "./pages/User/UsersPage";
+import {AddUserPage} from "./pages/User/AddUserPage";
 import {EditorPage} from "./pages/EditorPage";
-import {AddTimePage} from "./pages/AddTimePage";
-import {AllAnnouncementPage} from "./pages/AllAnnouncementPage";
-import {AddAnnouncementPage} from "./pages/AddAnnouncementPage";
-import {DetailAnnouncementPage} from "./pages/DetailAnnouncementPage";
-import {SelectViewPage} from "./pages/SelectViewPage";
-import {AddDirPage} from "./pages/AddDirPage";
-import {AddAdPage} from "./pages/AddAdPage";
+import {AddTimePage} from "./pages/Time/AddTimePage";
+import {AllAnnouncementPage} from "./pages/Announcement/AllAnnouncementPage";
+import {AddAnnouncementPage} from "./pages/Announcement/AddAnnouncementPage";
+import {DetailAnnouncementPage} from "./pages/Announcement/DetailAnnouncementPage";
+import {SelectViewPage} from "./pages/View/SelectViewPage";
+import {AddDirPage} from "./pages/Dir/AddDirPage";
+import {AddAdPage} from "./pages/Ad/AddAdPage";
+import {AdListPage} from "./pages/Ad/AdListPage";
 
 
 export const useRoutes = (isAuthenticated, userRole) => {
@@ -51,7 +52,7 @@ export const useRoutes = (isAuthenticated, userRole) => {
                     <EditorPage/>
                 </Route>
                 <Route path="/add_data" exact>
-                    <AddDataPage/>
+                    <AddClassPage/>
                 </Route>
                 <Route path="/office_admin" exact>
                     <AdminOfficePage/>
@@ -69,6 +70,9 @@ export const useRoutes = (isAuthenticated, userRole) => {
                     <AddDirPage/>
                 </Route>
                 <Route path="/ad" exact>
+                    <AdListPage/>
+                </Route>
+                <Route path="/add_new_ad" exact>
                     <AddAdPage/>
                 </Route>
                 <Redirect to="/main" exact/>

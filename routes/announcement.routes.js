@@ -54,8 +54,15 @@ router.post('/add', auth,
 // /api/announcement/get_all
 router.get('/get_all', auth, async (req, res) => {
     try {
-        const announcements = await Announcement.find({});
-        res.json(announcements);
+        const user = await User.findById(req.user.userId);
+        if(user.role === 'ROLE_ADMIN'){
+            const announcements = await Announcement.find({});
+            res.json(announcements);
+        } else {
+            const announcements = await Announcement.find({school: user.school});
+            res.json(announcements);
+        }
+
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
@@ -68,7 +75,6 @@ router.get('/get_data/:id', auth, async (req, res) => {
         const announcement = await Announcement.findById(req.params.id);
         const deleteDate = announcement.deleteDate;
         const date = deleteDate.toJSON().split('T')[0];
-        console.log(date);
         res.json({name: announcement.name, text: announcement.text, deleteDate: date});
     } catch (e) {
         console.log(e);
@@ -105,12 +111,23 @@ router.put('/edit/:id', auth, async (req, res) => {
             }
         );
 
-        console.log(req.body);
 
         await Announcement.findByIdAndUpdate({_id: req.params.id}, announcement);
 
         res.status(201).json({message: 'Объявление изменено'})
 
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
+
+//api/ad/delete/:id
+router.delete('/delete/:id', async (req, res) => {
+    try {
+        await Announcement.findByIdAndRemove(req.params.id);
+
+        res.status(200).json({message: 'Объявление удалено'});
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})

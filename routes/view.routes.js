@@ -77,14 +77,9 @@ router.get('/get/:id', async (req, res) => {
 router.get('/get_announcement/:id', async (req, res) => {
     try {
         const school = await School.findById(req.params.id);
+        await Announcement.deleteMany({deleteDate: {$lte: new Date()}});
         const announcements = await Announcement.find({school: school.name});
-        /*const date = new Date().toJSON().split('T')[0];
 
-        let deleteData = Array.from(announcements, announcement => {
-           if(announcement.deleteDate.toJSON().split('T')[0] === date){
-               return {_id: deleteData.id}
-           }
-        });*/
         const announcementsText = Array.from(announcements, announcement => {
             return announcement.text;
         });

@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {AuthContext} from "../context/AuthContext";
-import {useMessage} from "../hooks/message.hook";
-import {useHttp} from "../hooks/http.hook";
+import {AuthContext} from "../../context/AuthContext";
+import {useMessage} from "../../hooks/message.hook";
+import {useHttp} from "../../hooks/http.hook";
 
-export const AddDataPage = () => {
+export const AddClassPage = () => {
 
     const auth = useContext(AuthContext);
     const message = useMessage();
@@ -50,19 +50,6 @@ export const AddDataPage = () => {
                     <div className="card-content white-text">
                         <span className="card-title">Добавление данных</span>
                         <div className="input-group mb-3">
-                            <div className="input-field">
-                                <input
-                                    placeholder="Введите назнавние предмета"
-                                    id="subjectName"
-                                    type="text"
-                                    name="subjectName"
-                                    className="yellow-input"
-                                    value={form.subjectName}
-                                    onChange={changeHandler}
-                                />
-                                <label htmlFor="subjectName">Предмет</label>
-                            </div>
-                            <h1/>
                             <div className="input-field">
                                 <input
                                     placeholder="Введите назнавние класса"

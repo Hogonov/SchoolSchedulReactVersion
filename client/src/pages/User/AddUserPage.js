@@ -1,40 +1,30 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {useParams} from 'react-router-dom';
-import {useHttp} from "../hooks/http.hook";
-import {AuthContext} from "../context/AuthContext";
-import {Loader} from "../components/Loader";
-import {UserCard} from "../components/UserCard";
-import {useMessage} from "../hooks/message.hook";
+import {useHttp} from "../../hooks/http.hook";
+import {AuthContext} from "../../context/AuthContext";
+import {Loader} from "../../components/Loader";
+import {useMessage} from "../../hooks/message.hook";
 
 
-export const DetailPage = () => {
+export const AddUserPage = () => {
     const message = useMessage();
     const {token} = useContext(AuthContext);
     const {loading, request, error, clearError} = useHttp();
     const [user, setUser] = useState({login: '', password: '', role: '', school: ''});
-    const userId = useParams().id;
 
-    const getUser = useCallback(async () => {
-        try {
-            const fetched = await request(`/api/users/get_user/${userId}`, 'GET', null, {Authorization: `Bearer ${token}`});
-            setUser(fetched);
-        } catch (e) {
 
-        }
-    }, [token, userId, request]);
 
     useEffect(() => {
-        getUser();
         message(error);
         clearError()
-    }, [getUser,error, message, clearError]);
+    }, [error, message, clearError]);
 
     useEffect(() => {
         window.M.updateTextFields()
     }, []);
 
     const changeHandler = event => {
-        setUser({...user, [event.target.name]: event.target.value});
+        setUser({...user, [event.target.name]: event.target.value})
     };
 
     if (loading) {
@@ -43,7 +33,7 @@ export const DetailPage = () => {
 
     const sendHandler = async () => {
         try {
-            const data = await request(`/api/users/edit_user/${userId}`, 'PUT', {...user}, {Authorization: `Bearer ${token}`});
+            const data = await request('/api/users/add_user', 'POST', {...user}, {Authorization: `Bearer ${token}`});
             message(data.message);
         } catch (e) {
         }

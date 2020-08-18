@@ -13,7 +13,7 @@ export const MainPage = () => {
         return <div>
             <Loader/>
         </div>
-    } else if (userRole === 'ROLE_ADMIN')
+    } else if (userRole === 'ROLE_ADMIN'){
         return (
             <div>
                 <h1/>
@@ -40,7 +40,8 @@ export const MainPage = () => {
                 </div>
             </div>
         );
-    else
+    }
+    else {
         return (
             <div>
                 <h1/>
@@ -61,4 +62,5 @@ export const MainPage = () => {
                 </div>
             </div>
         )
+    }
 };

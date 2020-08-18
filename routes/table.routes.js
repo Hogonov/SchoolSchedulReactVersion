@@ -145,15 +145,6 @@ router.get('/get_subject', auth, async (req, res) => {
     }
 });
 
-/*// /api/table/get_data_classroom
-router.get('/get_data_classroom', auth, async (req, res) => {
-    try {
-
-    } catch (e) {
-        console.log(e);
-        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
-    }
-});*/
 
 
 // /api/table/add_school

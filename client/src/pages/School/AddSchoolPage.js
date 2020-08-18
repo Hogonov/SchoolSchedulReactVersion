@@ -1,8 +1,8 @@
 import React, {useContext, useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
-import {useHttp} from '../hooks/http.hook'
-import {useMessage} from '../hooks/message.hook'
-import {AuthContext} from '../context/AuthContext'
+import {useHttp} from '../../hooks/http.hook'
+import {useMessage} from '../../hooks/message.hook'
+import {AuthContext} from '../../context/AuthContext'
 
 export const AddSchoolPage = () => {
     const auth = useContext(AuthContext);

@@ -8,4 +8,4 @@ export const UserCard = ({ user: user }) => {
 
     </>
   )
-}
+};

@@ -82,7 +82,6 @@ router.get('/get/:id', async (req, res) => {
 
         const ad = await Ad.findById(req.params.id);
         res.setHeader("Content-Type", "image/png");
-        console.log("work");
         fs.readFile(ad.image, function(error, image){
             if(error) throw error;
             res.end(image);
@@ -96,11 +95,10 @@ router.get('/get/:id', async (req, res) => {
 
 
 //api/ad/get_data/:id
-router.get('/get_data/:id', async (req, res) => {
+router.get('/get_data_ad/:id', async (req, res) => {
     try {
         const school = await School.findById(req.params.id);
         const ad = await Ad.find({school: school.name});
-
         res.json({ad: ad})
     } catch (e) {
         console.log(e);
@@ -108,6 +106,33 @@ router.get('/get_data/:id', async (req, res) => {
     }
 });
 
+//api/ad/get_all
+router.get('/get_all', async (req, res) => {
+    try {
+        const ad = await Ad.find({});
+        res.json(ad)
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
+
+//api/ad/delete/:id
+router.delete('/delete/:id', async (req, res) => {
+   try {
+       const ad = await Ad.findById(req.params.id);
+
+       fs.unlink(ad.image, async (e) => {
+           if (e) throw e;
+
+           await Ad.findByIdAndRemove(req.params.id);
+       });
+       res.status(200).json({message: 'Реклама удалена'});
+   } catch (e) {
+       console.log(e);
+       res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+   }
+});
 
 
 

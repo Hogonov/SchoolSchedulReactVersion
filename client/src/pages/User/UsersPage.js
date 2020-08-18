@@ -1,8 +1,8 @@
-import {useHttp} from "../hooks/http.hook";
-import {AuthContext} from "../context/AuthContext";
+import {useHttp} from "../../hooks/http.hook";
+import {AuthContext} from "../../context/AuthContext";
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Loader} from "../components/Loader";
-import {UserList} from "../components/UserList";
+import {Loader} from "../../components/Loader";
+import {UserList} from "../../components/UserList";
 import Button from "react-bootstrap/Button";
 
 
