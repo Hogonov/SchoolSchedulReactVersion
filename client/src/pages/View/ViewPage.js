@@ -14,6 +14,7 @@ export const ViewPage = () => {
     const [view, setView] = useState({
         date: new Date(),
         session: '',
+        editDate: '',
         times: [],
         classrooms: [
             {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
@@ -161,13 +162,16 @@ export const ViewPage = () => {
     return (
         <div>
             <div className="head">
-                <div id="time" className="container">
+                <div id="time" className="container" style={{display: "inline-block"}}>
                     <h5>
                         <p>{clock.clock}<br/>
                             {clock.clockDate}<br/>
                             {clock.clockDay}
                         </p>
                     </h5>
+                    <p className="red-text">
+                        {view.editDate}
+                    </p>
                 </div>
                 <div id="caption">
                     <h5>РАСПИСАНИЕ ЗАНЯТИЙ</h5>

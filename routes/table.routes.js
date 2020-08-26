@@ -257,7 +257,8 @@ router.post('/editor', auth,
                     session: session,
                     subjects: subjects,
                     school: user.school,
-                    day: day
+                    day: day,
+                    date: new Date()
                 });
 
             if (candidate.length > 0) {
@@ -268,7 +269,8 @@ router.post('/editor', auth,
                         session: session,
                         subjects: subjects,
                         school: user.school,
-                        day: day
+                        day: day,
+                        date: new Date()
                     }
                 );
             } else {

@@ -31,7 +31,11 @@ export const AdListPage = () => {
     }
 
     if (!ads.length) {
-        return <p className="center">Рекламы пока нет</p>
+        return <div>
+            <p className="center">Рекламы пока нет</p>
+            <h1/>
+            <Button href="/add_new_ad" className="btn yellow darken-4">Добавить рекламу</Button>
+        </div>
     }
 
     const deleteHandler = async (event) => {

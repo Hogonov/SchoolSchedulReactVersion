@@ -56,6 +56,18 @@ router.get('/get/:id', async (req, res) => {
             session: session
         }).sort({name: 1});
 
+        let editDate = new Date().toJSON().split('T')[0];
+        for (let i = 0; i < classrooms.length; i++) {
+            try {
+                let subDate = classrooms[i].date.toJSON().split('T')[0];
+                if (subDate <= editDate) {
+                    editDate = subDate;
+                }
+            }catch (e) {
+
+            }
+        }
+
 
         while (classrooms.length < 20) {
             classrooms.push({
@@ -66,7 +78,7 @@ router.get('/get/:id', async (req, res) => {
             });
         }
 
-        res.json({classrooms: classrooms, times: time[0].time, session: classrooms.session});
+        res.json({classrooms: classrooms, times: time[0].time, session: classrooms.session, editDate: editDate});
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})

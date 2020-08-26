@@ -51,7 +51,6 @@ router.post('/add', auth,
 router.put('/add_file/:id', upload.single('image'), auth, async (req, res) => {
     try {
         const image = {...req.file, path: req.file.path + '.png'};
-        console.log(image);
         fs.rename(req.file.path, image.path, function(err) {
             if ( err ) console.log('ERROR: ' + err);
         });

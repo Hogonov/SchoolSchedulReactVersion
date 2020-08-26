@@ -5,7 +5,8 @@ const schema = new Schema({
     session: {type: String, required: true},
     subjects: [{name: String, time: String}],
     school: {type: String, required: true},
-    day: {type: String, required: true}
+    day: {type: String, required: true},
+    date: {type: Date, required: true}
 });
 
 module.exports = model('Classroom', schema);
