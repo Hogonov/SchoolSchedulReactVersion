@@ -1,7 +1,0 @@
-{
-  "port": 5000,
-  "secret": "AlexTh",
-  "mongoUri": "mongodb+srv://Admin:Honda1@school-shedule.eyyk2.azure.mongodb.net/schedule?retryWrites=true&w=majority",
-  "ADMIN": "Admin",
-  "PASS": "Honda1"
-}
