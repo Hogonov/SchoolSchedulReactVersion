@@ -17,26 +17,26 @@ export const ViewPage = () => {
         editDate: '',
         times: [],
         classrooms: [
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]},
-            {name: '', subjects: [{name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}, {name: ''}]}
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]},
+            {name: '', subjects: [{name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}, {name: '', update: false}]}
         ]
     });
     const [clock, setClock] = useState({clock: '', clockDate: '', clockDay: ''});
@@ -200,76 +200,76 @@ export const ViewPage = () => {
                 <div className="separation">{view.classrooms[9].name}</div>
 
                 <div className="separation">{view.times[0]}</div>
-                <div>{view.classrooms[0].subjects[0].name}</div>
-                <div>{view.classrooms[1].subjects[0].name}</div>
-                <div>{view.classrooms[2].subjects[0].name}</div>
-                <div>{view.classrooms[3].subjects[0].name}</div>
-                <div>{view.classrooms[4].subjects[0].name}</div>
-                <div>{view.classrooms[5].subjects[0].name}</div>
-                <div>{view.classrooms[6].subjects[0].name}</div>
-                <div>{view.classrooms[7].subjects[0].name}</div>
-                <div>{view.classrooms[8].subjects[0].name}</div>
-                <div>{view.classrooms[9].subjects[0].name}</div>
+                <div className={view.classrooms[0].subjects[0].update && 'red'} >{view.classrooms[0].subjects[0].name}</div>
+                <div className={view.classrooms[1].subjects[0].update && 'red'} >{view.classrooms[1].subjects[0].name}</div>
+                <div className={view.classrooms[2].subjects[0].update && 'red'} >{view.classrooms[2].subjects[0].name}</div>
+                <div className={view.classrooms[3].subjects[0].update && 'red'} >{view.classrooms[3].subjects[0].name}</div>
+                <div className={view.classrooms[4].subjects[0].update && 'red'} >{view.classrooms[4].subjects[0].name}</div>
+                <div className={view.classrooms[5].subjects[0].update && 'red'} >{view.classrooms[5].subjects[0].name}</div>
+                <div className={view.classrooms[6].subjects[0].update && 'red'} >{view.classrooms[6].subjects[0].name}</div>
+                <div className={view.classrooms[7].subjects[0].update && 'red'} >{view.classrooms[7].subjects[0].name}</div>
+                <div className={view.classrooms[8].subjects[0].update && 'red'} >{view.classrooms[8].subjects[0].name}</div>
+                <div className={view.classrooms[9].subjects[0].update && 'red'} >{view.classrooms[9].subjects[0].name}</div>
 
                 <div className="separation">{view.times[1]}</div>
-                <div>{view.classrooms[0].subjects[1].name}</div>
-                <div>{view.classrooms[1].subjects[1].name}</div>
-                <div>{view.classrooms[2].subjects[1].name}</div>
-                <div>{view.classrooms[3].subjects[1].name}</div>
-                <div>{view.classrooms[4].subjects[1].name}</div>
-                <div>{view.classrooms[5].subjects[1].name}</div>
-                <div>{view.classrooms[6].subjects[1].name}</div>
-                <div>{view.classrooms[7].subjects[1].name}</div>
-                <div>{view.classrooms[8].subjects[1].name}</div>
-                <div>{view.classrooms[9].subjects[1].name}</div>
+                <div className={view.classrooms[0].subjects[1].update && 'red'} >{view.classrooms[0].subjects[1].name}</div>
+                <div className={view.classrooms[1].subjects[1].update && 'red'} >{view.classrooms[1].subjects[1].name}</div>
+                <div className={view.classrooms[2].subjects[1].update && 'red'} >{view.classrooms[2].subjects[1].name}</div>
+                <div className={view.classrooms[3].subjects[1].update && 'red'} >{view.classrooms[3].subjects[1].name}</div>
+                <div className={view.classrooms[4].subjects[1].update && 'red'} >{view.classrooms[4].subjects[1].name}</div>
+                <div className={view.classrooms[5].subjects[1].update && 'red'} >{view.classrooms[5].subjects[1].name}</div>
+                <div className={view.classrooms[6].subjects[1].update && 'red'} >{view.classrooms[6].subjects[1].name}</div>
+                <div className={view.classrooms[7].subjects[1].update && 'red'} >{view.classrooms[7].subjects[1].name}</div>
+                <div className={view.classrooms[8].subjects[1].update && 'red'} >{view.classrooms[8].subjects[1].name}</div>
+                <div className={view.classrooms[9].subjects[1].update && 'red'} >{view.classrooms[9].subjects[1].name}</div>
 
                 <div className="separation">{view.times[2]}</div>
-                <div>{view.classrooms[0].subjects[2].name}</div>
-                <div>{view.classrooms[1].subjects[2].name}</div>
-                <div>{view.classrooms[2].subjects[2].name}</div>
-                <div>{view.classrooms[3].subjects[2].name}</div>
-                <div>{view.classrooms[4].subjects[2].name}</div>
-                <div>{view.classrooms[5].subjects[2].name}</div>
-                <div>{view.classrooms[6].subjects[2].name}</div>
-                <div>{view.classrooms[7].subjects[2].name}</div>
-                <div>{view.classrooms[8].subjects[2].name}</div>
-                <div>{view.classrooms[9].subjects[2].name}</div>
+                <div className={view.classrooms[0].subjects[2].update && 'red'} >{view.classrooms[0].subjects[2].name}</div>
+                <div className={view.classrooms[1].subjects[2].update && 'red'} >{view.classrooms[1].subjects[2].name}</div>
+                <div className={view.classrooms[2].subjects[2].update && 'red'} >{view.classrooms[2].subjects[2].name}</div>
+                <div className={view.classrooms[3].subjects[2].update && 'red'} >{view.classrooms[3].subjects[2].name}</div>
+                <div className={view.classrooms[4].subjects[2].update && 'red'} >{view.classrooms[4].subjects[2].name}</div>
+                <div className={view.classrooms[5].subjects[2].update && 'red'} >{view.classrooms[5].subjects[2].name}</div>
+                <div className={view.classrooms[6].subjects[2].update && 'red'} >{view.classrooms[6].subjects[2].name}</div>
+                <div className={view.classrooms[7].subjects[2].update && 'red'} >{view.classrooms[7].subjects[2].name}</div>
+                <div className={view.classrooms[8].subjects[2].update && 'red'} >{view.classrooms[8].subjects[2].name}</div>
+                <div className={view.classrooms[9].subjects[2].update && 'red'} >{view.classrooms[9].subjects[2].name}</div>
 
                 <div className="separation">{view.times[3]}</div>
-                <div>{view.classrooms[0].subjects[3].name}</div>
-                <div>{view.classrooms[1].subjects[3].name}</div>
-                <div>{view.classrooms[2].subjects[3].name}</div>
-                <div>{view.classrooms[3].subjects[3].name}</div>
-                <div>{view.classrooms[4].subjects[3].name}</div>
-                <div>{view.classrooms[5].subjects[3].name}</div>
-                <div>{view.classrooms[6].subjects[3].name}</div>
-                <div>{view.classrooms[7].subjects[3].name}</div>
-                <div>{view.classrooms[8].subjects[3].name}</div>
-                <div>{view.classrooms[9].subjects[3].name}</div>
+                <div className={view.classrooms[0].subjects[3].update && 'red'} >{view.classrooms[0].subjects[3].name}</div>
+                <div className={view.classrooms[1].subjects[3].update && 'red'} >{view.classrooms[1].subjects[3].name}</div>
+                <div className={view.classrooms[2].subjects[3].update && 'red'} >{view.classrooms[2].subjects[3].name}</div>
+                <div className={view.classrooms[3].subjects[3].update && 'red'} >{view.classrooms[3].subjects[3].name}</div>
+                <div className={view.classrooms[4].subjects[3].update && 'red'} >{view.classrooms[4].subjects[3].name}</div>
+                <div className={view.classrooms[5].subjects[3].update && 'red'} >{view.classrooms[5].subjects[3].name}</div>
+                <div className={view.classrooms[6].subjects[3].update && 'red'} >{view.classrooms[6].subjects[3].name}</div>
+                <div className={view.classrooms[7].subjects[3].update && 'red'} >{view.classrooms[7].subjects[3].name}</div>
+                <div className={view.classrooms[8].subjects[3].update && 'red'} >{view.classrooms[8].subjects[3].name}</div>
+                <div className={view.classrooms[9].subjects[3].update && 'red'} >{view.classrooms[9].subjects[3].name}</div>
 
                 <div className="separation">{view.times[4]}</div>
-                <div>{view.classrooms[0].subjects[4].name}</div>
-                <div>{view.classrooms[1].subjects[4].name}</div>
-                <div>{view.classrooms[2].subjects[4].name}</div>
-                <div>{view.classrooms[3].subjects[4].name}</div>
-                <div>{view.classrooms[4].subjects[4].name}</div>
-                <div>{view.classrooms[5].subjects[4].name}</div>
-                <div>{view.classrooms[6].subjects[4].name}</div>
-                <div>{view.classrooms[7].subjects[4].name}</div>
-                <div>{view.classrooms[8].subjects[4].name}</div>
-                <div>{view.classrooms[9].subjects[4].name}</div>
+                <div className={view.classrooms[0].subjects[4].update && 'red'} >{view.classrooms[0].subjects[4].name}</div>
+                <div className={view.classrooms[1].subjects[4].update && 'red'} >{view.classrooms[1].subjects[4].name}</div>
+                <div className={view.classrooms[2].subjects[4].update && 'red'} >{view.classrooms[2].subjects[4].name}</div>
+                <div className={view.classrooms[3].subjects[4].update && 'red'} >{view.classrooms[3].subjects[4].name}</div>
+                <div className={view.classrooms[4].subjects[4].update && 'red'} >{view.classrooms[4].subjects[4].name}</div>
+                <div className={view.classrooms[5].subjects[4].update && 'red'} >{view.classrooms[5].subjects[4].name}</div>
+                <div className={view.classrooms[6].subjects[4].update && 'red'} >{view.classrooms[6].subjects[4].name}</div>
+                <div className={view.classrooms[7].subjects[4].update && 'red'} >{view.classrooms[7].subjects[4].name}</div>
+                <div className={view.classrooms[8].subjects[4].update && 'red'} >{view.classrooms[8].subjects[4].name}</div>
+                <div className={view.classrooms[9].subjects[4].update && 'red'} >{view.classrooms[9].subjects[4].name}</div>
 
                 <div className="separation">{view.times[5]}</div>
-                <div>{view.classrooms[0].subjects[5].name}</div>
-                <div>{view.classrooms[1].subjects[5].name}</div>
-                <div>{view.classrooms[2].subjects[5].name}</div>
-                <div>{view.classrooms[3].subjects[5].name}</div>
-                <div>{view.classrooms[4].subjects[5].name}</div>
-                <div>{view.classrooms[5].subjects[5].name}</div>
-                <div>{view.classrooms[6].subjects[5].name}</div>
-                <div>{view.classrooms[7].subjects[5].name}</div>
-                <div>{view.classrooms[8].subjects[5].name}</div>
-                <div>{view.classrooms[9].subjects[5].name}</div>
+                <div className={view.classrooms[0].subjects[5].update && 'red'} >{view.classrooms[0].subjects[5].name}</div>
+                <div className={view.classrooms[1].subjects[5].update && 'red'} >{view.classrooms[1].subjects[5].name}</div>
+                <div className={view.classrooms[2].subjects[5].update && 'red'} >{view.classrooms[2].subjects[5].name}</div>
+                <div className={view.classrooms[3].subjects[5].update && 'red'} >{view.classrooms[3].subjects[5].name}</div>
+                <div className={view.classrooms[4].subjects[5].update && 'red'} >{view.classrooms[4].subjects[5].name}</div>
+                <div className={view.classrooms[5].subjects[5].update && 'red'} >{view.classrooms[5].subjects[5].name}</div>
+                <div className={view.classrooms[6].subjects[5].update && 'red'} >{view.classrooms[6].subjects[5].name}</div>
+                <div className={view.classrooms[7].subjects[5].update && 'red'} >{view.classrooms[7].subjects[5].name}</div>
+                <div className={view.classrooms[8].subjects[5].update && 'red'} >{view.classrooms[8].subjects[5].name}</div>
+                <div className={view.classrooms[9].subjects[5].update && 'red'} >{view.classrooms[9].subjects[5].name}</div>
 
             </div>
             <div className="schedule" id="table2">

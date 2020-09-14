@@ -26,6 +26,8 @@ app.use('/api/view', require('./routes/view.routes'));
 app.use('/api/dir', require('./routes/dir.routes'));
 //реклама
 app.use('/api/ad', require('./routes/ad.routes'));
+//года и четверти
+app.use('/api/year', require('./routes/year.routes'));
 
 const PORT = config.get('port') || 5000;
 

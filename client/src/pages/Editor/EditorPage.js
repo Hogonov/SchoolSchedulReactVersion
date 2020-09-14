@@ -17,15 +17,14 @@ export const EditorPage = () => {
         session: '',
         time: [],
         day: '',
-        subject1: '',
-        subject2: '',
-        subject3: '',
-        subject4: '',
-        subject5: '',
-        subject6: ''
+        subject1: '', office1: '',
+        subject2: '', office2: '',
+        subject3: '', office3: '',
+        subject4: '', office4: '',
+        subject5: '', office5: '',
+        subject6: '', office6: '',
     });
     const [options, setOptions] = useState({classrooms: [], subjects: [], firstTimes: [], secondTimes: []});
-    const [count, setCount] = useState({count: 1});
     const days = [
         {value: 'понедельник', label: 'Понедельник'},
         {value: 'вторник', label: 'Вторник'},
@@ -77,44 +76,22 @@ export const EditorPage = () => {
 
     };
 
-    /* const getDataClassroom = useCallback(async (classroom) => {
-
-         ///ДОПИЛ
-         try {
-             const fetched = await request(`/api/table/get_data_classroom/${classroom}`, 'GET', null);
-             setForm({...form, session: fetched.session,
-                 subject1: fetched.subjects[0],
-                 subject2: fetched.subjects[1],
-                 subject3: fetched.subjects[2],
-                 subject4: fetched.subjects[3],
-                 subject5: fetched.subjects[4],
-                 subject6: fetched.subjects[5]
-             });
-         } catch (e) {
-
-         }
-     }, [ request]);*/
-
     const changeHandlerClassroom = event => {
         try {
             setForm({...form, classroom: event.value});
-            console.log("Classroom", form);
         }catch (e) {
 
         }
-        // getDataClassroom(event.value);
-
     };
     const changeHandlerDays = event => {
 
         try {
             setForm({...form, day: event.value});
-            console.log("Day", form);
         }catch (e) {
 
         }
     };
-    const changeHandlerSubjects = event => {
+    const changeHandlerInput = event => {
         setForm({...form, [event.target.id]: event.target.value})
     };
 
@@ -144,7 +121,7 @@ export const EditorPage = () => {
     return (
         <div className="row">
             <h1/>
-            <div className="col s6 offset-s3">
+            <div className="col s7 offset-s3">
                 <div className="card blue darken-1">
                     <div className="card-content white-text">
                         <span className="card-title">Редактор расписания</span>
@@ -178,17 +155,21 @@ export const EditorPage = () => {
                                     name="classroom"
                             />
                             <h1/>
-                            <Grid container spacing={2}>
+                            <Grid container spacing={3}>
                                 <Grid item style={{flexGrow: 1}}>
-                                    <label htmlFor="subjects" className="white-text">Время</label>
+                                    <label className="white-text">Время</label>
                                 </Grid>
                                 <Grid item style={{flexGrow: 2}}>
-                                    <label htmlFor="subjects" className="white-text"
-                                           style={{marginLeft: 36}}>Предметы</label>
+                                    <label className="white-text"
+                                           style={{marginLeft: 70}}>Предметы</label>
+                                </Grid>
+                                <Grid item style={{flexGrow: 2}}>
+                                    <label className="white-text"
+                                           style={{marginLeft: 10}}>Кабинеты</label>
                                 </Grid>
                             </Grid>
 
-                            <Grid container spacing={2}>
+                            <Grid container spacing={3}>
                                 <Grid item style={{flexGrow: 0}}>
                                     <input
                                         id={`time1`}
@@ -206,7 +187,15 @@ export const EditorPage = () => {
                                         name="subject"
                                         className="yellow-input"
                                         value={form.subject1}
-                                        onChange={changeHandlerSubjects}
+                                        onChange={changeHandlerInput}
+                                    />
+                                </Grid>
+                                <Grid item style={{flexGrow: 1}}>
+                                    <input onChange={changeHandlerInput}
+                                           id="office1"
+                                           placeholder="Введите кабинет"
+                                           className="yellow-input white-text"
+                                           name="office"
                                     />
                                 </Grid>
                                 <h1/>
@@ -229,7 +218,15 @@ export const EditorPage = () => {
                                         name="subject"
                                         className="yellow-input"
                                         value={form.subject2}
-                                        onChange={changeHandlerSubjects}
+                                        onChange={changeHandlerInput}
+                                    />
+                                </Grid>
+                                <Grid item style={{flexGrow: 1}}>
+                                    <input onChange={changeHandlerInput}
+                                           id="office2"
+                                           placeholder="Введите кабинет"
+                                           className="yellow-input white-text"
+                                           name="office"
                                     />
                                 </Grid>
                                 <h1/>
@@ -252,7 +249,15 @@ export const EditorPage = () => {
                                         name="subject"
                                         className="yellow-input"
                                         value={form.subject3}
-                                        onChange={changeHandlerSubjects}
+                                        onChange={changeHandlerInput}
+                                    />
+                                </Grid>
+                                <Grid item style={{flexGrow: 1}}>
+                                    <input onChange={changeHandlerInput}
+                                           id="office3"
+                                           placeholder="Введите кабинет"
+                                           className="yellow-input white-text"
+                                           name="office"
                                     />
                                 </Grid>
                                 <h1/>
@@ -275,10 +280,18 @@ export const EditorPage = () => {
                                         name="subject"
                                         className="yellow-input"
                                         value={form.subject4}
-                                        onChange={changeHandlerSubjects}
+                                        onChange={changeHandlerInput}
                                     />
                                 </Grid>
                                 <h1/>
+                                <Grid item style={{flexGrow: 1}}>
+                                    <input onChange={changeHandlerInput}
+                                           id="office4"
+                                           placeholder="Введите кабинет"
+                                           className="yellow-input white-text"
+                                           name="office"
+                                    />
+                                </Grid>
                             </Grid>
                             <Grid container spacing={2}>
                                 <Grid item style={{flexGrow: 0}}>
@@ -298,7 +311,15 @@ export const EditorPage = () => {
                                         name="subject"
                                         className="yellow-input"
                                         value={form.subject5}
-                                        onChange={changeHandlerSubjects}
+                                        onChange={changeHandlerInput}
+                                    />
+                                </Grid>
+                                <Grid item style={{flexGrow: 1}}>
+                                    <input onChange={changeHandlerInput}
+                                           id="office5"
+                                           placeholder="Введите кабинет"
+                                           className="yellow-input white-text"
+                                           name="office"
                                     />
                                 </Grid>
                                 <h1/>
@@ -321,7 +342,15 @@ export const EditorPage = () => {
                                         name="subject"
                                         className="yellow-input"
                                         value={form.subject6}
-                                        onChange={changeHandlerSubjects}
+                                        onChange={changeHandlerInput}
+                                    />
+                                </Grid>
+                                <Grid item style={{flexGrow: 1}}>
+                                    <input onChange={changeHandlerInput}
+                                           id="office6"
+                                           placeholder="Введите кабинет"
+                                           className="yellow-input white-text"
+                                           name="office"
                                     />
                                 </Grid>
                                 <h1/>

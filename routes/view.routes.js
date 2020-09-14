@@ -15,6 +15,7 @@ const Announcement = require('../models/Announcement');
 const router = Router();
 
 // /api/view/get/:school
+// /api/view/get/:school
 router.get('/get/:id', async (req, res) => {
 
     try {
@@ -56,6 +57,40 @@ router.get('/get/:id', async (req, res) => {
             session: session
         }).sort({name: 1});
 
+        for (const el of classrooms) {
+            try {
+                let arrSubjects = [];
+                let subject;
+                for (let i = 0; i < el.subjects.length; i++) {
+                    if (el.subjects[i].update && (new Date() - el.date >= 3600000)) {
+                        subject = {
+                            _id: el.subjects[i]._id,
+                            name: el.subjects[i].name,
+                            time: el.subjects[i].time,
+                            office: el.subjects[i].office,
+                            update: false
+                        };
+                        arrSubjects.push(subject)
+                    } else {
+                        arrSubjects.push(el.subjects[i]);
+                    }
+                }
+                await Classroom.findByIdAndUpdate({_id: el._id},
+                    {
+                        _id: el._id,
+                        name: el.name,
+                        session: el.session,
+                        subjects: arrSubjects,
+                        school: el.school,
+                        day: el.day,
+                        date: el.date
+                    }
+                );
+            } catch (e) {
+                console.log(e)
+            }
+        }
+
         let editDate = new Date().toJSON().split('T')[0];
         for (let i = 0; i < classrooms.length; i++) {
             try {
@@ -63,7 +98,7 @@ router.get('/get/:id', async (req, res) => {
                 if (subDate <= editDate) {
                     editDate = subDate;
                 }
-            }catch (e) {
+            } catch (e) {
 
             }
         }
@@ -72,12 +107,11 @@ router.get('/get/:id', async (req, res) => {
         while (classrooms.length < 20) {
             classrooms.push({
                 name: '', subjects: [
-                    {name: ''}, {name: ''}, {name: ''},
-                    {name: ''}, {name: ''}, {name: ''}
+                    {name: '', update: false}, {name: '', update: false}, {name: '', update: false},
+                    {name: '', update: false}, {name: '', update: false}, {name: '', update: false}
                 ]
             });
         }
-
         res.json({classrooms: classrooms, times: time[0].time, session: classrooms.session, editDate: editDate});
     } catch (e) {
         console.log(e);

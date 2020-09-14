@@ -210,7 +210,7 @@ router.post('/editor', auth,
     [
         check('classroom', 'Выберети класс').isLength({min: 1}),
         check('session', 'Выберети смену').isLength({min: 1}),
-        check('session', 'Выберети день').isLength({min: 1})
+        check('session', 'Выберети день').isLength({min: 1}),
     ],
     async (req, res) => {
         try {
@@ -229,8 +229,12 @@ router.post('/editor', auth,
 
             const {
                 classroom, session, day,
-                subject1, subject2, subject3,
-                subject4, subject5, subject6
+                subject1, office1,
+                subject2, office2,
+                subject3, office3,
+                subject4, office4,
+                subject5, office5,
+                subject6, office6
             } = req.body;
 
             const candidate = await Classroom.find({name: classroom, session: session, school: user.school, day: day});
@@ -242,12 +246,12 @@ router.post('/editor', auth,
 
 
             const subjects = [
-                {name: subject1, time: subTime[0]},
-                {name: subject2, time: subTime[1]},
-                {name: subject3, time: subTime[2]},
-                {name: subject4, time: subTime[3]},
-                {name: subject5, time: subTime[4]},
-                {name: subject6, time: subTime[5]}
+                {name: subject1, time: subTime[0], office: office1, update: false},
+                {name: subject2, time: subTime[1], office: office2, update: false},
+                {name: subject3, time: subTime[2], office: office3, update: false},
+                {name: subject4, time: subTime[3], office: office4, update: false},
+                {name: subject5, time: subTime[4], office: office5, update: false},
+                {name: subject6, time: subTime[5], office: office6, update: false}
             ];
 
 
@@ -262,6 +266,11 @@ router.post('/editor', auth,
                 });
 
             if (candidate.length > 0) {
+                for(let i = 0; i < candidate[0].subjects.length; i++){
+                    if(candidate[0].subjects[i].name.toLowerCase() !== subjects[i].name.toLowerCase()){
+                        subjects[i] = {...subjects[i], update: true}
+                    }
+                }
                 await Classroom.findByIdAndUpdate({_id: candidate[0]._id},
                     {
                         _id: candidate[0]._id,

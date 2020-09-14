@@ -6,7 +6,6 @@ import {DetailPage} from './pages/User/DetailPage'
 import {AuthPage} from './pages/User/AuthPage'
 import {AddClassPage} from './pages/Class/AddClassPage'
 import {AdminOfficePage} from './pages/Admin/AdminOfficePage'
-import {AddSchoolPage} from "./pages/School/AddSchoolPage";
 import {UsersPage} from "./pages/User/UsersPage";
 import {AddUserPage} from "./pages/User/AddUserPage";
 import {EditorPage} from "./pages/Editor/EditorPage";
@@ -18,6 +17,7 @@ import {SelectViewPage} from "./pages/View/SelectViewPage";
 import {AddDirPage} from "./pages/Dir/AddDirPage";
 import {AddAdPage} from "./pages/Ad/AddAdPage";
 import {AdListPage} from "./pages/Ad/AdListPage";
+import {AddYearSchoolPage} from "./pages/YearSchool/AddYearSchoolPage";
 
 
 export const useRoutes = (isAuthenticated, userRole) => {
@@ -110,6 +110,9 @@ export const useRoutes = (isAuthenticated, userRole) => {
                 </Route>
                 <Route path="/dir" exact>
                     <AddDirPage/>
+                </Route>
+                <Route path="/add_new_year" exact>
+                    <AddYearSchoolPage/>
                 </Route>
                 <Redirect to="/main" exact/>
             </Switch>

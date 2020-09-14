@@ -33,6 +33,9 @@ export const UserDashboardPage = () => {
                 <div>
                     <Link to="/dir">Добавить директора</Link>
                 </div>
+                <div>
+                    <Link to="/add_new_year">Добавить учебный год</Link>
+                </div>
             </div>
         )
     }
