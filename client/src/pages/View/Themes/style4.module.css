@@ -1,12 +1,12 @@
 @font-face {
     font-family: "Courier New";
-    src: url(../../../fonts/cour.ttf);
+    src: url(../../../public/fonts/cour.ttf);
 
     font-family: "Gotham Pro";
-    src: url(../../../fonts/GothamPro.ttf);
+    src: url(../../../public/fonts/GothamPro.ttf);
 
     font-family: "Gotham Pro bold";
-    src: url(../../../fonts/GothamPro_bold.ttf);
+    src: url(../../../public/fonts/GothamPro_bold.ttf);
 }
 
 .header{

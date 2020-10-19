@@ -1,0 +1,69 @@
+.timeRedactor{
+    display: grid;
+    grid-template-columns: 4fr 0fr 4fr;
+}
+.session{
+    margin-left: 50px;
+}
+.session h3 {
+    text-align: center;
+}
+
+.first {
+
+}
+.second {
+    grid-spacing: 1;
+}
+
+.title {
+    text-align: center;
+    font-family: "GothamProBold";
+}
+
+.nameTimePack {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.backgroundBoard {
+    background-color: #fbf8f5;
+    padding: 20px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.titleTable{
+    background-color: #f8f1e7;
+    border: 1px solid #f8f1e7;
+}
+
+.table {
+    border-spacing: 7px 11px;
+    border-collapse: separate;
+}
+
+.table tr td {
+    text-align: center;
+}
+
+.cellTable td{
+    border: 2px solid #3a73ab;
+    padding: 10px;
+}
+
+.verticalLine{
+    text-align: center;
+    border-left: 1px solid black;
+    margin-left: 55px;
+
+}
+
+.button {
+    background-color: #3a73ab;
+    float: right;
+    margin-right: 7px;
+}
+
+.button:hover{
+    background-color: #7ba5c6;
+}

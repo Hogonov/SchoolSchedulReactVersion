@@ -5,8 +5,9 @@ import {useRoutes} from "./routes";
 import {useAuth} from "./hooks/auth.hook";
 import 'materialize-css';
 import {AuthContext} from "./context/AuthContext";
-import {Navbar} from "./components/Navbar";
+import {Header} from "./components/Header";
 import {Loader} from "./components/Loader";
+import {Sidebar} from "./components/Sidebar";
 
 function App() {
     const {token, login, logout, userId, ready, userRole} = useAuth();
@@ -21,9 +22,12 @@ function App() {
     return (
         <AuthContext.Provider value={{token, login, logout, userId, isAuthenticated, userRole}}>
             <Roter>
-                {isAuthenticated && flag && <Navbar/>}
-                {flag && <div className="container">
-                    {routes}
+                {isAuthenticated && flag && <Header/>}
+                {flag && <div style={{display: "flex", flexDirection: "row"}}>
+                    {isAuthenticated && <Sidebar/>}
+                    <div className="container" >
+                        {routes}
+                    </div>
                 </div>
                 }
                 {!flag && routes}

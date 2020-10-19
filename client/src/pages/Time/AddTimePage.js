@@ -5,9 +5,9 @@ import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
 import Select from "react-select";
 import Grid from "@material-ui/core/Grid";
+import stylesTimePage from './TimePage.module.css';
 
 export const AddTimePage = () => {
-
     const auth = useContext(AuthContext);
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
@@ -48,8 +48,118 @@ export const AddTimePage = () => {
     };
 
     return (
-        <div className="row">
-            <h1/>
+            <div className={stylesTimePage.backgroundBoard}>
+                <h1 className={stylesTimePage.title}>Редактор звонков</h1>
+                <div className={stylesTimePage.timeRedactor}>
+                    <div className={`${stylesTimePage.session}  ${stylesTimePage.first}`}>
+                        <h3>Смена I</h3>
+                        <div className={stylesTimePage.nameTimePack}>
+                            <h5>Продолжительность урока</h5><label>
+                            <input type="number" min="0" max="60" />
+                        </label>
+                        </div>
+                        <table className={stylesTimePage.table}>
+                            <tr>
+                                <td className={stylesTimePage.titleTable}>№</td>
+                                <td className={stylesTimePage.titleTable}>Начало</td>
+                                <td className={stylesTimePage.titleTable}>Конец</td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>1</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>2</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>3</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>4</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>5</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>6</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+
+                        </table>
+                        <button
+                            className={`btn ${stylesTimePage.button}`}
+                            disabled={loading}
+                            // onClick={sendHandler}
+                        >
+                            Отправить
+                        </button>
+                    </div>
+                    <div className={stylesTimePage.verticalLine}></div>
+                    <div className={`${stylesTimePage.session}  ${stylesTimePage.second}`}>
+                        <h3>Смена II</h3>
+                        <div className={stylesTimePage.nameTimePack}>
+                            <h5>Продолжительность урока</h5><label>
+                            <input type="number" min="0" max="60"/>
+                        </label>
+                        </div>
+                        <table className={stylesTimePage.table}>
+                            <tr>
+                                <td className={stylesTimePage.titleTable}>№</td>
+                                <td className={stylesTimePage.titleTable}>Начало</td>
+                                <td className={stylesTimePage.titleTable}>Конец</td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>1</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>2</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>3</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>4</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>5</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+                            <tr className={stylesTimePage.cellTable}>
+                                <td>6</td>
+                                <td><input type="time"/></td>
+                                <td><input type="time"/></td>
+                            </tr>
+
+                        </table>
+                        <button
+                            className={`btn ${stylesTimePage.button}`}
+                            disabled={loading}
+                            // onClick={sendHandler}
+                        >
+                            Отправить
+                        </button>
+                    </div>
+                </div>
+            {/*<h1/>
             <div className="col s6 offset-s3">
                 <div className="card blue darken-1">
                     <div className="card-content white-text">
@@ -155,7 +265,7 @@ export const AddTimePage = () => {
                         </button>
                     </div>
                 </div>
-            </div>
+            </div>*/}
         </div>
     )
 };
