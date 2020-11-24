@@ -26,29 +26,39 @@ router.post('/add_time', auth, async (req, res) => {
             });
         }
 
-        const {session, time1, time2, time3, time4, time5, time6} = req.body;
+        const {times} = req.body;
 
         const user = await User.findById(req.user.userId);
 
-        let special;
-        try {
-            if(session.indexOf("special") !== -1){
-                special = req.body.date;
-                let specialDate = new SpecialDate({school: user.school, date: special});
-                await specialDate.save();
-            }
-        }catch (e) {
-            console.log(e)
-        }
+        /* let special;
+         try {
+             if(session.indexOf("special") !== -1){
+                 special = req.body.date;
+                 let specialDate = new SpecialDate({school: user.school, date: special});
+                 await specialDate.save();
+             }
+         }catch (e) {
+             console.log(e)
+         }*/
 
+
+        const newTimes = times.map((e) => {
+            return [
+                e.startTime1 + '-' + e.endTime1,
+                e.startTime2 + '-' + e.endTime2,
+                e.startTime3 + '-' + e.endTime3,
+                e.startTime4 + '-' + e.endTime4,
+                e.startTime5 + '-' + e.endTime5,
+                e.startTime6 + '-' + e.endTime6
+            ]
+        });
+        console.log(newTimes)
 
         const time = new Time({
-            time: [time1, time2, time3, time4, time5, time6],
-            school: user.school,
-            session: session,
-            special: special
+            time: {firstSession: newTimes[0], secondSession: newTimes[1]},
+            school: user.school
         });
-
+        console.log(time)
         await time.save();
 
         res.status(201).json({message: 'Время добавлено'})
@@ -144,7 +154,6 @@ router.get('/get_subject', auth, async (req, res) => {
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
     }
 });
-
 
 
 // /api/table/add_school
@@ -266,8 +275,8 @@ router.post('/editor', auth,
                 });
 
             if (candidate.length > 0) {
-                for(let i = 0; i < candidate[0].subjects.length; i++){
-                    if(candidate[0].subjects[i].name.toLowerCase() !== subjects[i].name.toLowerCase()){
+                for (let i = 0; i < candidate[0].subjects.length; i++) {
+                    if (candidate[0].subjects[i].name.toLowerCase() !== subjects[i].name.toLowerCase()) {
                         subjects[i] = {...subjects[i], update: true}
                     }
                 }

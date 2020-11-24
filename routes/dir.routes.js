@@ -81,7 +81,7 @@ router.put('/add_file/:id', upload.single('image'), auth, async (req, res) => {
 
     } catch (e) {
         console.log(e);
-        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
     }
 });
 
@@ -92,9 +92,11 @@ router.get('/get/:id', async (req, res) => {
         const dir = await Director.findById(req.params.id);
         res.setHeader("Content-Type", "image/png");
         fs.readFile(dir.image, function (error, image) {
-            if (error) throw error;
-
-            res.end(image);
+            try {
+                res.end(image);
+            } catch (e) {
+                console.log(e);
+            }
         });
 
     } catch (e) {

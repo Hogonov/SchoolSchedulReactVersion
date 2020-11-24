@@ -12,6 +12,11 @@ export const Sidebar = () => {
                         </Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
+                        <Nav.Link className="nav-link" href="/editor_special_course">Спецкурсы
+                            <svg className="toArrowIcon"/>
+                        </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
                         <Nav.Link className="nav-link" href="/announcement">Объявления
                             <svg className="toArrowIcon"/>
                         </Nav.Link>

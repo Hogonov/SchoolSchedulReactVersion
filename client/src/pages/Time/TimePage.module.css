@@ -1,19 +1,30 @@
 .timeRedactor{
     display: grid;
     grid-template-columns: 4fr 0fr 4fr;
+    grid-template-rows: 4fr 0fr;
 }
+.oneTimeRedactor {
+    grid-template-columns: 1fr;
+    margin-left: -10%;
+}
+
 .session{
     margin-left: 50px;
 }
 .session h3 {
     text-align: center;
+    font-family: "RobotoSlabBold";
+    color: #314d59;
+    text-decoration: underline;
 }
 
-.first {
-
+.first table{
+    float: right;
+    margin-right: 10%;
 }
-.second {
-    grid-spacing: 1;
+.second table{
+    float: left;
+    margin-left: 10%;
 }
 
 .title {
@@ -23,13 +34,26 @@
 
 .nameTimePack {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 5fr 1fr;
+    margin-left: 5px;
+    margin-right: 10%;
+    text-align: center;
+}
+.nameTimePack h5{
+    text-align: right;
+}
+.nameTimePack input{
+    text-align: center;
+    vertical-align: text-bottom;
 }
 
-.backgroundBoard {
+.main {
     background-color: #fbf8f5;
     padding: 20px;
     border-radius: 5px 5px 5px 5px;
+}
+.oneMain {
+    width: 55%;
 }
 
 .titleTable{
@@ -40,6 +64,7 @@
 .table {
     border-spacing: 7px 11px;
     border-collapse: separate;
+    width: 80%;
 }
 
 .table tr td {
@@ -60,10 +85,40 @@
 
 .button {
     background-color: #3a73ab;
-    float: right;
-    margin-right: 7px;
+    margin-top: 5%;
+    margin-left: 42%;
+    width: 20%;
 }
 
 .button:hover{
     background-color: #7ba5c6;
+}
+
+.buttonSwitcherAdd {
+    background-image: url("../../public/icons/bluePlus.svg");
+    width: 30px;
+    height: 27px;
+    margin-left: 10px;
+
+}
+
+
+.buttonSwitcherDel {
+    background-image: url("../../public/icons/delete.svg");
+    fill: #314d59;
+    stroke: blue;
+    width: 27px;
+    height: 40px;
+    margin-left: 10px;
+    margin-bottom: -5px;
+}
+
+.buttonSpecialDay {
+    background-image: url("../../public/icons/specialDay.svg");
+    fill: #314d59;
+    stroke: blue;
+    width: 36px;
+    height: 40px;
+    margin-left: 10px;
+    margin-bottom: -5px;
 }

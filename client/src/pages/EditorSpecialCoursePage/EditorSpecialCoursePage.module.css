@@ -1,0 +1,75 @@
+.main {
+    background-color: #fbf8f5;
+    padding: 20px;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.title {
+    margin-top: -10px;
+    text-align: center;
+    font-family: "GothamProBold";
+}
+
+.mainTable {
+    border-collapse: collapse;
+    border: 2px solid white;
+    border-style: hidden;
+}
+
+
+.dayBlock {
+    width: 33%;
+    border: 4px solid #7ba5c6;
+    padding: 10px;
+}
+.dayBlock h3 {
+    font-family: "GothamProBold";
+    color: #314d59;
+    text-decoration: underline;
+}
+
+.leftBlock {
+
+}
+
+.cellTable td {
+    border: 2px solid #7ba5c6;
+    padding: 10px;
+}
+
+.dayBlock h3 {
+    text-align: center;
+}
+
+.dayBlock table {
+
+}
+
+.titleTable {
+    background-color: #f8f1e7;
+    border: 1px solid #f8f1e7;
+}
+
+.table {
+    border-spacing: 7px 11px;
+    border-collapse: separate;
+}
+
+.table tr td {
+    text-align: center;
+}
+
+.cellTable td {
+    border: 2px solid #3a73ab;
+    padding: 10px;
+}
+
+.button {
+    background-color: #3a73ab;
+    margin-left: 45%;
+    width: 15%;
+}
+
+.button:hover {
+    background-color: #7ba5c6;
+}

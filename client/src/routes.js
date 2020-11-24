@@ -18,6 +18,7 @@ import {AddDirPage} from "./pages/Dir/AddDirPage";
 import {AddAdPage} from "./pages/Ad/AddAdPage";
 import {AdListPage} from "./pages/Ad/AdListPage";
 import {AddYearSchoolPage} from "./pages/YearSchool/AddYearSchoolPage";
+import {EditorSpecialCoursePage} from "./pages/EditorSpecialCoursePage/EditorSpecialCoursePage";
 
 
 export const useRoutes = (isAuthenticated, userRole) => {
@@ -113,6 +114,9 @@ export const useRoutes = (isAuthenticated, userRole) => {
                 </Route>
                 <Route path="/add_new_year" exact>
                     <AddYearSchoolPage/>
+                </Route>
+                <Route path="/editor_special_course" exact>
+                    <EditorSpecialCoursePage/>
                 </Route>
                 <Redirect to="/main" exact/>
             </Switch>

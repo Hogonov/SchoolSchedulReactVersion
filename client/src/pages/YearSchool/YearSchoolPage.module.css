@@ -1,0 +1,57 @@
+.main {
+    background-color: #fbf8f5;
+    padding: 20px;
+    border-radius: 5px 5px 5px 5px;
+    width: 80%;
+}
+
+.title {
+    text-align: center;
+    font-family: "GothamProBold";
+    color: #314d59;
+}
+
+.quarters {
+    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}
+
+.titleQuarter{
+
+}
+
+.quarter h3{
+    font-family: "RobotoSlabBold";
+    color: #314d59;
+    text-decoration: underline;
+}
+.quarter {
+    margin: 5px;
+}
+
+
+.time {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    font-family: "GothamProRegular";
+}
+.time input{
+    color: #578cb7;
+}
+
+.button {
+    background-color: #3a73ab;
+    margin-left: 45%;
+    width: 15%;
+}
+
+.button:hover{
+    background-color: #7ba5c6;
+}
+
+.titleYear {
+    text-align: center;
+    color: #578cb7;
+}

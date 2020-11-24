@@ -20,28 +20,32 @@ const multer = require('multer');
 const upload = multer({dest: 'public/images/Ad'});
 const router = Router();
 
-// /api/year/add
+// /api/time/add
 router.post('/add', auth, async (req, res) => {
     try {
         const {
-            nameYear, startYear, finishYear,
-            nameQuarter1, startQuarter1, finishQuarter1,
-            nameQuarter2, startQuarter2, finishQuarter2,
-            nameQuarter3, startQuarter3, finishQuarter3,
-            nameQuarter4, startQuarter4, finishQuarter4
+            nameTime, session,
+            startTime1, endTime1,
+            startTime2, endTime2,
+            startTime3, endTime3,
+            startTime4, endTime4,
+            startTime5, endTime5,
+            startTime6, endTime6
         } = req.body;
 
         const user = await User.findById(req.user.userId);
 
         const schoolYear = new SchoolYear({
-            name: nameYear,
+            name: nameTime,
             school: user.school,
-            interval: {start: startYear, finish: finishYear},
+            session: session,
             quarter: [
-                {name: nameQuarter1, start: startQuarter1, finish: finishQuarter1},
-                {name: nameQuarter2, start: startQuarter2, finish: finishQuarter2},
-                {name: nameQuarter3, start: startQuarter3, finish: finishQuarter3},
-                {name: nameQuarter4, start: startQuarter4, finish: finishQuarter4}
+                {name: "time1", time: startTime1, end: endTime1},
+                {name: "time2", time: startTime2, end: endTime2},
+                {name: "time3", time: startTime3, end: endTime3},
+                {name: "time4", time: startTime4, end: endTime4},
+                {name: "time5", time: startTime5, end: endTime5},
+                {name: "time6", time: startTime6, end: endTime6}
             ]
         });
 

@@ -27,7 +27,9 @@ app.use('/api/dir', require('./routes/dir.routes'));
 //реклама
 app.use('/api/ad', require('./routes/ad.routes'));
 //года и четверти
-app.use('/api/year', require('./routes/year.routes'));
+app.use('/api/quarter', require('./routes/quarters.routes'));
+//Расписание звонков
+app.use('/api/time', require('./routes/time.routes'))
 
 
 const PORT = config.get('port') || 5000;
