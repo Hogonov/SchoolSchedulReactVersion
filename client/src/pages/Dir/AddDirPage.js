@@ -53,8 +53,7 @@ export const AddDirPage = () => {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${auth.token}`
-                },
-
+                }
             });
             message(dataFile.data.message)
         } catch (e) {

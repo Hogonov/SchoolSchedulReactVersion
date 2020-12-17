@@ -30,6 +30,8 @@ app.use('/api/ad', require('./routes/ad.routes'));
 app.use('/api/quarter', require('./routes/quarters.routes'));
 //Расписание звонков
 app.use('/api/time', require('./routes/time.routes'))
+//Спец курсы
+app.use('/api/special_course', require('./routes/special_course.routes'))
 
 
 const PORT = config.get('port') || 5000;
