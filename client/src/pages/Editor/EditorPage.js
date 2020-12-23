@@ -5,6 +5,8 @@ import {useHttp} from "../../hooks/http.hook";
 import Select from 'react-select';
 import {Loader} from "../../components/Loader";
 import Grid from "@material-ui/core/Grid";
+import styleEditorPage from "./StyleEditorPage.module.css"
+import stylesTimePage from "../Time/TimePage.module.css";
 
 
 export const EditorPage = () => {
@@ -24,6 +26,9 @@ export const EditorPage = () => {
         subject5: '', office5: '',
         subject6: '', office6: '',
     });
+    const [state, setState] = useState({
+        classroom: []
+    });
     const [options, setOptions] = useState({classrooms: [], subjects: [], firstTimes: [], secondTimes: []});
     const days = [
         {value: 'понедельник', label: 'Понедельник'},
@@ -34,7 +39,7 @@ export const EditorPage = () => {
         {value: 'суббота', label: 'Суббота'},
         {value: 'воскресенье', label: 'Воскресенье'},
     ];
-    const getData = useCallback(async () => {
+    /*const getData = useCallback(async () => {
         try {
             const data = await request(`/api/table/get_all_data`, 'GET', null, {
                 Authorization: `Bearer ${auth.token}`
@@ -113,271 +118,74 @@ export const EditorPage = () => {
         } catch (e) {
 
         }
-    };
+    }; */
 
 
     if (loading)
         return <Loader/>;
-    return (
-        <div className="row">
-            <h1/>
-            <div className="col s7 offset-s3">
-                <div className="card blue darken-1">
-                    <div className="card-content white-text">
-                        <span className="card-title">Редактор расписания</span>
-                        <div>
-                            <label htmlFor="classroom" className="white-text">Класс</label>
-                            <Select onChange={changeHandlerClassroom}
-                                    id="classroom"
-                                    placeholder="Выберите класс"
-                                    className="black-text"
-                                    options={options.classrooms}
-                                    name="classroom"
-                            />
+    return <div className={styleEditorPage.main}>
+        <h3 className={styleEditorPage.title}>Редактирование текущего расписания</h3>
 
-                            <label htmlFor="session" className="white-text">Смена</label>
-                            <Select onChange={changeHandlerSession}
-                                    id="session"
-                                    placeholder="Выберите смену"
-                                    className="black-text"
-                                    options={[{value: "first", label: "Первая смена"},
-                                            {value: "second", label: "Вторая смена"}
-                                        ]
-                                    }
-                                    name="session"
-                            />
-                            <label htmlFor="classroom" className="white-text">День недели</label>
-                            <Select onChange={changeHandlerDays}
-                                    id="classroom"
-                                    placeholder="Выберите день недели"
-                                    className="black-text"
-                                    options={days}
-                                    name="classroom"
-                            />
-                            <h1/>
-                            <Grid container spacing={3}>
-                                <Grid item style={{flexGrow: 1}}>
-                                    <label className="white-text">Время</label>
-                                </Grid>
-                                <Grid item style={{flexGrow: 2}}>
-                                    <label className="white-text"
-                                           style={{marginLeft: 70}}>Предметы</label>
-                                </Grid>
-                                <Grid item style={{flexGrow: 2}}>
-                                    <label className="white-text"
-                                           style={{marginLeft: 10}}>Кабинеты</label>
-                                </Grid>
-                            </Grid>
-
-                            <Grid container spacing={3}>
-                                <Grid item style={{flexGrow: 0}}>
-                                    <input
-                                        id={`time1`}
-                                        value={time[0]}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input white-text"
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 2}}>
-                                    <input
-                                        placeholder="Введите предмет"
-                                        id={`subject1`}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input"
-                                        value={form.subject1}
-                                        onChange={changeHandlerInput}
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 1}}>
-                                    <input onChange={changeHandlerInput}
-                                           id="office1"
-                                           placeholder="Введите кабинет"
-                                           className="yellow-input white-text"
-                                           name="office"
-                                    />
-                                </Grid>
-                                <h1/>
-                            </Grid>
-                            <Grid container spacing={2}>
-                                <Grid item style={{flexGrow: 0}}>
-                                    <input
-                                        id={`time2`}
-                                        value={time[1]}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input white-text"
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 2}}>
-                                    <input
-                                        placeholder="Введите предмет"
-                                        id={`subject2`}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input"
-                                        value={form.subject2}
-                                        onChange={changeHandlerInput}
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 1}}>
-                                    <input onChange={changeHandlerInput}
-                                           id="office2"
-                                           placeholder="Введите кабинет"
-                                           className="yellow-input white-text"
-                                           name="office"
-                                    />
-                                </Grid>
-                                <h1/>
-                            </Grid>
-                            <Grid container spacing={2}>
-                                <Grid item style={{flexGrow: 0}}>
-                                    <input
-                                        id={`time3`}
-                                        value={time[2]}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input white-text"
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 2}}>
-                                    <input
-                                        placeholder="Введите предмет"
-                                        id={`subject3`}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input"
-                                        value={form.subject3}
-                                        onChange={changeHandlerInput}
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 1}}>
-                                    <input onChange={changeHandlerInput}
-                                           id="office3"
-                                           placeholder="Введите кабинет"
-                                           className="yellow-input white-text"
-                                           name="office"
-                                    />
-                                </Grid>
-                                <h1/>
-                            </Grid>
-                            <Grid container spacing={2}>
-                                <Grid item style={{flexGrow: 0}}>
-                                    <input
-                                        id={`time4`}
-                                        value={time[3]}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input white-text"
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 2}}>
-                                    <input
-                                        placeholder="Введите предмет"
-                                        id={`subject4`}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input"
-                                        value={form.subject4}
-                                        onChange={changeHandlerInput}
-                                    />
-                                </Grid>
-                                <h1/>
-                                <Grid item style={{flexGrow: 1}}>
-                                    <input onChange={changeHandlerInput}
-                                           id="office4"
-                                           placeholder="Введите кабинет"
-                                           className="yellow-input white-text"
-                                           name="office"
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid container spacing={2}>
-                                <Grid item style={{flexGrow: 0}}>
-                                    <input
-                                        id={`time5`}
-                                        value={time[4]}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input white-text"
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 2}}>
-                                    <input
-                                        placeholder="Введите предмет"
-                                        id={`subject5`}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input"
-                                        value={form.subject5}
-                                        onChange={changeHandlerInput}
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 1}}>
-                                    <input onChange={changeHandlerInput}
-                                           id="office5"
-                                           placeholder="Введите кабинет"
-                                           className="yellow-input white-text"
-                                           name="office"
-                                    />
-                                </Grid>
-                                <h1/>
-                            </Grid>
-                            <Grid container spacing={2}>
-                                <Grid item style={{flexGrow: 0}}>
-                                    <input
-                                        id={`time6`}
-                                        value={time[5]}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input white-text"
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 2}}>
-                                    <input
-                                        placeholder="Введите предмет"
-                                        id={`subject6`}
-                                        type="text"
-                                        name="subject"
-                                        className="yellow-input"
-                                        value={form.subject6}
-                                        onChange={changeHandlerInput}
-                                    />
-                                </Grid>
-                                <Grid item style={{flexGrow: 1}}>
-                                    <input onChange={changeHandlerInput}
-                                           id="office6"
-                                           placeholder="Введите кабинет"
-                                           className="yellow-input white-text"
-                                           name="office"
-                                    />
-                                </Grid>
-                                <h1/>
-                            </Grid>
-
-                        </div>
-                    </div>
-                    <div className="card-action">
-                        <button
-                            className="btn yellow darken-4"
-                            style={{marginRight: 10}}
-                            disabled={loading}
-                            onClick={sendHandler}
-                        >
-                            Добавить в расписание
-                        </button>
-                        <button
-                            className="btn yellow darken-4"
-                            style={{marginRight: 10}}
-                            disabled={loading}
-                            // onClick={sendHandler}
-                        >
-                            Посмотреть
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div className={styleEditorPage.filterSelectors}>
+            <Select
+                id="classroom"
+                placeholder="Класс"
+                className={styleEditorPage.selector}
+                options={options.classrooms}
+                name="classroom"
+            />
+            <Select
+                id="days"
+                placeholder="День недели"
+                className={styleEditorPage.selector}
+                options={days}
+                name="days"
+            />
+            <Select
+                id="session"
+                placeholder="Смена"
+                className={styleEditorPage.selector}
+                name="session"
+            />
         </div>
-    )
+        <div className={styleEditorPage.arrows}>
+            <svg className={styleEditorPage.leftArrow}/>
+            <svg className={styleEditorPage.rightArrow}/>
+        </div>
+        <div className={styleEditorPage.subMain}>
+            <table className={styleEditorPage.table}>
+                <thead className={styleEditorPage.tableHead}>
+                <tr>
+                    <td>№</td>
+                    <td className={styleEditorPage.subjects}>Предмет</td>
+                    <td>Кабинет</td>
+                </tr>
+                </thead>
+                <tbody className={styleEditorPage.cellTable}>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <Select
+                            id="lesson"
+                            placeholder="Урок"
+                            className={`black-text ${styleEditorPage.tableSelector}`}
+                            name="lesson"
+                        />
+                    </td>
+                    <td>1</td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 className={styleEditorPage.addLesson}>+ урок</h5>
+            <button
+                className={`btn ${styleEditorPage.button}`}
+                disabled={loading}
+
+            >
+                Отправить
+            </button>
+        </div>
+
+
+    </div>
 };

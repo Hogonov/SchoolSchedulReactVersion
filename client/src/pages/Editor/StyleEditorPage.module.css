@@ -1,0 +1,88 @@
+.main {
+    background-color: white;
+    width: 60%;
+    padding: 20px;
+    border-radius: 5px 5px 5px 5px;
+}
+.subMain{
+    width: 74%;
+    margin-left: 13%;
+}
+
+.title {
+    text-align: center;
+    font-family: "GothamProRegular", serif;
+}
+.cellTable td{
+    border: 2px solid #7ba5c6;
+    padding: 10px;
+}
+.subjects {
+    width: 100%;
+}
+.tableSelector {
+    height: 20%;
+}
+
+
+.filterSelectors {
+    text-align: center;
+    width: 72%;
+    margin-left: 14%;
+}
+.filterSelectors .selector{
+    margin-bottom: 10px;
+    color: black;
+    font-size: larger;
+}
+
+.tableHead tr td{
+    background-color: #f8f1e7;
+    color: #7ba5c6;
+    text-align: center;
+}
+
+.table {
+    border-spacing: 7px 11px;
+    border-collapse: separate;
+}
+
+.table tbody tr td {
+    text-align: center;
+}
+
+.addLesson{
+    color: #7ba5c6;
+    margin-left: 1%;
+}
+
+.button {
+    background-color: #3a73ab;
+    margin-top: 5%;
+    margin-left: 38%;
+
+}
+
+.arrows {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: -15%;
+}
+
+.leftArrow{
+    background-image: url("../../public/icons/previous_blue.svg");
+    width: 80px;
+    height: 100px;
+    margin-left: 3%;
+}
+.rightArrow{
+    background-image: url("../../public/icons/next_blue.svg");
+    width: 80px;
+    text-align: right;
+    height: 100px;
+    margin: 0 0 0 auto;
+}
+
+.button:hover{
+    background-color: #7ba5c6;
+}
