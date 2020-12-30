@@ -6,14 +6,14 @@
 }
 .subMain{
     width: 74%;
-    margin-left: 13%;
+    margin-left: 13%; /* was 13% */
 }
 
 .title {
     text-align: center;
     font-family: "GothamProRegular", serif;
 }
-.cellTable td{
+.cellTable td:not(.redCross){
     border: 2px solid #7ba5c6;
     padding: 10px;
 }
@@ -47,21 +47,34 @@
     border-collapse: separate;
 }
 
-.table tbody tr td {
+.table tbody tr td{
+    text-align: center;
+}
+.input {
     text-align: center;
 }
 
 .addLesson{
-    color: #7ba5c6;
     margin-left: 1%;
+    background-color: #3a73ab;
 }
+.addLesson:hover {
+    background-color: #7ba5c6;
+}
+.addLesson:focus {
+    background-color: #3a73ab;
+}
+
 
 .button {
     background-color: #3a73ab;
     margin-top: 5%;
     margin-left: 38%;
-
 }
+.button:focus {
+    background-color: #3a73ab;
+}
+
 
 .arrows {
     display: grid;
@@ -81,6 +94,16 @@
     text-align: right;
     height: 100px;
     margin: 0 0 0 auto;
+}
+
+.redCross svg{
+    background-image: url("../../public/icons/delete.svg");
+
+    width: 20px;
+    height: 30px;
+}
+.redCross {
+
 }
 
 .button:hover{

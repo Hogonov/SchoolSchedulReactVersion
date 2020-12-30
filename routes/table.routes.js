@@ -56,7 +56,8 @@ router.post('/add_time', auth, async (req, res) => {
 
         const time = new Time({
             time: {firstSession: newTimes[0], secondSession: newTimes[1]},
-            school: user.school
+            school: user.school,
+            special: {firstSpecialSession: [], secondSpecialSession: [], date: []}
         });
         console.log(time)
         await time.save();
@@ -213,6 +214,21 @@ router.get('/get_school', async (req, res) => {
     }
 });
 
+// /api/table/get_data_class/:classname
+router.get('/get_data_class/:classname', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId);
+        const candidate = await Classroom.find({name: req.params.classname, school: user.school});
+        if (candidate.length > 0) {
+            console.log(candidate)
+            res.json(candidate[0]);
+        } else {
+            res.json({candidate: false});
+        }
+    } catch (e) {
+        console.log(e);
+    }
+});
 
 // /api/table/editor
 router.post('/editor', auth,
@@ -310,26 +326,40 @@ router.get('/get_all_data', auth, async (req, res) => {
         const user = await User.findById(req.user.userId);
         const subjects = await DataSubject.find({school: user.school});
         const classrooms = await DataClassroom.find({school: user.school});
-        const firstTimes = await Time.find({school: user.school, session: 'first'});
-        const secondTimes = await Time.find({school: user.school, session: 'second'});
+        const times = await Time.find({school: user.school});
 
-
-        const sub = {
-            subjects: Array.from(subjects, subject => {
-                return {value: subject.name, label: subject.name}
-            }),
+        let newArrSubjects = []
+        for (let i = 0; i < subjects.length; i++){
+            newArrSubjects.push({value: subjects[i].name, label: subjects[i].name, name: 'subject'});
+        }
+        let sub = {
+            subjects: newArrSubjects,
             classrooms: Array.from(classrooms, classroom => {
-                return {value: classroom.name, label: classroom.name}
+                return {value: classroom.name, label: classroom.name, name: 'classname'}
             })
         };
+        try {
+            sub = {...sub,
+                times: {
+                    firstSession: {
+                        options: {value: 'firstSession', label: 'Первая смена', name: 'session'},
+                        time: times[0].time.firstSession
+                    },
+                    secondSession: {
+                        options: {value: 'secondSession', label: 'Вторая смена', name: 'session'},
+                        time: times[0].time.secondSession
+                    }
+                },
+            };
+        } catch (e) {
+            console.log(e)
+        }
 
 
         res.json({
             subjects: sub.subjects,
             classrooms: sub.classrooms,
-            firstTimes: firstTimes,
-            secondTimes: secondTimes,
-
+            times: sub.times
         });
 
     } catch (e) {

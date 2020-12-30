@@ -13,45 +13,68 @@ export const EditorPage = () => {
     const auth = useContext(AuthContext);
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
+    const [filterFlag, setFilterFlag] = useState(false);
+    const [deleteBlocker, setDeleteBlocker] = useState(true);
+    const [selectedOption, setSelectedOption] = useState({
+        classname: null,
+        day: null,
+        session: null,
+        subject: [{option: null}]
+    })
     const [time, setTime] = useState({time: []});
+    const [indexDay, setIndexDay] = useState({
+        index: 0
+    });
+    const [fullForm, setFullForm] = useState({
+        form: [{
+            classroom: '',
+            session: '',
+            time: [],
+            day: '',
+            subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+        }]
+    });
     const [form, setForm] = useState({
-        classroom: '',
+        classname: '',
         session: '',
         time: [],
         day: '',
-        subject1: '', office1: '',
-        subject2: '', office2: '',
-        subject3: '', office3: '',
-        subject4: '', office4: '',
-        subject5: '', office5: '',
-        subject6: '', office6: '',
+        subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
     });
-    const [state, setState] = useState({
-        classroom: []
-    });
+
     const [options, setOptions] = useState({classrooms: [], subjects: [], firstTimes: [], secondTimes: []});
     const days = [
-        {value: 'понедельник', label: 'Понедельник'},
-        {value: 'вторник', label: 'Вторник'},
-        {value: 'среда', label: 'Среда'},
-        {value: 'четверг', label: 'Четверг'},
-        {value: 'пятница', label: 'Пятница'},
-        {value: 'суббота', label: 'Суббота'},
-        {value: 'воскресенье', label: 'Воскресенье'},
+        {value: 'понедельник', label: 'Понедельник', name: 'day'},
+        {value: 'вторник', label: 'Вторник', name: 'day'},
+        {value: 'среда', label: 'Среда', name: 'day'},
+        {value: 'четверг', label: 'Четверг', name: 'day'},
+        {value: 'пятница', label: 'Пятница', name: 'day'},
+        {value: 'суббота', label: 'Суббота', name: 'day'},
     ];
-    /*const getData = useCallback(async () => {
+
+    const [classInfo, setClassInfo] = useState({
+        name: '',
+        session: '',
+        days: [{
+            name: '',
+            subjects: [{name: '', option: null, office: ''}]
+        }],
+        school: '',
+        date: new Date()
+    });
+    const getData = useCallback(async () => {
         try {
             const data = await request(`/api/table/get_all_data`, 'GET', null, {
                 Authorization: `Bearer ${auth.token}`
             });
 
-
             setOptions({
                 classrooms: data.classrooms,
                 subjects: data.subjects,
-                firstTimes: data.firstTimes[0].time,
-                secondTimes: data.secondTimes[0].time,
+                times: [data.times.firstSession.options, data.times.secondSession.options],
             });
+            console.log(form.classes)
+            //console.log(selectedOption.selectedSubjectOption[0].option)
             console.log(data)
         } catch (e) {
             console.log(e)
@@ -62,7 +85,7 @@ export const EditorPage = () => {
         getData();
     }, [getData]);
 
-    const changeHandlerSession = event => {
+    /*const changeHandlerSession = event => {
         try {
             if (event.value === 'first')
                 setTime(options.firstTimes);
@@ -99,7 +122,7 @@ export const EditorPage = () => {
     const changeHandlerInput = event => {
         setForm({...form, [event.target.id]: event.target.value})
     };
-
+    */
     useEffect(() => {
         message(error);
         clearError()
@@ -109,7 +132,7 @@ export const EditorPage = () => {
         window.M.updateTextFields()
     }, []);
 
-
+    /*
     const sendHandler = async () => {
         try {
             console.log(form);
@@ -120,6 +143,103 @@ export const EditorPage = () => {
         }
     }; */
 
+
+    const getDataClassroom = useCallback(async (classname) => {
+        try {
+            const data = await request(`/api/table/get_data_class/${classname}`, 'GET', null, {
+                Authorization: `Bearer ${auth.token}`
+            });
+            console.log(data);
+            if (data.candidate) {
+                // set state classInfo
+            }
+        } catch (e) {
+            console.log(e);
+        }
+
+
+    }, [auth.token]);
+
+    const searchHandler = useCallback(async (event) => {
+        try {
+            setForm({...form, classname: event});
+            setFilterFlag(true)
+            await getDataClassroom(event.value);
+        } catch (e) {
+            console.log(e);
+        }
+
+    }, [getDataClassroom, selectedOption, setSelectedOption, setForm, form]);
+
+    const addLesson = () => {
+        if (form.subjects.length < 10) {
+            let subArr = form.subjects
+            let index = subArr.length + 1
+            subArr.push({index: index, name: `subject-${index}`, option: null, office: ''})
+            setForm({...form, subjects: subArr})
+        }
+    }
+
+    const switchHandler = (event) => {
+        //переключение между днями недели
+    }
+
+    const deleteHandler = (event) => {
+        if (form.subjects.length > 1) {
+            let deleteIndex = +event.target.id.split('-')[1]
+            console.log(deleteIndex)
+            let subArr = []
+            form.subjects.splice(deleteIndex - 1, 1)
+            //console.log(form.subjects)
+           for (let i = 0; i < form.subjects.length; i++) {
+                console.log(deleteIndex)
+                subArr.push({...form.subjects[i], index: i + 1, name: `subject-${i + 1}`})
+              if( i > 10) break
+            }
+
+            console.log(subArr)
+           setForm({...form, subjects: subArr})
+        }
+
+    }
+
+    const selectHandler = (event, action) => {
+        if (action.name.indexOf('subject') !== -1) {
+            let index = +action.name.split('-')[1]
+            let subjectsArr = []
+            for (let i = 0; i < form.subjects.length; i++) {
+                console.log(index)
+                if (index === (i + 1)) {
+                    subjectsArr.push({...form.subjects[i], option: event})
+                    console.log('arr', subjectsArr)
+                } else {
+                    subjectsArr.push(form.subjects[i])
+                }
+            }
+            setForm({...form, subjects: subjectsArr})
+        } else {
+            console.log(action)
+            setForm({...form, [action.name]: event})
+        }
+
+    }
+
+    const changeSubjectHandler = event => {
+        try {
+            let index = +event.target.name.split('-')[1]
+            let subjectsArr = []
+            for (let i = 0; i < form.subjects.length; i++) {
+                if (index === (i + 1)) {
+                    subjectsArr.push({...form.subjects[i], office: event.target.value})
+                } else {
+                    subjectsArr.push(form.subjects[i])
+                }
+            }
+            setForm({...form, subjects: subjectsArr})
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     if (loading)
         return <Loader/>;
@@ -132,58 +252,92 @@ export const EditorPage = () => {
                 placeholder="Класс"
                 className={styleEditorPage.selector}
                 options={options.classrooms}
+                value={form.classname}
+                onChange={searchHandler}
                 name="classroom"
             />
-            <Select
-                id="days"
-                placeholder="День недели"
-                className={styleEditorPage.selector}
-                options={days}
-                name="days"
-            />
-            <Select
-                id="session"
-                placeholder="Смена"
-                className={styleEditorPage.selector}
-                name="session"
-            />
+            <div>
+                <Select
+                    id="day"
+                    placeholder="День недели"
+                    className={styleEditorPage.selector}
+                    options={days}
+                    value={form.day}
+                    onChange={selectHandler}
+                    name="day"
+                />
+                <Select
+                    id="session"
+                    placeholder="Смена"
+                    className={styleEditorPage.selector}
+                    name="session"
+                    onChange={selectHandler}
+                    value={form.session}
+                    options={options.times}
+                    // допил
+                />
+            </div>
         </div>
-        <div className={styleEditorPage.arrows}>
-            <svg className={styleEditorPage.leftArrow}/>
-            <svg className={styleEditorPage.rightArrow}/>
-        </div>
-        <div className={styleEditorPage.subMain}>
-            <table className={styleEditorPage.table}>
-                <thead className={styleEditorPage.tableHead}>
-                <tr>
-                    <td>№</td>
-                    <td className={styleEditorPage.subjects}>Предмет</td>
-                    <td>Кабинет</td>
-                </tr>
-                </thead>
-                <tbody className={styleEditorPage.cellTable}>
-                <tr>
-                    <td>1</td>
-                    <td>
-                        <Select
-                            id="lesson"
-                            placeholder="Урок"
-                            className={`black-text ${styleEditorPage.tableSelector}`}
-                            name="lesson"
-                        />
-                    </td>
-                    <td>1</td>
-                </tr>
-                </tbody>
-            </table>
-            <h5 className={styleEditorPage.addLesson}>+ урок</h5>
-            <button
-                className={`btn ${styleEditorPage.button}`}
-                disabled={loading}
+        <div>
+            <div className={styleEditorPage.arrows}>
+                <svg className={styleEditorPage.leftArrow}/>
+                <svg className={styleEditorPage.rightArrow}/>
+            </div>
+            <div className={styleEditorPage.subMain}>
+                <table className={styleEditorPage.table}>
+                    <thead className={styleEditorPage.tableHead}>
+                    <tr>
+                        <td>№</td>
+                        <td className={styleEditorPage.subjects}>Предмет</td>
+                        <td>Кабинет</td>
+                    </tr>
+                    </thead>
+                    <tbody className={styleEditorPage.cellTable}>
+                    {Array.from(form.subjects, subject => {
+                        return (
+                            <tr>
+                                <td>{subject.index}</td>
+                                <td>
+                                    <Select
+                                        id="lesson"
+                                        placeholder="Урок"
+                                        className={`black-text ${styleEditorPage.tableSelector}`}
+                                        name={`subject-${subject.index}`}
+                                        options={options.subjects}
+                                        value={subject.option}
+                                        onChange={selectHandler}
+                                    />
+                                </td>
+                                <td>
+                                    <input name={`office-${subject.index}`}
+                                           type="number"
+                                           className={styleEditorPage.input}
+                                           value={subject.office}
+                                           onChange={changeSubjectHandler}
+                                    />
+                                </td>
 
-            >
-                Отправить
-            </button>
+                                {form.subjects.length > 1 && <td className={styleEditorPage.redCross}>
+                                    <svg id={`delete-${subject.index}`}
+                                         onClick={deleteHandler}
+                                    />
+                                </td>}
+
+                            </tr>)
+                    })}
+
+                    </tbody>
+                </table>
+                <button className={`btn ${styleEditorPage.addLesson}`} onClick={addLesson}>+ урок</button>
+                <h1/>
+                <button
+                    className={`btn ${styleEditorPage.button}`}
+                    disabled={loading || !filterFlag}
+
+                >
+                    Отправить
+                </button>
+            </div>
         </div>
 
 
