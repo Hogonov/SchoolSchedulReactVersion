@@ -26,11 +26,42 @@ export const EditorPage = () => {
         index: 0
     });
     const [fullForm, setFullForm] = useState({
+        classname: '',
         form: [{
-            classroom: '',
+            classname: '',
             session: '',
             time: [],
-            day: '',
+            day: {value: 'понедельник', label: 'Понедельник', name: 'day', index: "0"},
+            subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+        }, {
+            classname: '',
+            session: '',
+            time: [],
+            day: {value: 'вторник', label: 'Вторник', name: 'day', index: "1"},
+            subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+        }, {
+            classname: '',
+            session: '',
+            time: [],
+            day: {value: 'среда', label: 'Среда', name: 'day', index: "2"},
+            subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+        }, {
+            classname: '',
+            session: '',
+            time: [],
+            day: {value: 'четверг', label: 'Четверг', name: 'day', index: "3"},
+            subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+        }, {
+            classname: '',
+            session: '',
+            time: [],
+            day: {value: 'пятница', label: 'Пятница', name: 'day', index: "4"},
+            subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+        }, {
+            classname: '',
+            session: '',
+            time: [],
+            day:  {value: 'суббота', label: 'Суббота', name: 'day', index: "5"},
             subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
         }]
     });
@@ -38,18 +69,26 @@ export const EditorPage = () => {
         classname: '',
         session: '',
         time: [],
-        day: '',
+        day: {value: 'понедельник', label: 'Понедельник', name: 'day', index: "0"},
         subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
     });
 
+    const emptyForm = {
+        classname: '',
+        session: '',
+        time: [],
+        day: '',
+        subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+    }
+
     const [options, setOptions] = useState({classrooms: [], subjects: [], firstTimes: [], secondTimes: []});
     const days = [
-        {value: 'понедельник', label: 'Понедельник', name: 'day'},
-        {value: 'вторник', label: 'Вторник', name: 'day'},
-        {value: 'среда', label: 'Среда', name: 'day'},
-        {value: 'четверг', label: 'Четверг', name: 'day'},
-        {value: 'пятница', label: 'Пятница', name: 'day'},
-        {value: 'суббота', label: 'Суббота', name: 'day'},
+        {value: 'понедельник', label: 'Понедельник', name: 'day', index: "0"},
+        {value: 'вторник', label: 'Вторник', name: 'day', index: "1"},
+        {value: 'среда', label: 'Среда', name: 'day', index: "2"},
+        {value: 'четверг', label: 'Четверг', name: 'day', index: "3"},
+        {value: 'пятница', label: 'Пятница', name: 'day', index: "4"},
+        {value: 'суббота', label: 'Суббота', name: 'day', index: "5"}
     ];
 
     const [classInfo, setClassInfo] = useState({
@@ -132,16 +171,16 @@ export const EditorPage = () => {
         window.M.updateTextFields()
     }, []);
 
-    /*
-    const sendHandler = async () => {
+
+    const sendHandler = async () => { // допилить отправку, она не работает
         try {
             console.log(form);
-            const data = await request('/api/table/editor', 'POST', {...form}, {Authorization: `Bearer ${auth.token}`});
+            const data = await request('/api/table/editor', 'POST', {...fullForm}, {Authorization: `Bearer ${auth.token}`});
             message(data.message)
         } catch (e) {
 
         }
-    }; */
+    };
 
 
     const getDataClassroom = useCallback(async (classname) => {
@@ -151,7 +190,7 @@ export const EditorPage = () => {
             });
             console.log(data);
             if (data.candidate) {
-                // set state classInfo
+                // set state fullForm
             }
         } catch (e) {
             console.log(e);
@@ -163,6 +202,7 @@ export const EditorPage = () => {
     const searchHandler = useCallback(async (event) => {
         try {
             setForm({...form, classname: event});
+            setFullForm({...fullForm, classname: event});
             setFilterFlag(true)
             await getDataClassroom(event.value);
         } catch (e) {
@@ -180,25 +220,51 @@ export const EditorPage = () => {
         }
     }
 
-    const switchHandler = (event) => {
-        //переключение между днями недели
+    const switchHandler = (event) => {  //switch days of week
+        let next = +event.target.id
+        let index = +indexDay.index
+        let classname = form.classname
+        if (index + next > days.length - 1) {
+            index = 0
+        } else if (index + next < 0) {
+            index = days.length - 1
+        } else {
+            index += next
+        }
+
+        let subForm = form
+        let fullFormArr = fullForm.form
+        let formArr = []
+        for(let i = 0; i < fullFormArr.length; i++){
+            if(+indexDay.index === i){
+                formArr.push(subForm)
+            } else {
+                formArr.push({...fullFormArr[i], classname: classname})
+            }
+        }
+        setForm(formArr[index])
+        setFullForm({classname: classname, form: formArr})
+        setIndexDay({index: index})
+    }
+
+    const byDaysChangeHandler = (event, action) => {
+        let index = +event.index
+        fullForm.form.splice(indexDay.index, 1, form)
+        setForm(fullForm.form[index])
+        setIndexDay({index: index})
+
     }
 
     const deleteHandler = (event) => {
         if (form.subjects.length > 1) {
             let deleteIndex = +event.target.id.split('-')[1]
-            console.log(deleteIndex)
             let subArr = []
             form.subjects.splice(deleteIndex - 1, 1)
-            //console.log(form.subjects)
-           for (let i = 0; i < form.subjects.length; i++) {
-                console.log(deleteIndex)
+            for (let i = 0; i < form.subjects.length; i++) {
                 subArr.push({...form.subjects[i], index: i + 1, name: `subject-${i + 1}`})
-              if( i > 10) break
+                if (i > 10) break
             }
-
-            console.log(subArr)
-           setForm({...form, subjects: subArr})
+            setForm({...form, subjects: subArr})
         }
 
     }
@@ -208,32 +274,30 @@ export const EditorPage = () => {
             let index = +action.name.split('-')[1]
             let subjectsArr = []
             for (let i = 0; i < form.subjects.length; i++) {
-                console.log(index)
                 if (index === (i + 1)) {
                     subjectsArr.push({...form.subjects[i], option: event})
-                    console.log('arr', subjectsArr)
                 } else {
                     subjectsArr.push(form.subjects[i])
                 }
             }
             setForm({...form, subjects: subjectsArr})
         } else {
-            console.log(action)
             setForm({...form, [action.name]: event})
         }
-
     }
 
     const changeSubjectHandler = event => {
         try {
             let index = +event.target.name.split('-')[1]
             let subjectsArr = []
+            console.log(index, " - ", event.target.value)
             for (let i = 0; i < form.subjects.length; i++) {
                 if (index === (i + 1)) {
                     subjectsArr.push({...form.subjects[i], office: event.target.value})
                 } else {
                     subjectsArr.push(form.subjects[i])
                 }
+                console.log(i, " = ", subjectsArr)
             }
             setForm({...form, subjects: subjectsArr})
         } catch (e) {
@@ -263,7 +327,7 @@ export const EditorPage = () => {
                     className={styleEditorPage.selector}
                     options={days}
                     value={form.day}
-                    onChange={selectHandler}
+                    onChange={byDaysChangeHandler}
                     name="day"
                 />
                 <Select
@@ -280,8 +344,8 @@ export const EditorPage = () => {
         </div>
         <div>
             <div className={styleEditorPage.arrows}>
-                <svg className={styleEditorPage.leftArrow}/>
-                <svg className={styleEditorPage.rightArrow}/>
+                <svg onClick={switchHandler} id="-1" className={styleEditorPage.leftArrow}/>
+                <svg onClick={switchHandler} id="1" className={styleEditorPage.rightArrow}/>
             </div>
             <div className={styleEditorPage.subMain}>
                 <table className={styleEditorPage.table}>
