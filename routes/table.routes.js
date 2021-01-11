@@ -159,8 +159,7 @@ router.get('/get_subject', auth, async (req, res) => {
 
 // /api/table/add_school
 router.post('/add_school',
-    [check('schoolName', 'Введите название школы').isLength({min: 1})],
-    auth,
+    [check('schoolName', 'Введите название школы').isLength({min: 1})], auth,
     async (req, res) => {
         try {
             const errors = validationResult(req);
@@ -196,7 +195,8 @@ router.post('/add_school',
             console.log(e);
             res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
         }
-    });
+    }
+);
 
 // /api/table/get_school
 router.get('/get_school', async (req, res) => {
@@ -233,9 +233,7 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
 // /api/table/editor
 router.post('/editor', auth,
     [
-        check('classroom', 'Выберети класс').isLength({min: 1}),
-        check('session', 'Выберети смену').isLength({min: 1}),
-        check('session', 'Выберети день').isLength({min: 1}),
+        check('classname', 'Выберети класс').isLength({min: 1})
     ],
     async (req, res) => {
         try {
@@ -262,13 +260,14 @@ router.post('/editor', auth,
                 subject6, office6
             } = req.body;
 
-            const candidate = await Classroom.find({name: classroom, session: session, school: user.school, day: day});
+            const {classname, form} = req.body // new
+            console.log(classname, "\n --- \n", form)
+           /* const candidate = await Classroom.find({name: classname, school: user.school});
 
 
-            const time = await Time.find({session: session, school: user.school});
+            const time = await Time.find({session: session, school: user.school}); // delete
 
-            let subTime = time[0].time;
-
+            let subTime = time[0].time; // delete
 
             const subjects = [
                 {name: subject1, time: subTime[0], office: office1, update: false},
@@ -309,7 +308,7 @@ router.post('/editor', auth,
                 );
             } else {
                 await classroomObject.save();
-            }
+            }*/
 
             res.status(201).json({message: 'Расписание для класса добавлено'});
 
@@ -329,7 +328,7 @@ router.get('/get_all_data', auth, async (req, res) => {
         const times = await Time.find({school: user.school});
 
         let newArrSubjects = []
-        for (let i = 0; i < subjects.length; i++){
+        for (let i = 0; i < subjects.length; i++) {
             newArrSubjects.push({value: subjects[i].name, label: subjects[i].name, name: 'subject'});
         }
         let sub = {
@@ -339,7 +338,8 @@ router.get('/get_all_data', auth, async (req, res) => {
             })
         };
         try {
-            sub = {...sub,
+            sub = {
+                ...sub,
                 times: {
                     firstSession: {
                         options: {value: 'firstSession', label: 'Первая смена', name: 'session'},
