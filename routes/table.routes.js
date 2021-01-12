@@ -219,9 +219,34 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId);
         const candidate = await Classroom.find({name: req.params.classname, school: user.school});
+
         if (candidate.length > 0) {
-            console.log(candidate)
-            res.json(candidate[0]);
+            let daysArr = []
+            for (let i = 0; i < candidate[0].days.length; i++) {
+                daysArr.push({
+                    classname: {
+                        value: candidate[0].name,
+                        label: candidate[0].name,
+                        name: "classname"
+                    }, session: candidate[0].days[i].session,
+                    day: candidate[0].days[i].day,
+                    subjects: Array.from(candidate[0].days[i].subjects, subject => {
+                        return {
+                            index: subject.index,
+                            name: `subject-${subject.index}`,
+                            office: subject.office,
+                            time: subject.time,
+                            option: {value: subject.name, label: subject.name, name: 'subject'}
+                        }
+                    })
+                })
+            }
+            const prepareData = {
+                name: candidate[0].name,
+                school: candidate[0].school,
+                days: daysArr
+            }
+            res.json({candidateData: prepareData, candidate: true});
         } else {
             res.json({candidate: false});
         }
@@ -231,92 +256,126 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
 });
 
 // /api/table/editor
-router.post('/editor', auth,
-    [
-        check('classname', 'Выберети класс').isLength({min: 1})
-    ],
-    async (req, res) => {
-        try {
+router.post('/editor', auth, async (req, res) => {
+    try {
 
-            const errors = validationResult(req);
+        const user = await User.findById(req.user.userId);
 
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    errors: errors.array(),
-                    message: 'Некорректный данные при добавлении в расписание'
-                });
+        const {classname, form} = req.body
+
+        const candidate = await Classroom.find({name: classname.value, school: user.school});
+        let daysArr = []
+        if (candidate.length > 0) {
+            let minLengthDay = Math.min(form.length, candidate[0].days.length)
+            let minLengthSubjects = -1
+            for (let i = 0; i < form.length; i++) {
+                if (i < minLengthDay) {
+                    minLengthSubjects = Math.min(form[i].subjects.length, candidate[0].days[i].subjects.length)
+                }
+                if (form[i].session !== '' && form[i].subjects[0].option !== '') {
+                    let subjectArr = []
+                    for (let j = 0; j < form[i].subjects.length; j++) {
+                        let update = true
+                        if (j < minLengthSubjects && candidate[0].days[i].subjects[j].name === form[i].subjects[j].option.value) {
+                            update = false
+                        }
+
+                        subjectArr.push({
+                            index: form[i].subjects[j].index,
+                            name: form[i].subjects[j].option.value,
+                            time: form[i].subjects[j].time,
+                            office: form[i].subjects[j].office,
+                            update: update
+                        })
+                    }
+
+                    daysArr.push({
+                        day: form[i].day,
+                        session: form[i].session,
+                        subjects: subjectArr
+                    })
+                }
             }
+            const classroomObject = new Classroom({
+                _id: candidate[0]._id,
+                name: classname.value,
+                school: user.school,
+                days: daysArr
+            });
+            res.status(201).json({message: 'Расписание для класса изменено', classroomObject: classroomObject});
+        } else {
+            for (let i = 0; i < form.length; i++) {
+                if (form[i].session !== '' && form[i].subjects[0].option !== '') {
+                    daysArr.push({
+                        day: form[i].day,
+                        session: form[i].session,
+                        subjects: Array.from(form[i].subjects, subject => {
+                            console.log("subject = ", subject)
+                            return {
+                                index: subject.index,
+                                name: subject.option.value,
+                                time: subject.time,
+                                office: subject.office,
+                                update: false
+                            }
+                        })
+                    })
+                }
+            }
+            const classroomObject = new Classroom({
+                name: classname.value,
+                school: user.school,
+                days: daysArr
+            });
+
+            await classroomObject.save();
+            res.status(201).json({message: 'Расписание для класса добавлено', daysArr: daysArr});
+        }
 
 
-            const user = await User.findById(req.user.userId);
-
-            const {
-                classroom, session, day,
-                subject1, office1,
-                subject2, office2,
-                subject3, office3,
-                subject4, office4,
-                subject5, office5,
-                subject6, office6
-            } = req.body;
-
-            const {classname, form} = req.body // new
-            console.log(classname, "\n --- \n", form)
-           /* const candidate = await Classroom.find({name: classname, school: user.school});
+        /*
+        const time = await Time.find({session: session, school: user.school}); // delete
 
 
-            const time = await Time.find({session: session, school: user.school}); // delete
-
-            let subTime = time[0].time; // delete
-
-            const subjects = [
-                {name: subject1, time: subTime[0], office: office1, update: false},
-                {name: subject2, time: subTime[1], office: office2, update: false},
-                {name: subject3, time: subTime[2], office: office3, update: false},
-                {name: subject4, time: subTime[3], office: office4, update: false},
-                {name: subject5, time: subTime[4], office: office5, update: false},
-                {name: subject6, time: subTime[5], office: office6, update: false}
-            ];
 
 
-            const classroomObject = new Classroom(
+        const classroomObject = new Classroom(
+            {
+                name: classroom,
+                session: session,
+                subjects: subjects,
+                school: user.school,
+                day: day,
+                date: new Date()
+            });
+
+        if (candidate.length > 0) {
+            for (let i = 0; i < candidate[0].subjects.length; i++) {
+                if (candidate[0].subjects[i].name.toLowerCase() !== subjects[i].name.toLowerCase()) {
+                    subjects[i] = {...subjects[i], update: true}
+                }
+            }
+            await Classroom.findByIdAndUpdate({_id: candidate[0]._id},
                 {
+                    _id: candidate[0]._id,
                     name: classroom,
                     session: session,
                     subjects: subjects,
                     school: user.school,
                     day: day,
                     date: new Date()
-                });
-
-            if (candidate.length > 0) {
-                for (let i = 0; i < candidate[0].subjects.length; i++) {
-                    if (candidate[0].subjects[i].name.toLowerCase() !== subjects[i].name.toLowerCase()) {
-                        subjects[i] = {...subjects[i], update: true}
-                    }
                 }
-                await Classroom.findByIdAndUpdate({_id: candidate[0]._id},
-                    {
-                        _id: candidate[0]._id,
-                        name: classroom,
-                        session: session,
-                        subjects: subjects,
-                        school: user.school,
-                        day: day,
-                        date: new Date()
-                    }
-                );
-            } else {
-                await classroomObject.save();
-            }*/
+            );
+        } else {
+            await classroomObject.save();
+        }*/
 
-            res.status(201).json({message: 'Расписание для класса добавлено'});
 
-        } catch (e) {
-            console.log(e);
-            res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '});
-        }
-    });
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '});
+    }
+});
 
 // /api/table/get_all_data
 router.get('/get_all_data', auth, async (req, res) => {

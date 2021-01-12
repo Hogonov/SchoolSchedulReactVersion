@@ -36,65 +36,107 @@ export const EditorPage = () => {
                 classname: '',
                 session: '',
                 time: [],
-                day: {value: 'понедельник', label: 'Понедельник', name: 'day', index: "0"},
-                subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+                day: {value: 'Понедельник', label: 'Понедельник', name: 'day', index: "0"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
-                day: {value: 'вторник', label: 'Вторник', name: 'day', index: "1"},
-                subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+                day: {value: 'Вторник', label: 'Вторник', name: 'day', index: "1"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
-                day: {value: 'среда', label: 'Среда', name: 'day', index: "2"},
-                subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+                day: {value: 'Среда', label: 'Среда', name: 'day', index: "2"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
-                day: {value: 'четверг', label: 'Четверг', name: 'day', index: "3"},
-                subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+                day: {value: 'Четверг', label: 'Четверг', name: 'day', index: "3"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
-                day: {value: 'пятница', label: 'Пятница', name: 'day', index: "4"},
-                subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+                day: {value: 'Пятница', label: 'Пятница', name: 'day', index: "4"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
-                day: {value: 'суббота', label: 'Суббота', name: 'day', index: "5"},
-                subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+                day: {value: 'Суббота', label: 'Суббота', name: 'day', index: "5"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
             }
         ]
     });
+    const emptyFullForm = {
+        classname: '',
+        form: [
+            {
+                classname: '',
+                session: '',
+                time: [],
+                day: {value: 'Понедельник', label: 'Понедельник', name: 'day', index: "0"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+            }, {
+                classname: '',
+                session: '',
+                time: [],
+                day: {value: 'Вторник', label: 'Вторник', name: 'day', index: "1"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+            }, {
+                classname: '',
+                session: '',
+                time: [],
+                day: {value: 'Среда', label: 'Среда', name: 'day', index: "2"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+            }, {
+                classname: '',
+                session: '',
+                time: [],
+                day: {value: 'Четверг', label: 'Четверг', name: 'day', index: "3"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+            }, {
+                classname: '',
+                session: '',
+                time: [],
+                day: {value: 'Пятница', label: 'Пятница', name: 'day', index: "4"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+            }, {
+                classname: '',
+                session: '',
+                time: [],
+                day: {value: 'Суббота', label: 'Суббота', name: 'day', index: "5"},
+                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+            }
+        ]
+    }
     const [form, setForm] = useState({
         classname: '',
         session: '',
         time: [],
-        day: {value: 'понедельник', label: 'Понедельник', name: 'day', index: "0"},
-        subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
+        day: {value: 'Понедельник', label: 'Понедельник', name: 'day', index: "0"},
+        subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
     });
 
     const emptyForm = {
         classname: '',
         session: '',
         time: [],
-        day: '',
-        subjects: [{index: 1, name: 'subject-1', option: null, office: ''}]
+        day: {value: 'Понедельник', label: 'Понедельник', name: 'day', index: "0"},
+        subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
     }
 
     const [options, setOptions] = useState({classrooms: [], subjects: [], times: []});
     const days = [
-        {value: 'понедельник', label: 'Понедельник', name: 'day', index: "0"},
-        {value: 'вторник', label: 'Вторник', name: 'day', index: "1"},
-        {value: 'среда', label: 'Среда', name: 'day', index: "2"},
-        {value: 'четверг', label: 'Четверг', name: 'day', index: "3"},
-        {value: 'пятница', label: 'Пятница', name: 'day', index: "4"},
-        {value: 'суббота', label: 'Суббота', name: 'day', index: "5"}
+        {value: 'Понедельник', label: 'Понедельник', name: 'day', index: "0"},
+        {value: 'Вторник', label: 'Вторник', name: 'day', index: "1"},
+        {value: 'Среда', label: 'Среда', name: 'day', index: "2"},
+        {value: 'Четверг', label: 'Четверг', name: 'day', index: "3"},
+        {value: 'Пятница', label: 'Пятница', name: 'day', index: "4"},
+        {value: 'Суббота', label: 'Суббота', name: 'day', index: "5"}
     ];
 
     const [classInfo, setClassInfo] = useState({
@@ -112,7 +154,7 @@ export const EditorPage = () => {
             const data = await request(`/api/table/get_all_data`, 'GET', null, {
                 Authorization: `Bearer ${auth.token}`
             });
-
+            console.log(data)
             setOptions({
                 classrooms: data.classrooms,
                 subjects: data.subjects,
@@ -121,7 +163,6 @@ export const EditorPage = () => {
                     {...data.times.secondSession.options, time: data.times.secondSession.time},
                 ],
             });
-            console.log(data)
         } catch (e) {
             console.log(e)
         }
@@ -131,44 +172,6 @@ export const EditorPage = () => {
         getData();
     }, [getData]);
 
-    /*const changeHandlerSession = event => {
-        try {
-            if (event.value === 'first')
-                setTime(options.firstTimes);
-            else if (event.value === 'second')
-                setTime(options.secondTimes);
-            else if(event.value === 'specialFirst')
-                setTime(options.firstSpecialTimes);
-            else if(event.value === 'specialSecond')
-                setTime(options.secondSpecialTimes);
-
-            setForm({...form, session: event.value, time: time});
-            console.log(time);
-        }catch (e) {
-
-        }
-
-    };
-
-    const changeHandlerClassroom = event => {
-        try {
-            setForm({...form, classroom: event.value});
-        }catch (e) {
-
-        }
-    };
-    const changeHandlerDays = event => {
-
-        try {
-            setForm({...form, day: event.value});
-        }catch (e) {
-
-        }
-    };
-    const changeHandlerInput = event => {
-        setForm({...form, [event.target.id]: event.target.value})
-    };
-    */
     useEffect(() => {
         message(error);
         clearError()
@@ -178,12 +181,22 @@ export const EditorPage = () => {
         window.M.updateTextFields()
     }, []);
 
+    useEffect(() => {
+        fullForm.form.splice(indexDay.index, 1, form)
+        if(form.session !== ''){
+            setIsChose({...isChose, session: false})
+        } else {
+            setIsChose({...isChose, session: true})
+        }
+    }, [form, setForm])
+
 
     const sendHandler = async () => { // допилить отправку, она не работает
         try {
-            console.log(form);
+            console.log("fullForm = ", fullForm)
             const data = await request('/api/table/editor', 'POST', {...fullForm}, {Authorization: `Bearer ${auth.token}`});
             message(data.message)
+            console.log("data = ", data)
         } catch (e) {
 
         }
@@ -192,27 +205,41 @@ export const EditorPage = () => {
 
     const getDataClassroom = useCallback(async (classname) => {
         try {
-            setIsChose({...isChose, class: false})
-            const data = await request(`/api/table/get_data_class/${classname}`, 'GET', null, {
+            const data = await request(`/api/table/get_data_class/${classname.value}`, 'GET', null, {
                 Authorization: `Bearer ${auth.token}`
             });
-            console.log(data);
             if (data.candidate) {
-                // set state fullForm
+                console.log("Under if data = ", data);
+                let fullFormArr = []
+                for (let i = 0; i < fullForm.form.length; i++) {
+                    if(i < data.candidateData.days.length){
+                        fullFormArr.push(data.candidateData.days[i])
+                    } else {
+                        fullFormArr.push({...fullForm.form[i], classname: classname})
+                    }
+                }
+                setFullForm({classname: classname, form: fullFormArr})
+                setForm(fullFormArr[0])
+                setIndexDay({index: 0})
+                if(fullFormArr[0].session !== ''){
+                    setIsChose({class: false, session: false})
+                } else {
+                    setIsChose({class: false, session: true})
+                }
             }
         } catch (e) {
             console.log(e);
         }
-
-
-    }, [auth.token]);
+    }, [auth.token, setForm, setIndexDay, setFullForm, form, fullForm, setIsChose, isChose]);
 
     const searchHandler = useCallback(async (event) => {
         try {
-            setForm({...form, classname: event});
-            setFullForm({...fullForm, classname: event});
-            setFilterFlag(true)
-            await getDataClassroom(event.value);
+            if(event !== fullForm.classname){
+                setForm({...emptyForm, classname: event});
+                setFullForm({...emptyFullForm, classname: event});
+                setFilterFlag(true)
+                await getDataClassroom(event);
+            }
         } catch (e) {
             console.log(e);
         }
@@ -220,7 +247,6 @@ export const EditorPage = () => {
     }, [getDataClassroom, selectedOption, setSelectedOption, setForm, form]);
 
     const addLesson = () => {
-        console.log("options = ", options)
         if (form.subjects.length < 10) {
             let subArr = form.subjects
             let index = subArr.length + 1
@@ -255,9 +281,6 @@ export const EditorPage = () => {
             setForm(formArr[index])
             setFullForm({classname: classname, form: formArr})
             setIndexDay({index: index})
-            if(formArr[index].session === ''){
-                setIsChose({...isChose, session: true})
-            }
         } else {
             message('Выберете класс')
         }
@@ -284,7 +307,6 @@ export const EditorPage = () => {
                 subArr.push({...form.subjects[i], index: i + 1, name: `subject-${i + 1}`, time: timeSubject})
                 if (i > 10) break
             }
-            console.log(subArr)
             setForm({...form, subjects: subArr})
         }
 
@@ -292,6 +314,7 @@ export const EditorPage = () => {
 
     const selectHandler = (event, action) => {
         if (action.name.indexOf('subject') !== -1) {
+            console.log(event)
             let index = +action.name.split('-')[1]
             let subjectsArr = []
             for (let i = 0; i < form.subjects.length; i++) {
@@ -301,10 +324,10 @@ export const EditorPage = () => {
                     subjectsArr.push(form.subjects[i])
                 }
             }
+            console.log(subjectsArr)
             setForm({...form, subjects: subjectsArr})
         } else {
             setForm({...form, [action.name]: event})
-            setIsChose({...isChose, session: false})
         }
     }
 

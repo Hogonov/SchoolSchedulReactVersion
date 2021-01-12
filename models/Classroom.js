@@ -2,19 +2,18 @@ const {Schema, model, Types} = require('mongoose');
 
 const schema = new Schema({
     name: {type: String, required: true},
-    session: {type: String, required: true},
-    day: [{
-        name: String,
+    school: {type: String, required: true},
+    days: [{
+        day: {value: String, label: String, name: String, index: Number},
+        session: {value: String, label: String, name: String, time: [String]},
         subjects: [{
-            day: String,
+            index: Number,
             name: String,
             time: String,
             office: String,
             update: Boolean
         }]
-    }],
-    school: {type: String, required: true},
-    date: {type: Date, required: true}
+    }]
 });
 
 module.exports = model('Classroom', schema);
