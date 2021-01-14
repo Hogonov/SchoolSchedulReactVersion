@@ -3,8 +3,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
 import stylesTimePage from './TimePage.module.css';
-import {Nav} from "react-bootstrap";
-import {TimeTable} from "./TimeTable";
+import {otherTimeSetter, TimeTable} from "./TimeTable";
 
 
 export const AddTimePage = () => {
@@ -12,37 +11,30 @@ export const AddTimePage = () => {
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
     const [form, setForm] = useState({
-        lengthLesson: [0, 0],
+        lengthLesson: [0, 0, 0, 0],
         isSpecial: false,
-        times: [
-            {
-                startTime1: '', endTime1: '',
-                startTime2: '', endTime2: '',
-                startTime3: '', endTime3: '',
-                startTime4: '', endTime4: '',
-                startTime5: '', endTime5: '',
-                startTime6: '', endTime6: ''
-            }, {
-                startTime1: '', endTime1: '',
-                startTime2: '', endTime2: '',
-                startTime3: '', endTime3: '',
-                startTime4: '', endTime4: '',
-                startTime5: '', endTime5: '',
-                startTime6: '', endTime6: ''
-            }
-        ]
+        times: {
+            firstSession: [{index: 1, startTime: '', endTime: ''}],
+            secondSession: [{index: 1, startTime: '', endTime: ''}],
+            specialFirstSession: [{index: 1, startTime: '', endTime: ''}],
+            specialSecondSession: [{index: 1, startTime: '', endTime: ''}]
+        }
     });
+
+
+    const [formTime, setFormTime] = useState({
+        firstSession: [{index: 1, startTime: '', endTime: ''}],
+        secondSession: [{index: 1, startTime: '', endTime: ''}],
+    });
+
     const [flag, setFlag] = useState(false);
     const [title, setTitle] = useState({text: 'Редактор звонков'});
 
     const changeHandler = event => {
-        let length = +event.target.value > +event.target.max ? event.target.max : event.target.value;
-        if (event.target.id === '0') {
-            setForm({...form, lengthLesson: [length, form.lengthLesson[1]]});
-        } else {
-            setForm({...form, lengthLesson: [form.lengthLesson[0], length]});
-        }
-        //console.log(form)
+        let length = +event.target.value > +event.target.max ? +event.target.max : +event.target.value;
+        let lengthArr = form.lengthLesson
+        lengthArr.splice(+event.target.id, 1, length)
+        setForm({...form, lengthLesson: lengthArr})
     };
 
 
@@ -51,24 +43,59 @@ export const AddTimePage = () => {
         clearError()
     }, [error, message, clearError]);
 
+    useEffect(()=>{
+        if(form.isSpecial){
+            setFormTime({firstSession: form.times.specialFirstSession, secondSession: form.times.specialSecondSession})
+        }else {
+            setFormTime({firstSession: form.times.firstSession, secondSession: form.times.secondSession})
+        }
+    }, [form, setForm])
+
+
     useEffect(() => {
         window.M.updateTextFields()
     }, []);
 
+
     const switcherFlag = () => {
         if (!flag) setFlag(true)
         else setFlag(false)
+    }
 
+    const addLesson = (event) => {
+        let subArr = form.times
+        if (+event.target.id === 0) {
+            if (form.isSpecial) {
+                let index = subArr.specialFirstSession.length + 1
+                if (index <= 10)
+                    subArr.specialFirstSession.push({index: index, startTime: '', endTime: '', session: 'specialFirstSession'})
+            } else {
+                let index = subArr.firstSession.length + 1
+                if (index <= 10){
+                    subArr.firstSession.push({index: index, startTime: '', endTime: '', session: 'firstSession'})
+                }
+            }
+        } else {
+            if (form.isSpecial) {
+                let index = subArr.specialSecondSession.length + 1
+                if (index <= 10)
+                    subArr.specialSecondSession.push({index: index, startTime: '', endTime: '', session: 'specialSecondSession'})
+            } else {
+                let index = subArr.secondSession.length + 1
+                if (index <= 10)
+                    subArr.secondSession.push({index: index, startTime: '', endTime: '', session: 'secondSession'})
+            }
+        }
+        setForm({...form, times: subArr})
     }
 
     const switcherSpecialDay = () => {
-        if(form.isSpecial){
+        if (form.isSpecial) {
             setTitle({text: 'Редактор звонков'})
         } else {
             setTitle({text: 'Редактор празднечных звонков'})
         }
         setForm({...form, isSpecial: !form.isSpecial});
-
     }
 
     const sendHandler = async (event) => {
@@ -80,6 +107,7 @@ export const AddTimePage = () => {
         } catch (e) {
         }
     };
+
 
     return (
         <div className={stylesTimePage.main + " " + (!flag && stylesTimePage.oneMain)}>
@@ -93,16 +121,17 @@ export const AddTimePage = () => {
                     </h3>
                     <div className={stylesTimePage.nameTimePack}>
                         <h5>Продолжительность урока</h5><label>
-                        <input id="0" type="number" min="0" max="60" value={form.lengthLesson[0]}
+                        <input id={form.isSpecial ? 2 : 0} type="number" min="0" max="120" value={form.lengthLesson[form.isSpecial ? 2 : 0]}
                                onChange={changeHandler}/>
                     </label>
                     </div>
                     <TimeTable
-                        session="0"
+                        session='0'
                         form={form}
                         setForm={setForm}
-                        time={form.times[0]}
+                        time={formTime.firstSession}
                     />
+                    <button className={`btn ${stylesTimePage.addLesson}`} onClick={addLesson} id={0}>+ урок</button>
                 </div>
                 {flag && <div className={stylesTimePage.verticalLine}/>}
                 {flag &&
@@ -110,16 +139,17 @@ export const AddTimePage = () => {
                     <h3>Смена II <svg onClick={switcherFlag} className={stylesTimePage.buttonSwitcherDel}/></h3>
                     <div className={stylesTimePage.nameTimePack}>
                         <h5>Продолжительность урока</h5><label>
-                        <input id="1" type="number" min="0" max="60" value={form.lengthLesson[1]}
+                        <input id={form.isSpecial ? 3 : 1} type="number" min="0" max="120" value={form.lengthLesson[form.isSpecial ? 3 : 1]}
                                onChange={changeHandler}/>
                     </label>
                     </div>
                     <TimeTable
-                        session="1"
+                        session='1'
                         form={form}
                         setForm={setForm}
-                        time={form.times[1]}
+                        time={formTime.secondSession}
                     />
+                    <button className={`btn ${stylesTimePage.addLesson}`} onClick={addLesson} id={1}>+ урок</button>
                 </div>
                 }
 

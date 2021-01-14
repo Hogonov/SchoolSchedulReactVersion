@@ -6,25 +6,24 @@ import Select from 'react-select';
 import {Loader} from "../../components/Loader";
 import Grid from "@material-ui/core/Grid";
 import styleEditorPage from "./StyleEditorPage.module.css"
-import stylesTimePage from "../Time/TimePage.module.css";
 
 
 export const EditorPage = () => {
     const auth = useContext(AuthContext);
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
-    const [filterFlag, setFilterFlag] = useState(false);
-    const [deleteBlocker, setDeleteBlocker] = useState(true);
     const [selectedOption, setSelectedOption] = useState({
         classname: null,
         day: null,
         session: null,
         subject: [{option: null}]
     })
-    const [time, setTime] = useState({time: []});
     const [indexDay, setIndexDay] = useState({
         index: 0
     });
+    const [maxLesson, setMaxLesson] = useState({
+        maxLesson: [10, 10, 10, 10]
+    })
     const [isChose, setIsChose] = useState({
         class: true,
         session: true,
@@ -37,37 +36,37 @@ export const EditorPage = () => {
                 session: '',
                 time: [],
                 day: {value: 'Понедельник', label: 'Понедельник', name: 'day', index: "0"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Вторник', label: 'Вторник', name: 'day', index: "1"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Среда', label: 'Среда', name: 'day', index: "2"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Четверг', label: 'Четверг', name: 'day', index: "3"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Пятница', label: 'Пятница', name: 'day', index: "4"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Суббота', label: 'Суббота', name: 'day', index: "5"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }
         ]
     });
@@ -79,37 +78,37 @@ export const EditorPage = () => {
                 session: '',
                 time: [],
                 day: {value: 'Понедельник', label: 'Понедельник', name: 'day', index: "0"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Вторник', label: 'Вторник', name: 'day', index: "1"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Среда', label: 'Среда', name: 'day', index: "2"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Четверг', label: 'Четверг', name: 'day', index: "3"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Пятница', label: 'Пятница', name: 'day', index: "4"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }, {
                 classname: '',
                 session: '',
                 time: [],
                 day: {value: 'Суббота', label: 'Суббота', name: 'day', index: "5"},
-                subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+                subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
             }
         ]
     }
@@ -118,7 +117,7 @@ export const EditorPage = () => {
         session: '',
         time: [],
         day: {value: 'Понедельник', label: 'Понедельник', name: 'day', index: "0"},
-        subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+        subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
     });
 
     const emptyForm = {
@@ -126,7 +125,7 @@ export const EditorPage = () => {
         session: '',
         time: [],
         day: {value: 'Понедельник', label: 'Понедельник', name: 'day', index: "0"},
-        subjects: [{index: 1, name: 'subject-1', option: '', office: '', time: ''}]
+        subjects: [{index: 1, name: 'subject-1', option: null, office: '', time: ''}]
     }
 
     const [options, setOptions] = useState({classrooms: [], subjects: [], times: []});
@@ -139,30 +138,30 @@ export const EditorPage = () => {
         {value: 'Суббота', label: 'Суббота', name: 'day', index: "5"}
     ];
 
-    const [classInfo, setClassInfo] = useState({
-        name: '',
-        session: '',
-        days: [{
-            name: '',
-            subjects: [{name: '', option: null, office: ''}]
-        }],
-        school: '',
-        date: new Date()
-    });
     const getData = useCallback(async () => {
         try {
             const data = await request(`/api/table/get_all_data`, 'GET', null, {
                 Authorization: `Bearer ${auth.token}`
             });
-            console.log(data)
+            console.log("data: ", data)
             setOptions({
                 classrooms: data.classrooms,
                 subjects: data.subjects,
                 times: [
-                    {...data.times.firstSession.options, time: data.times.firstSession.time},
-                    {...data.times.secondSession.options, time: data.times.secondSession.time},
+                    {...data.times.firstSession.options, time: data.times.firstSession.time, index: 0},
+                    {...data.times.secondSession.options, time: data.times.secondSession.time, index: 1},
+                    {...data.times.firstSpecialSession.options, time: data.times.firstSpecialSession.time, index: 2},
+                    {...data.times.secondSpecialSession.options, time: data.times.secondSpecialSession.time, index: 3},
                 ],
             });
+            setMaxLesson({
+                maxLesson: [
+                    data.times.firstSession.time.length,
+                    data.times.secondSession.time.length,
+                    data.times.firstSpecialSession.time.length,
+                    data.times.secondSpecialSession.time.length
+                ]
+            })
         } catch (e) {
             console.log(e)
         }
@@ -183,7 +182,7 @@ export const EditorPage = () => {
 
     useEffect(() => {
         fullForm.form.splice(indexDay.index, 1, form)
-        if(form.session !== ''){
+        if (form.session !== '') {
             setIsChose({...isChose, session: false})
         } else {
             setIsChose({...isChose, session: true})
@@ -191,7 +190,7 @@ export const EditorPage = () => {
     }, [form, setForm])
 
 
-    const sendHandler = async () => { // допилить отправку, она не работает
+    const sendHandler = async () => {
         try {
             console.log("fullForm = ", fullForm)
             const data = await request('/api/table/editor', 'POST', {...fullForm}, {Authorization: `Bearer ${auth.token}`});
@@ -212,7 +211,7 @@ export const EditorPage = () => {
                 console.log("Under if data = ", data);
                 let fullFormArr = []
                 for (let i = 0; i < fullForm.form.length; i++) {
-                    if(i < data.candidateData.days.length){
+                    if (i < data.candidateData.days.length) {
                         fullFormArr.push(data.candidateData.days[i])
                     } else {
                         fullFormArr.push({...fullForm.form[i], classname: classname})
@@ -221,11 +220,13 @@ export const EditorPage = () => {
                 setFullForm({classname: classname, form: fullFormArr})
                 setForm(fullFormArr[0])
                 setIndexDay({index: 0})
-                if(fullFormArr[0].session !== ''){
+                if (fullFormArr[0].session !== '') {
                     setIsChose({class: false, session: false})
                 } else {
                     setIsChose({class: false, session: true})
                 }
+            } else {
+                setIsChose({...isChose, class: false})
             }
         } catch (e) {
             console.log(e);
@@ -234,10 +235,9 @@ export const EditorPage = () => {
 
     const searchHandler = useCallback(async (event) => {
         try {
-            if(event !== fullForm.classname){
+            if (event !== fullForm.classname) {
                 setForm({...emptyForm, classname: event});
                 setFullForm({...emptyFullForm, classname: event});
-                setFilterFlag(true)
                 await getDataClassroom(event);
             }
         } catch (e) {
@@ -247,7 +247,7 @@ export const EditorPage = () => {
     }, [getDataClassroom, selectedOption, setSelectedOption, setForm, form]);
 
     const addLesson = () => {
-        if (form.subjects.length < 10) {
+        if (form.subjects.length < maxLesson.maxLesson[form.session.index]) {
             let subArr = form.subjects
             let index = subArr.length + 1
             subArr.push({index: index, name: `subject-${index}`, option: null, office: '', time: ''})
@@ -256,7 +256,7 @@ export const EditorPage = () => {
     }
 
     const switchHandler = (event) => {  //switch days of week
-        if(!isChose.class){
+        if (!isChose.class) {
             let next = +event.target.id
             let index = +indexDay.index
             let classname = form.classname
@@ -301,11 +301,11 @@ export const EditorPage = () => {
             form.subjects.splice(deleteIndex - 1, 1)
             for (let i = 0; i < form.subjects.length; i++) {
                 let timeSubject = ''
-                if(form.session !== ''){
+                if (form.session !== '') {
                     timeSubject = form.session.time[i]
                 }
                 subArr.push({...form.subjects[i], index: i + 1, name: `subject-${i + 1}`, time: timeSubject})
-                if (i > 10) break
+                if (i > maxLesson.maxLesson[form.session.index]) break
             }
             setForm({...form, subjects: subArr})
         }
@@ -438,11 +438,12 @@ export const EditorPage = () => {
 
                     </tbody>
                 </table>
-                <button className={`btn ${styleEditorPage.addLesson}`} onClick={addLesson}>+ урок</button>
+                <button className={`btn ${styleEditorPage.addLesson}`} onClick={addLesson}
+                        disabled={form.subjects.length > maxLesson.maxLesson[form.session.index] || isChose.session}>+ урок</button>
                 <h1/>
                 <button
                     className={`btn ${styleEditorPage.button}`}
-                    disabled={loading || !filterFlag}
+                    disabled={loading || isChose.session || form.subjects.length > maxLesson.maxLesson[form.session.index]}
                     onClick={sendHandler}
                 >
                     Отправить

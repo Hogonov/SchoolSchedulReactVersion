@@ -71,7 +71,7 @@
     text-align: center;
 }
 
-.cellTable td{
+.cellTable td:not(.redCross){
     border: 2px solid #3a73ab;
     padding: 10px;
 }
@@ -121,4 +121,21 @@
     height: 40px;
     margin-left: 10px;
     margin-bottom: -5px;
+}
+
+.addLesson{
+    margin-left: 11%;
+    background-color: #3a73ab;
+}
+.addLesson:hover {
+    background-color: #7ba5c6;
+}
+.addLesson:focus {
+    background-color: #3a73ab;
+}
+
+.redCross svg{
+    background-image: url("../../public/icons/delete.svg");
+    width: 20px;
+    height: 30px;
 }

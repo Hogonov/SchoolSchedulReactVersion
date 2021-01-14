@@ -39,7 +39,7 @@ router.post('/add_time', auth, async (req, res) => {
              }
          }catch (e) {
              console.log(e)
-         }*/
+         }
 
 
         const newTimes = times.map((e) => {
@@ -61,7 +61,7 @@ router.post('/add_time', auth, async (req, res) => {
         });
         console.log(time)
         await time.save();
-
+        */
         res.status(201).json({message: 'Время добавлено'})
 
     } catch (e) {
@@ -272,10 +272,10 @@ router.post('/editor', auth, async (req, res) => {
                 if (i < minLengthDay) {
                     minLengthSubjects = Math.min(form[i].subjects.length, candidate[0].days[i].subjects.length)
                 }
-                if(form[i].subjects[0].option === '' && minLengthSubjects <= 1){
+                if(form[i].subjects[0].option === null && minLengthSubjects <= 1){
                     continue
                 }
-                if (form[i].session !== '' && form[i].subjects[0].option !== '') {
+                if (form[i].session !== '' && form[i].subjects[0].option !== null) {
                     let subjectArr = []
                     for (let j = 0; j < form[i].subjects.length; j++) {
                         let update = true
@@ -343,44 +343,6 @@ router.post('/editor', auth, async (req, res) => {
         }
 
 
-        /*
-        const time = await Time.find({session: session, school: user.school}); // delete
-
-
-
-
-        const classroomObject = new Classroom(
-            {
-                name: classroom,
-                session: session,
-                subjects: subjects,
-                school: user.school,
-                day: day,
-                date: new Date()
-            });
-
-        if (candidate.length > 0) {
-            for (let i = 0; i < candidate[0].subjects.length; i++) {
-                if (candidate[0].subjects[i].name.toLowerCase() !== subjects[i].name.toLowerCase()) {
-                    subjects[i] = {...subjects[i], update: true}
-                }
-            }
-            await Classroom.findByIdAndUpdate({_id: candidate[0]._id},
-                {
-                    _id: candidate[0]._id,
-                    name: classroom,
-                    session: session,
-                    subjects: subjects,
-                    school: user.school,
-                    day: day,
-                    date: new Date()
-                }
-            );
-        } else {
-            await classroomObject.save();
-        }*/
-
-
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '});
@@ -417,6 +379,14 @@ router.get('/get_all_data', auth, async (req, res) => {
                     secondSession: {
                         options: {value: 'secondSession', label: 'Вторая смена', name: 'session'},
                         time: times[0].time.secondSession
+                    },
+                    firstSpecialSession: {
+                        options: {value: 'firstSpecialSession', label: 'Первая праздничная смена', name: 'session'},
+                        time: times[0].special.firstSpecialSession
+                    },
+                    secondSpecialSession: {
+                        options: {value: 'secondSpecialSession', label: 'Вторая праздничная смена', name: 'session'},
+                        time: times[0].special.firstSpecialSession
                     }
                 },
             };
