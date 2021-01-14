@@ -272,17 +272,23 @@ router.post('/editor', auth, async (req, res) => {
                 if (i < minLengthDay) {
                     minLengthSubjects = Math.min(form[i].subjects.length, candidate[0].days[i].subjects.length)
                 }
+                if(form[i].subjects[0].option === '' && minLengthSubjects <= 1){
+                    continue
+                }
                 if (form[i].session !== '' && form[i].subjects[0].option !== '') {
                     let subjectArr = []
                     for (let j = 0; j < form[i].subjects.length; j++) {
                         let update = true
-                        if (j < minLengthSubjects && candidate[0].days[i].subjects[j].name === form[i].subjects[j].option.value) {
+                        if (i < minLengthDay && j < minLengthSubjects && candidate[0].days[i].subjects[j].name === form[i].subjects[j].option.value) {
                             update = false
                         }
-
+                        let subjectName = ''
+                        if (form[i].subjects[j].option !== null){
+                            subjectName = form[i].subjects[j].option.value
+                        }
                         subjectArr.push({
-                            index: form[i].subjects[j].index,
-                            name: form[i].subjects[j].option.value,
+                            index: form[i].subjects[j].index ,
+                            name: subjectName,
                             time: form[i].subjects[j].time,
                             office: form[i].subjects[j].office,
                             update: update
@@ -302,6 +308,10 @@ router.post('/editor', auth, async (req, res) => {
                 school: user.school,
                 days: daysArr
             });
+
+            await Classroom.findByIdAndUpdate({_id: classroomObject._id}, classroomObject);
+
+
             res.status(201).json({message: 'Расписание для класса изменено', classroomObject: classroomObject});
         } else {
             for (let i = 0; i < form.length; i++) {
