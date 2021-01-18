@@ -1,15 +1,12 @@
 .timeRedactor{
     display: grid;
-    grid-template-columns: 4fr 0fr 4fr;
-    grid-template-rows: 4fr 0fr;
+    grid-template-columns: 5fr 1fr 5fr;
 }
 .oneTimeRedactor {
     grid-template-columns: 1fr;
-    margin-left: -10%;
 }
 
-.session{
-    margin-left: 50px;
+.session:not(.second){
 }
 .session h3 {
     text-align: center;
@@ -20,11 +17,11 @@
 
 .first table{
     float: right;
-    margin-right: 10%;
 }
+
 .second table{
     float: left;
-    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .title {
@@ -51,6 +48,7 @@
     background-color: #fbf8f5;
     padding: 20px;
     border-radius: 5px 5px 5px 5px;
+    margin-bottom: 5%;
 }
 .oneMain {
     width: 55%;
@@ -59,12 +57,13 @@
 .titleTable{
     background-color: #f8f1e7;
     border: 1px solid #f8f1e7;
+    border-radius: 5px 5px 5px 5px;
 }
 
 .table {
     border-spacing: 7px 11px;
     border-collapse: separate;
-    width: 80%;
+    text-align: center;
 }
 
 .table tr td {
@@ -74,20 +73,23 @@
 .cellTable td:not(.redCross){
     border: 2px solid #3a73ab;
     padding: 10px;
+    border-radius: 5px 5px 5px 5px;
 }
 
-.verticalLine{
-    text-align: center;
-    border-left: 1px solid black;
-    margin-left: 55px;
-
+.verticalLine div{
+    height: 100%;
+    margin-top: 20%;
+    width: 2%;
+    background-color: black;
+    float: right;
+    margin-right: 50%;
 }
 
 .button {
     background-color: #3a73ab;
     margin-top: 5%;
-    margin-left: 42%;
     width: 20%;
+    margin-left: 40%;
 }
 
 .button:hover{
@@ -99,7 +101,7 @@
     width: 30px;
     height: 27px;
     margin-left: 10px;
-
+    cursor: pointer;
 }
 
 
@@ -111,20 +113,27 @@
     height: 40px;
     margin-left: 10px;
     margin-bottom: -5px;
+    cursor: pointer;
 }
 
 .buttonSpecialDay {
     background-image: url("../../public/icons/specialDay.svg");
     fill: #314d59;
     stroke: blue;
-    width: 36px;
-    height: 40px;
+    width: 35px;
+    height: 39px;
     margin-left: 10px;
     margin-bottom: -5px;
+    cursor: pointer;
+}
+
+.buttonUsualDay{
+    background-image: url("../../public/icons/usualDay.svg");
 }
 
 .addLesson{
-    margin-left: 11%;
+    margin-left: 6px;
+    float: left;
     background-color: #3a73ab;
 }
 .addLesson:hover {
@@ -138,4 +147,22 @@
     background-image: url("../../public/icons/delete.svg");
     width: 20px;
     height: 30px;
+    cursor: pointer;
+}
+.divDatePicker {
+    text-align: center;
+}
+.datePickerWithSecondSession {
+
+}
+.datePicker{
+    background-color: #3a73ab;
+    text-align: center;
+}
+.datePicker:hover{
+    background-color: #7ba5c6;
+}
+
+.datePicker:focus {
+    background-color: #3a73ab;
 }

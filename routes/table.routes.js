@@ -14,63 +14,6 @@ const SpecialDate = require('../models/SpecialDate');
 const router = Router();
 
 
-// /api/table/add_time
-router.post('/add_time', auth, async (req, res) => {
-    try {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array(),
-                message: 'Некорректный данные при добавлении времени'
-            });
-        }
-
-        const {times} = req.body;
-
-        const user = await User.findById(req.user.userId);
-
-        /* let special;
-         try {
-             if(session.indexOf("special") !== -1){
-                 special = req.body.date;
-                 let specialDate = new SpecialDate({school: user.school, date: special});
-                 await specialDate.save();
-             }
-         }catch (e) {
-             console.log(e)
-         }
-
-
-        const newTimes = times.map((e) => {
-            return [
-                e.startTime1 + '-' + e.endTime1,
-                e.startTime2 + '-' + e.endTime2,
-                e.startTime3 + '-' + e.endTime3,
-                e.startTime4 + '-' + e.endTime4,
-                e.startTime5 + '-' + e.endTime5,
-                e.startTime6 + '-' + e.endTime6
-            ]
-        });
-        console.log(newTimes)
-
-        const time = new Time({
-            time: {firstSession: newTimes[0], secondSession: newTimes[1]},
-            school: user.school,
-            special: {firstSpecialSession: [], secondSpecialSession: [], date: []}
-        });
-        console.log(time)
-        await time.save();
-        */
-        res.status(201).json({message: 'Время добавлено'})
-
-    } catch (e) {
-        console.log(e);
-        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
-    }
-});
-
-
 // /api/table/subjects
 router.post('/subject',
     [check('subjectName', 'Введите название предмета').exists()],

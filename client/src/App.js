@@ -24,7 +24,7 @@ function App() {
             <Roter>
                 {isAuthenticated && flag && <Header/>}
                 {flag && <div style={{display: "flex", flexDirection: "row"}}>
-                    {isAuthenticated && <Sidebar/>}
+                    {isAuthenticated && <Sidebar userRole={userRole}/>}
                     <div className="container" >
                         {routes}
                     </div>

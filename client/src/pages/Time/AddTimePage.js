@@ -4,6 +4,10 @@ import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
 import stylesTimePage from './TimePage.module.css';
 import {otherTimeSetter, TimeTable} from "./TimeTable";
+import DatePicker from "react-multi-date-picker";
+import CustomDatePicker from "./CustomDatePicker";
+
+// the locale you want  https://react-day-picker.js.org/examples/localization
 
 
 export const AddTimePage = () => {
@@ -18,7 +22,8 @@ export const AddTimePage = () => {
             secondSession: [{index: 1, startTime: '', endTime: ''}],
             specialFirstSession: [{index: 1, startTime: '', endTime: ''}],
             specialSecondSession: [{index: 1, startTime: '', endTime: ''}]
-        }
+        },
+        specialDates: []
     });
 
 
@@ -63,27 +68,28 @@ export const AddTimePage = () => {
     }
 
     const addLesson = (event) => {
+        console.log("form = ", form)
         let subArr = form.times
         if (+event.target.id === 0) {
             if (form.isSpecial) {
                 let index = subArr.specialFirstSession.length + 1
                 if (index <= 10)
-                    subArr.specialFirstSession.push({index: index, startTime: '', endTime: '', session: 'specialFirstSession'})
+                    subArr.specialFirstSession.push({index: index, startTime: '', endTime: ''})
             } else {
                 let index = subArr.firstSession.length + 1
                 if (index <= 10){
-                    subArr.firstSession.push({index: index, startTime: '', endTime: '', session: 'firstSession'})
+                    subArr.firstSession.push({index: index, startTime: '', endTime: ''})
                 }
             }
         } else {
             if (form.isSpecial) {
                 let index = subArr.specialSecondSession.length + 1
                 if (index <= 10)
-                    subArr.specialSecondSession.push({index: index, startTime: '', endTime: '', session: 'specialSecondSession'})
+                    subArr.specialSecondSession.push({index: index, startTime: '', endTime: ''})
             } else {
                 let index = subArr.secondSession.length + 1
                 if (index <= 10)
-                    subArr.secondSession.push({index: index, startTime: '', endTime: '', session: 'secondSession'})
+                    subArr.secondSession.push({index: index, startTime: '', endTime: ''})
             }
         }
         setForm({...form, times: subArr})
@@ -101,7 +107,8 @@ export const AddTimePage = () => {
     const sendHandler = async (event) => {
         try {
             setForm({...form, session: event.target.value});
-            const data = await request('/api/table/add_time', 'POST', {...form}, {Authorization: `Bearer ${auth.token}`});
+            console.log(form)
+            const data = await request('/api/time/add', 'POST', {...form}, {Authorization: `Bearer ${auth.token}`});
             message(data.message)
             console.log(form)
         } catch (e) {
@@ -112,8 +119,13 @@ export const AddTimePage = () => {
     return (
         <div className={stylesTimePage.main + " " + (!flag && stylesTimePage.oneMain)}>
             <h3 className={stylesTimePage.title}>{title.text}
-                <svg onClick={switcherSpecialDay} className={stylesTimePage.buttonSpecialDay}/>
+                <svg onClick={switcherSpecialDay}
+                     className={`${stylesTimePage.buttonSpecialDay} ${form.isSpecial ? stylesTimePage.buttonUsualDay : ''}`}
+                />
             </h3>
+            {form.isSpecial && <div className={stylesTimePage.divDatePicker}>
+                <CustomDatePicker flag={flag} form={form} setForm={setForm}/>
+            </div>}
             <div className={stylesTimePage.timeRedactor + " " + (!flag && stylesTimePage.oneTimeRedactor)}>
                 <div className={`${stylesTimePage.session}  ${stylesTimePage.first}`}>
                     <h3>Смена I
@@ -133,7 +145,9 @@ export const AddTimePage = () => {
                     />
                     <button className={`btn ${stylesTimePage.addLesson}`} onClick={addLesson} id={0}>+ урок</button>
                 </div>
-                {flag && <div className={stylesTimePage.verticalLine}/>}
+                {flag && <div className={stylesTimePage.verticalLine}>
+                    <div/>
+                </div>}
                 {flag &&
                 <div className={`${stylesTimePage.session}  ${stylesTimePage.second}`}>
                     <h3>Смена II <svg onClick={switcherFlag} className={stylesTimePage.buttonSwitcherDel}/></h3>
@@ -152,7 +166,6 @@ export const AddTimePage = () => {
                     <button className={`btn ${stylesTimePage.addLesson}`} onClick={addLesson} id={1}>+ урок</button>
                 </div>
                 }
-
             </div>
             <button
                 className={`btn ${stylesTimePage.button}`}

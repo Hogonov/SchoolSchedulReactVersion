@@ -1,5 +1,5 @@
 import React, {useContext} from 'react'
-import {NavLink, useHistory} from 'react-router-dom'
+import {Link, NavLink, useHistory} from 'react-router-dom'
 import {AuthContext} from '../context/AuthContext'
 
 
@@ -17,17 +17,19 @@ export const Header = () => {
         <>
             <nav className="navHeader">
                 <div>
-                    <span className="brand-logo">IT Школа</span>
+                    <ul className="left">
+                        <div className="brand-logo">IT Школа</div>
+                    </ul>
                     <ul className="right">
-                        <li><a className="headerNavLink" href="/main">Главная страница
+                        <li><Link className="headerNavLink" to="/main">Главная страница
                             <svg className="toHomeIcon"/>
-                        </a></li>
-                        <li><a className="headerNavLink" href="/select_view">Расписание
+                        </Link></li>
+                        <li><Link className="headerNavLink" to="/select_view">Расписание
                             <svg className="toViewIcon"/>
-                        </a></li>
-                        <li><a className="headerNavLink" href="/" onClick={logoutHandler}>Выйти
+                        </Link></li>
+                        <li><Link className="headerNavLink" to="/" onClick={logoutHandler}>Выйти
                             <svg className="toExitIcon"/>
-                        </a></li>
+                        </Link></li>
                     </ul>
                 </div>
             </nav>

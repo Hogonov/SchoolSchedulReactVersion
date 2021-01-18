@@ -73,6 +73,12 @@ export const useRoutes = (isAuthenticated, userRole) => {
                 <Route path="/add_new_ad" exact>
                     <AddAdPage/>
                 </Route>
+                <Route path="/editor_special_course" exact>
+                    <EditorSpecialCoursePage/>
+                </Route>
+                <Route path="/add_new_year" exact>
+                    <AddYearSchoolPage/>
+                </Route>
                 <Redirect to="/office_admin" exact/>
             </Switch>
         )

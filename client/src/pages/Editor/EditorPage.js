@@ -403,7 +403,7 @@ export const EditorPage = () => {
                     <tbody className={styleEditorPage.cellTable}>
                     {Array.from(form.subjects, subject => {
                         return (
-                            <tr>
+                            <tr key={subject.index}>
                                 <td>{subject.index}</td>
                                 <td>
                                     <Select

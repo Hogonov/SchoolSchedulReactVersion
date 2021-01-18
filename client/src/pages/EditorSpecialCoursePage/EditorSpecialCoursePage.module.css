@@ -48,6 +48,7 @@
 .titleTable {
     background-color: #f8f1e7;
     border: 1px solid #f8f1e7;
+    border-radius: 5px 5px 5px 5px;
 }
 
 .table {
@@ -62,6 +63,7 @@
 .cellTable td {
     border: 2px solid #3a73ab;
     padding: 10px;
+    border-radius: 5px 5px 5px 5px;
 }
 
 .button {

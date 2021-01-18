@@ -16,6 +16,7 @@
 .cellTable td:not(.redCross){
     border: 2px solid #7ba5c6;
     padding: 10px;
+    border-radius: 5px 5px 5px 5px;
 }
 .subjects {
     width: 100%;
@@ -40,11 +41,13 @@
     background-color: #f8f1e7;
     color: #7ba5c6;
     text-align: center;
+    border-radius: 5px 5px 5px 5px;
 }
 
 .table {
     border-spacing: 7px 11px;
     border-collapse: separate;
+
 }
 
 .table tbody tr td{
@@ -87,6 +90,7 @@
     width: 80px;
     height: 100px;
     margin-left: 3%;
+    cursor: pointer;
 }
 .rightArrow{
     background-image: url("../../public/icons/next_blue.svg");
@@ -94,11 +98,12 @@
     text-align: right;
     height: 100px;
     margin: 0 0 0 auto;
+    cursor: pointer;
 }
 
 .redCross svg{
     background-image: url("../../public/icons/delete.svg");
-
+    cursor: pointer;
     width: 20px;
     height: 30px;
 }

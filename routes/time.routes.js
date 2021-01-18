@@ -23,41 +23,39 @@ const router = Router();
 // /api/time/add
 router.post('/add', auth, async (req, res) => {
     try {
-        const {
-            nameTime, session,
-            startTime1, endTime1,
-            startTime2, endTime2,
-            startTime3, endTime3,
-            startTime4, endTime4,
-            startTime5, endTime5,
-            startTime6, endTime6
-        } = req.body;
-
+        const {isSpecial, lengthLesson, times, dates} = req.body;
         const user = await User.findById(req.user.userId);
+        const candidate = await Time.find({school: user.school});
 
-        const schoolYear = new SchoolYear({
-            name: nameTime,
+        const subTime = {
             school: user.school,
-            session: session,
-            quarter: [
-                {name: "time1", time: startTime1, end: endTime1},
-                {name: "time2", time: startTime2, end: endTime2},
-                {name: "time3", time: startTime3, end: endTime3},
-                {name: "time4", time: startTime4, end: endTime4},
-                {name: "time5", time: startTime5, end: endTime5},
-                {name: "time6", time: startTime6, end: endTime6}
-            ]
-        });
+            time: {
+                firstSession: times.firstSession,
+                secondSession: times.secondSession
+            },
+            special: {
+                firstSpecialSession: times.specialFirstSession,
+                secondSpecialSession: times.specialSecondSession,
+                dates: dates
+            }
+        };
+        if(candidate[0]){
+            const time = new Time({...subTime, _id: candidate[0]._id})
+            await Time.findByIdAndUpdate({_id: candidate[0]._id}, time);
+            res.status(201).json({message: 'Данные изменены'})
+        } else {
+            const time = new Time(subTime)
+            await time.save();
+            res.status(201).json({message: 'Добавлено'})
+        }
 
-        await schoolYear.save();
-
-
-        res.status(201).json({message: 'Добавлено'})
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '});
     }
 });
+
+
 
 
 module.exports = router;

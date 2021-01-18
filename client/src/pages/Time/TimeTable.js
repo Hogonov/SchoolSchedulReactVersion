@@ -86,28 +86,6 @@ export const TimeTable = (props) => {
         }
     };
 
-    /*const otherTimeSetter = (Time, flag) => { // если flag = true, то вычисляем начальное время, иначе конечное
-        let timeArr = Time.split(':');
-        let numFlag = 1;
-        if (flag) {
-            numFlag = -1;
-        }
-        let lengthLesson = props.form.lengthLesson[props.session];
-        let date = new Date();
-        date.setHours(timeArr[0]);
-        date.setMinutes(timeArr[1]);
-        let newDate = new Date(+date + 60000 * lengthLesson * numFlag);
-        let hours = newDate.getHours();
-        let minutes = newDate.getMinutes();
-        if (Math.floor(minutes / 10) === 0) {
-            minutes = '0' + minutes;
-        }
-        if (Math.floor(hours / 10) === 0) {
-            hours = '0' + hours;
-        }
-        return hours + ':' + minutes;
-    };*/
-
 
     return (
         <table className={stylesTimePage.table}>
@@ -121,7 +99,7 @@ export const TimeTable = (props) => {
             <tbody>
             {Array.from(props.time, time => {
                 return (
-                    <tr className={stylesTimePage.cellTable}>
+                    <tr key={time.index} className={stylesTimePage.cellTable}>
                         <td>{time.index}</td>
                         <td><input
                             id={props.session} name={`s_${time.index}`}
