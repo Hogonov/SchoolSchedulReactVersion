@@ -19,11 +19,21 @@ router.post('/add', auth, async (req, res) => {
 
         const {courses} = req.body;
 
+        let handlingCourses = Array.from(courses, courses =>{
+            let course = []
+            for (let i = 0; i < courses.course.length; i++) {
+               if(courses.course[i].name !== '' && courses.course[i].time !== '' ){
+                   course.push({...courses.course[i], index: i + 1})
+               }
+            }
+            return {...courses, course: course}
+        })
+
         const user = await User.findById(req.user.userId);
         const candidate = await SpecialCourse.findOne({school: user.school}); // добавить привязку к четвертям школы
         const specialCourse = new SpecialCourse({
             school: user.school,
-            courses: courses
+            courses: handlingCourses
         });
 
         if (candidate) {
@@ -37,7 +47,6 @@ router.post('/add', auth, async (req, res) => {
         } else {
             await specialCourse.save();
         }
-
 
         res.status(201).json({message: 'Добавлено'})
     } catch (e) {

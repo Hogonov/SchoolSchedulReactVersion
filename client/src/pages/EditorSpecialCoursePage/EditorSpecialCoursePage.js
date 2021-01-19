@@ -16,13 +16,13 @@ export const EditorSpecialCoursePage = () => {
 
     const [form, setForm] = useState({
         courses: [
-            {time1: '', time2: '', time3: '', name1: '', name2: '', name3: '', day: 'Понедельник'},
-            {time1: '', time2: '', time3: '', name1: '', name2: '', name3: '', day: 'Вторник'},
-            {time1: '', time2: '', time3: '', name1: '', name2: '', name3: '', day: 'Среда'},
-            {time1: '', time2: '', time3: '', name1: '', name2: '', name3: '', day: 'Четверг'},
-            {time1: '', time2: '', time3: '', name1: '', name2: '', name3: '', day: 'Пятница'},
-            {time1: '', time2: '', time3: '', name1: '', name2: '', name3: '', day: 'Суббота'}
-            ]
+            {day: 'Понедельник', course: [{index: 1, name: '', time: ''}]},
+            {day: 'Вторник', course: [{index: 1, name: '', time: ''}]},
+            {day: 'Среда', course: [{index: 1, name: '', time: ''}]},
+            {day: 'Четверг', course: [{index: 1, name: '', time: ''}]},
+            {day: 'Пятница', course: [{index: 1, name: '', time: ''}]},
+            {day: 'Суббота', course: [{index: 1, name: '', time: ''}]}
+        ]
     });
 
     useEffect(() => {
@@ -50,8 +50,9 @@ export const EditorSpecialCoursePage = () => {
         <div className={styleEditorSpecialCourse.main}>
             <h3 className={styleEditorSpecialCourse.title}>Редактирование расписания спецкурсов</h3>
             <table className={styleEditorSpecialCourse.mainTable}>
+                <tbody>
                 <tr>
-                    <td className={`${styleEditorSpecialCourse.dayBlock} ${styleEditorSpecialCourse.leftBlock}`}>
+                    <td className={`${styleEditorSpecialCourse.dayBlock}`}>
                         <h3>Понедельник</h3>
                         <DayBock form={form} setForm={setForm} day={0}/>
                     </td>
@@ -73,11 +74,12 @@ export const EditorSpecialCoursePage = () => {
                         <h3>Пятница</h3>
                         <DayBock form={form} setForm={setForm} day={4}/>
                     </td>
-                    <td className={`${styleEditorSpecialCourse.dayBlock} ${styleEditorSpecialCourse.leftBlock}`}>
+                    <td className={`${styleEditorSpecialCourse.dayBlock}`}>
                         <h3>Суббота</h3>
                         <DayBock form={form} setForm={setForm} day={5}/>
                     </td>
                 </tr>
+                </tbody>
             </table>
             <h1/>
             <button

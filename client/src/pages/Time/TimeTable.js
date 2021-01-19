@@ -1,10 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import stylesTimePage from './TimePage.module.css';
 
-
-
 export const TimeTable = (props) => {
-
 
 
     const changeIndex = arr => {
