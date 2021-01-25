@@ -15,7 +15,6 @@ const Announcement = require('../models/Announcement');
 const router = Router();
 
 // /api/view/get/:school
-// /api/view/get/:school
 router.get('/get/:id', async (req, res) => {
 
     try {
@@ -31,59 +30,84 @@ router.get('/get/:id', async (req, res) => {
             "воскресенье"
         ];
         const school = await School.findById(req.params.id);
-        const specialDates = await SpecialDate.find({school: school.name});
-        const specialDatesArr = Array.from(specialDates, date => {
-            return date.date.toJSON().split('T')[0];
-        });
-        const specialDate = specialDatesArr[specialDatesArr.indexOf(new Date().toJSON().split('T')[0])];
 
-        const time = await Time.find({school: school.name, special: specialDate});
-        let date = new Date();
-        let dateStr = date.getHours() + ':' + date.getMinutes();
-
+        const time = await Time.find({school: school.name});
+        let nowDate = new Date();
+        let nowMonth = (nowDate.getMonth() + '').length < 2 ? `0${nowDate.getMonth() + 1}` : nowDate.getMonth() + 1
+        let nowDay = (nowDate.getDate() + '').length < 2 ? `0${nowDate.getDate() + 1}` : nowDate.getDate()
+        let date = `${nowDate.getFullYear()}/${nowMonth}/${nowDay}`;
+        let dateStr = nowDate.getHours() + ':' + nowDate.getMinutes();
         let session;
-
-
-        if (dateStr > time[0].time[5].split('-')[1]) {
-            session = 'second';
+        let specialDates = time[0].special.dates
+        let timeArr
+        if (specialDates[specialDates.indexOf(date)]) {
+            timeArr = time[0].special
+            if (dateStr > timeArr.firstSpecialSession[timeArr.firstSpecialSession.length - 1].endTime) {
+                session = 'secondSpecialSession';
+            } else {
+                session = 'firstSpecialSession';
+            }
         } else {
-            session = 'first';
+            timeArr = time[0].time
+            if (dateStr > timeArr.firstSession[timeArr.firstSession.length - 1].endTime) {
+                session = 'secondSession';
+            } else {
+                session = 'firstSession';
+            }
         }
-
 
         const classrooms = await Classroom.find({
             school: school.name,
-            day: dayStr[dayNum - 1],
-            session: session
-        }).sort({name: 1});
-
-        for (const el of classrooms) {
+        });
+        let nowIndexDay = new Date().getDay()
+        let editDate = new Date().toJSON().split('T')[0];
+        let classroomsArr = []
+        for (const classroom of classrooms) {
             try {
                 let arrSubjects = [];
                 let subject;
-                for (let i = 0; i < el.subjects.length; i++) {
-                    if (el.subjects[i].update && (new Date() - el.date >= 3600000)) {
+                let classroomDay = classroom.days[nowIndexDay]
+                if(classroomDay.session.value.indexOf(session) !== -1){
+                    console.log(classroomDay)
+                    classroomsArr.push({
+                        name: classroom.name,
+                        session: classroomDay.session,
+                        day: classroomDay.day,
+                        subjects: classroomDay.subjects
+                    })
+                }
+                for (let i = 0; i < classroomDay.subjects.length; i++) {
+                    let subDate = classroomDay.subjects[i].date.toJSON().split('T')[0];
+                    if (subDate <= editDate) {
+                        editDate = subDate;
+                    }
+                    if (classroomDay.subjects[i].update && (new Date() - classroomDay.subjects[i].date >= 3600000)) {
                         subject = {
-                            _id: el.subjects[i]._id,
-                            name: el.subjects[i].name,
-                            time: el.subjects[i].time,
-                            office: el.subjects[i].office,
+                            _id: classroomDay.subjects[i]._id,
+                            index: classroomDay.subjects[i].index,
+                            name: classroomDay.subjects[i].name,
+                            time: classroomDay.subjects[i].time,
+                            office: classroomDay.subjects[i].office,
                             update: false
                         };
                         arrSubjects.push(subject)
                     } else {
-                        arrSubjects.push(el.subjects[i]);
+                        arrSubjects.push(classroomDay.subjects[i]);
                     }
                 }
-                await Classroom.findByIdAndUpdate({_id: el._id},
+                let classDay = {
+                    session: classroomDay.session,
+                    day: classroomDay.day,
+                    subjects: arrSubjects
+                }
+                let classDays = classroom.days
+                classDays.splice(nowIndexDay, 1, classDay)
+                await Classroom.findByIdAndUpdate({_id: classroom._id},
                     {
-                        _id: el._id,
-                        name: el.name,
-                        session: el.session,
-                        subjects: arrSubjects,
-                        school: el.school,
-                        day: el.day,
-                        date: el.date
+                        _id: classroom._id,
+                        name: classroom.name,
+                        school: classroom.school,
+                        days: classDays
                     }
                 );
             } catch (e) {
@@ -91,28 +115,15 @@ router.get('/get/:id', async (req, res) => {
             }
         }
 
-        let editDate = new Date().toJSON().split('T')[0];
-        for (let i = 0; i < classrooms.length; i++) {
-            try {
-                let subDate = classrooms[i].date.toJSON().split('T')[0];
-                if (subDate <= editDate) {
-                    editDate = subDate;
-                }
-            } catch (e) {
 
-            }
-        }
+        res.json({
+            classrooms: classroomsArr,
+            times: timeArr,
+            session: session,
+            editDate: editDate,
+            isReady: true
+        });
 
-
-        while (classrooms.length < 20) {
-            classrooms.push({
-                name: '', subjects: [
-                    {name: '', update: false}, {name: '', update: false}, {name: '', update: false},
-                    {name: '', update: false}, {name: '', update: false}, {name: '', update: false}
-                ]
-            });
-        }
-        res.json({classrooms: classrooms, times: time[0].time, session: classrooms.session, editDate: editDate});
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})

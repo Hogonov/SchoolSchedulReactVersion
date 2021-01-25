@@ -11,7 +11,8 @@ const schema = new Schema({
             name: String,
             time: String,
             office: String,
-            update: Boolean
+            update: Boolean,
+            date: {type: Date, required: false}
         }]
     }]
 });

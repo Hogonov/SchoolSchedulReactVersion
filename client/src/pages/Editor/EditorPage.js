@@ -143,7 +143,6 @@ export const EditorPage = () => {
             const data = await request(`/api/table/get_all_data`, 'GET', null, {
                 Authorization: `Bearer ${auth.token}`
             });
-            console.log("data: ", data)
             setOptions({
                 classrooms: data.classrooms,
                 subjects: data.subjects,
@@ -192,10 +191,8 @@ export const EditorPage = () => {
 
     const sendHandler = async () => {
         try {
-            console.log("fullForm = ", fullForm)
             const data = await request('/api/table/editor', 'POST', {...fullForm}, {Authorization: `Bearer ${auth.token}`});
             message(data.message)
-            console.log("data = ", data)
         } catch (e) {
 
         }
@@ -208,7 +205,6 @@ export const EditorPage = () => {
                 Authorization: `Bearer ${auth.token}`
             });
             if (data.candidate) {
-                console.log("Under if data = ", data);
                 let fullFormArr = []
                 for (let i = 0; i < fullForm.form.length; i++) {
                     if (i < data.candidateData.days.length) {
@@ -219,7 +215,6 @@ export const EditorPage = () => {
                 }
                 setFullForm({classname: classname, form: fullFormArr})
                 setForm(fullFormArr[0])
-                setIndexDay({index: 0})
                 if (fullFormArr[0].session !== '') {
                     setIsChose({class: false, session: false})
                 } else {
@@ -238,13 +233,14 @@ export const EditorPage = () => {
             if (event !== fullForm.classname) {
                 setForm({...emptyForm, classname: event});
                 setFullForm({...emptyFullForm, classname: event});
+                setIndexDay({index: 0})
                 await getDataClassroom(event);
             }
         } catch (e) {
             console.log(e);
         }
 
-    }, [getDataClassroom, selectedOption, setSelectedOption, setForm, form]);
+    }, [getDataClassroom, selectedOption, setSelectedOption, setForm, form, setIndexDay]);
 
     const addLesson = () => {
         if (form.subjects.length < maxLesson.maxLesson[form.session.index]) {

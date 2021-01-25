@@ -162,7 +162,19 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId);
         const candidate = await Classroom.find({name: req.params.classname, school: user.school});
-
+        const time = await Time.find({school: user.school});
+        const timeObj = {
+            firstSession: time[0].time.firstSession,
+            secondSession: time[0].time.secondSession,
+            firstSpecialSession: time[0].special.firstSpecialSession,
+            secondSpecialSession: time[0].special.secondSpecialSession,
+        }
+        const index = {
+            firstSession: 0,
+            secondSession: 1,
+            firstSpecialSession: 2,
+            secondSpecialSession: 3,
+        }
         if (candidate.length > 0) {
             let daysArr = []
             for (let i = 0; i < candidate[0].days.length; i++) {
@@ -171,7 +183,11 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
                         value: candidate[0].name,
                         label: candidate[0].name,
                         name: "classname"
-                    }, session: candidate[0].days[i].session,
+                    }, session: {
+                        ...candidate[0].days[i].session,
+                        index: index[candidate[0].days[i].session.value],
+                        time: timeObj[candidate[0].days[i].session.value]
+                    },
                     day: candidate[0].days[i].day,
                     subjects: Array.from(candidate[0].days[i].subjects, subject => {
                         return {
@@ -215,26 +231,30 @@ router.post('/editor', auth, async (req, res) => {
                 if (i < minLengthDay) {
                     minLengthSubjects = Math.min(form[i].subjects.length, candidate[0].days[i].subjects.length)
                 }
-                if(form[i].subjects[0].option === null && minLengthSubjects <= 1){
+                if (form[i].subjects[0].option === null && minLengthSubjects <= 1) {
                     continue
                 }
                 if (form[i].session !== '' && form[i].subjects[0].option !== null) {
                     let subjectArr = []
                     for (let j = 0; j < form[i].subjects.length; j++) {
                         let update = true
-                        if (i < minLengthDay && j < minLengthSubjects && candidate[0].days[i].subjects[j].name === form[i].subjects[j].option.value) {
+                        if (i < minLengthDay &&
+                            j < minLengthSubjects &&
+                            candidate[0].days[i].subjects[j].name === form[i].subjects[j].option.value
+                        ) {
                             update = false
                         }
                         let subjectName = ''
-                        if (form[i].subjects[j].option !== null){
+                        if (form[i].subjects[j].option !== null) {
                             subjectName = form[i].subjects[j].option.value
                         }
                         subjectArr.push({
-                            index: form[i].subjects[j].index ,
+                            index: form[i].subjects[j].index,
                             name: subjectName,
                             time: form[i].subjects[j].time,
                             office: form[i].subjects[j].office,
-                            update: update
+                            update: update,
+                            date: new Date()
                         })
                     }
 
@@ -269,7 +289,8 @@ router.post('/editor', auth, async (req, res) => {
                                 name: subject.option.value,
                                 time: subject.time,
                                 office: subject.office,
-                                update: false
+                                update: false,
+                                date: new Date()
                             }
                         })
                     })
@@ -298,7 +319,7 @@ router.get('/get_all_data', auth, async (req, res) => {
 
         const user = await User.findById(req.user.userId);
         const subjects = await DataSubject.find({school: user.school});
-        const classrooms = await DataClassroom.find({school: user.school});
+        const classrooms = await DataClassroom.find({school: user.school}).sort({name: 1});
         const times = await Time.find({school: user.school});
 
         let newArrSubjects = []
