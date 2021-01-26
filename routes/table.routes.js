@@ -251,7 +251,7 @@ router.post('/editor', auth, async (req, res) => {
                         subjectArr.push({
                             index: form[i].subjects[j].index,
                             name: subjectName,
-                            time: form[i].subjects[j].time,
+                            time: `${form[i].subjects[j].time.startTime}-${form[i].subjects[j].time.endTime}`,
                             office: form[i].subjects[j].office,
                             update: update,
                             date: new Date()
@@ -281,13 +281,17 @@ router.post('/editor', auth, async (req, res) => {
                 if (form[i].session !== '' && form[i].subjects[0].option !== '') {
                     daysArr.push({
                         day: form[i].day,
-                        session: form[i].session,
+                        session: {
+                            value: form[i].session.value,
+                            label: form[i].session.label,
+                            name: form[i].session.label
+                        },
                         subjects: Array.from(form[i].subjects, subject => {
                             console.log("subject = ", subject)
                             return {
                                 index: subject.index,
                                 name: subject.option.value,
-                                time: subject.time,
+                                time: `${subject.time.startTime}-${subject.time.endTime}`,
                                 office: subject.office,
                                 update: false,
                                 date: new Date()

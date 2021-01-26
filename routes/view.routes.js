@@ -37,45 +37,66 @@ router.get('/get/:id', async (req, res) => {
         let nowDay = (nowDate.getDate() + '').length < 2 ? `0${nowDate.getDate() + 1}` : nowDate.getDate()
         let date = `${nowDate.getFullYear()}/${nowMonth}/${nowDay}`;
         let dateStr = nowDate.getHours() + ':' + nowDate.getMinutes();
-        let session;
+        let session = '';
         let specialDates = time[0].special.dates
         let timeArr
+        let timeForSend
         if (specialDates[specialDates.indexOf(date)]) {
             timeArr = time[0].special
             if (dateStr > timeArr.firstSpecialSession[timeArr.firstSpecialSession.length - 1].endTime) {
                 session = 'secondSpecialSession';
+                timeForSend = timeArr.secondSpecialSession
             } else {
                 session = 'firstSpecialSession';
+                timeForSend = timeArr.firstSpecialSession
             }
         } else {
             timeArr = time[0].time
             if (dateStr > timeArr.firstSession[timeArr.firstSession.length - 1].endTime) {
                 session = 'secondSession';
+                timeForSend = timeArr.secondSession
             } else {
                 session = 'firstSession';
+                timeForSend = timeArr.firstSession
             }
         }
 
-        const classrooms = await Classroom.find({
-            school: school.name,
-        });
-        let nowIndexDay = new Date().getDay()
+        const classrooms = await Classroom.find({school: school.name}).sort({name: 1});
+        let nowIndexDay = new Date().getDay() - 1
         let editDate = new Date().toJSON().split('T')[0];
         let classroomsArr = []
+        let count = 0;
+        let emptySubject = {
+            name: '',
+            time: '',
+            office: '',
+            date: new Date(),
+            update: false
+        }
         for (const classroom of classrooms) {
             try {
                 let arrSubjects = [];
                 let subject;
                 let classroomDay = classroom.days[nowIndexDay]
-                if(classroomDay.session.value.indexOf(session) !== -1){
-                    console.log(classroomDay)
+                if (classroomDay.session.value.indexOf(session) !== -1) {
+                    let subSubjects = classroom.days[nowIndexDay].subjects.slice()
+                    if (subSubjects.length < timeForSend.length) {
+                        let subjectIndex = subSubjects.length + 1
+                        while (timeForSend.length - subSubjects.length !== 0) {
+                            subSubjects.push({...emptySubject, index: subjectIndex++})
+                        }
+                    }
                     classroomsArr.push({
                         name: classroom.name,
+                        index: count++,
                         session: classroomDay.session,
                         day: classroomDay.day,
-                        subjects: classroomDay.subjects
+                        subjects: subSubjects
                     })
+
                 }
+
+
                 for (let i = 0; i < classroomDay.subjects.length; i++) {
                     let subDate = classroomDay.subjects[i].date.toJSON().split('T')[0];
                     if (subDate <= editDate) {
@@ -88,6 +109,7 @@ router.get('/get/:id', async (req, res) => {
                             name: classroomDay.subjects[i].name,
                             time: classroomDay.subjects[i].time,
                             office: classroomDay.subjects[i].office,
+                            date: new Date(),
                             update: false
                         };
                         arrSubjects.push(subject)
@@ -114,14 +136,28 @@ router.get('/get/:id', async (req, res) => {
                 console.log(e)
             }
         }
+        let indexClassroom = classroomsArr.length
+        let subjectsClassroom = []
+        for (let i = 0; i <timeForSend.length; i++) {
+            subjectsClassroom.push({...emptySubject, index: i + 1})
+        }
+        while (classroomsArr.length < 10) {
+            classroomsArr.push({
+                name: '|',
+                index: indexClassroom++,
+                day: classroomsArr[0].day,
+                session: classroomsArr[0].session,
+                subjects: subjectsClassroom
+            })
+        }
 
 
         res.json({
             classrooms: classroomsArr,
-            times: timeArr,
+            times: timeForSend,
             session: session,
             editDate: editDate,
-            isReady: true
+            isDataReady: true
         });
 
     } catch (e) {
@@ -141,7 +177,7 @@ router.get('/get_announcement/:id', async (req, res) => {
             return announcement.text;
         });
 
-        res.json({announcements: announcementsText});
+        res.json({announcements: announcementsText, isDataReady: true});
 
 
     } catch (e) {

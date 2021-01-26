@@ -102,7 +102,7 @@ router.get('/get_data_ad/:id', async (req, res) => {
     try {
         const school = await School.findById(req.params.id);
         const ad = await Ad.find({school: school.name});
-        res.json({ad: ad})
+        res.json({ad: ad, isDataReady: true})
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})

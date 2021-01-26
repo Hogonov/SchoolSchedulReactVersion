@@ -111,15 +111,17 @@ router.get('/get_data/:id', async (req, res) => {
     try {
         const school = await School.findById(req.params.id);
         const dir = await Director.find({school: school.name});
-
-        res.json({name: dir[0].name, text: dir[0].text, urlImage: `/api/dir/get/${dir[0].id}`})
+        res.json({
+            name: dir[0].name,
+            text: dir[0].text,
+            urlImage: `/api/dir/get/${dir[0].id}`,
+            isDataReady: true
+        })
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
     }
 });
-
-//api/dir/get_all
 
 
 module.exports = router;

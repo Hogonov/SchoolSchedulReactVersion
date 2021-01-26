@@ -55,5 +55,21 @@ router.post('/add', auth, async (req, res) => {
     }
 });
 
+//api/special_course/get/:id
+router.get('/get/:id', async (req, res) => {
+    try {
+        const school = await School.findById(req.params.id);
+        const specialCourse = await SpecialCourse.find({school: school.name});
+        let nowIndexDay = new Date().getDay() - 1
+        res.json({
+            day: specialCourse[0].courses[nowIndexDay].day,
+            specialCourse: specialCourse[0].courses[nowIndexDay].course,
+            isDataReady: true
+        })
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
 
 module.exports = router;

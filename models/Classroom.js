@@ -5,7 +5,7 @@ const schema = new Schema({
     school: {type: String, required: true},
     days: [{
         day: {value: String, label: String, name: String, index: Number},
-        session: {value: String, label: String, name: String, time: [String]},
+        session: {value: String, label: String, name: String},
         subjects: [{
             index: Number,
             name: String,
