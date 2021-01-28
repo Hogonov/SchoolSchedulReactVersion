@@ -62,6 +62,18 @@ export const AddClassPage = () => {
                                 />
                                 <label htmlFor="classroomName">Класс</label>
                             </div>
+                            <div className="input-field">
+                                <input
+                                    placeholder="Введите назнавние класса"
+                                    id="subjectName"
+                                    type="text"
+                                    name="subjectName"
+                                    className="yellow-input"
+                                    value={form.subjectName}
+                                    onChange={changeHandler}
+                                />
+                                <label htmlFor="subjectName">Предмет</label>
+                            </div>
                         </div>
                     </div>
                     <div className="card-action">

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
@@ -35,6 +35,31 @@ export const AddTimePage = () => {
     const [flag, setFlag] = useState(false);
     const [title, setTitle] = useState({text: 'Редактор звонков'});
 
+
+    const getData = useCallback(async () => {
+        try {
+            const data = await request(`/api/time/get_data`, 'GET', null, {
+                Authorization: `Bearer ${auth.token}`
+            });
+            if(data.candidate){
+                setForm({...form,
+                    lengthLesson: data.lengthLesson,
+                    specialDates: data.specialDates,
+                    times: {
+                        firstSession: data.firstSession,
+                        secondSession: data.secondSession,
+                        specialFirstSession: data.specialFirstSession,
+                        specialSecondSession: data.specialSecondSession
+                    },
+                    isSpecial: data.isSpecial,
+                })
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+    }, [auth.token]);
+
     const changeHandler = event => {
         let length = +event.target.value > +event.target.max ? +event.target.max : +event.target.value;
         let lengthArr = form.lengthLesson
@@ -42,6 +67,9 @@ export const AddTimePage = () => {
         setForm({...form, lengthLesson: lengthArr})
     };
 
+    useEffect(() => {
+        getData();
+    }, [getData]);
 
     useEffect(() => {
         message(error);

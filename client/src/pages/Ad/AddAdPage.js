@@ -53,7 +53,7 @@ export const AddAdPage = () => {
         window.M.updateTextFields()
     }, []);
 
-    const addDirHandler = async () => {
+    const sendHandler = async () => {
         try {
             let formData = new FormData();
             formData.append('image', image.image);
@@ -127,7 +127,7 @@ export const AddAdPage = () => {
                             className="btn yellow darken-4"
                             style={{marginRight: 10}}
                             disabled={loading}
-                            onClick={addDirHandler}
+                            onClick={sendHandler}
                         >
                             Добавить рекламу
                         </button>

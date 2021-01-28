@@ -127,7 +127,7 @@ input.yellow-input:focus {
     display: flex;
     justify-content: center; /*Центрирование по горизонтали*/
     align-items: center; /*Центрирование по вертикали */
-    font-size: 30;
+    font-size: 30px;
 }
 
 #time {

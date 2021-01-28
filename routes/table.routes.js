@@ -190,11 +190,11 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
                     },
                     day: candidate[0].days[i].day,
                     subjects: Array.from(candidate[0].days[i].subjects, subject => {
+                        console.log(subject.time)
                         return {
                             index: subject.index,
                             name: `subject-${subject.index}`,
                             office: subject.office,
-                            time: subject.time,
                             option: {value: subject.name, label: subject.name, name: 'subject'}
                         }
                     })
@@ -251,7 +251,6 @@ router.post('/editor', auth, async (req, res) => {
                         subjectArr.push({
                             index: form[i].subjects[j].index,
                             name: subjectName,
-                            time: `${form[i].subjects[j].time.startTime}-${form[i].subjects[j].time.endTime}`,
                             office: form[i].subjects[j].office,
                             update: update,
                             date: new Date()
@@ -291,7 +290,6 @@ router.post('/editor', auth, async (req, res) => {
                             return {
                                 index: subject.index,
                                 name: subject.option.value,
-                                time: `${subject.time.startTime}-${subject.time.endTime}`,
                                 office: subject.office,
                                 update: false,
                                 date: new Date()

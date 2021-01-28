@@ -157,7 +157,8 @@ router.get('/get/:id', async (req, res) => {
             times: timeForSend,
             session: session,
             editDate: editDate,
-            isDataReady: true
+            isDataReady: true,
+            school: school.name
         });
 
     } catch (e) {
