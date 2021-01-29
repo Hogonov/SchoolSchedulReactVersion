@@ -51,7 +51,7 @@ export const AddTimePage = () => {
                         specialFirstSession: data.specialFirstSession,
                         specialSecondSession: data.specialSecondSession
                     },
-                    isSpecial: data.isSpecial,
+                    isSpecial: data.isSpecial
                 })
             }
 

@@ -18,7 +18,7 @@ export const UserDashboardPage = () => {
         return (
             <div>
                 <h1/>
-                <div>
+                {/*<div>
                     <Link to="/editor">Редактор</Link>
                 </div>
                 <div>
@@ -35,7 +35,7 @@ export const UserDashboardPage = () => {
                 </div>
                 <div>
                     <Link to="/add_new_year">Добавить учебный год</Link>
-                </div>
+                </div>*/}
             </div>
         )
     }

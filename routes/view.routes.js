@@ -107,7 +107,6 @@ router.get('/get/:id', async (req, res) => {
                             _id: classroomDay.subjects[i]._id,
                             index: classroomDay.subjects[i].index,
                             name: classroomDay.subjects[i].name,
-                            time: classroomDay.subjects[i].time,
                             office: classroomDay.subjects[i].office,
                             date: new Date(),
                             update: false

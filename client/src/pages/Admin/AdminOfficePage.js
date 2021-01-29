@@ -5,7 +5,7 @@ export const AdminOfficePage = () => {
     return (
         <div>
             <h1/>
-            <div>
+            {/*<div>
                 <Link to="/editor">Редактор</Link>
             </div>
             <div>
@@ -25,7 +25,7 @@ export const AdminOfficePage = () => {
             </div>
             <div>
                 <Link to="/ad">Реклама</Link>
-            </div>
+            </div>*/}
         </div>
     )
 };

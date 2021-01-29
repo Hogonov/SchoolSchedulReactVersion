@@ -19,6 +19,7 @@ import {AddAdPage} from "./pages/Ad/AddAdPage";
 import {AdListPage} from "./pages/Ad/AdListPage";
 import {AddYearSchoolPage} from "./pages/YearSchool/AddYearSchoolPage";
 import {EditorSpecialCoursePage} from "./pages/EditorSpecialCoursePage/EditorSpecialCoursePage";
+import {SelectTheme} from "./pages/SelectTheme/SelectTheme";
 
 
 export const useRoutes = (isAuthenticated, userRole) => {
@@ -27,6 +28,9 @@ export const useRoutes = (isAuthenticated, userRole) => {
             <Switch>
                 <Route path="/view/:id" exact>
                     <ViewPage/>
+                </Route>
+                <Route path="/select_theme" exact>
+                    <SelectTheme/>
                 </Route>
                 <Route path="/select_view" exact>
                     <SelectViewPage/>
@@ -87,6 +91,9 @@ export const useRoutes = (isAuthenticated, userRole) => {
             <Switch>
                 <Route path="/view/:id" exact>
                     <ViewPage/>
+                </Route>
+                <Route path="/select_theme" exact>
+                    <SelectTheme/>
                 </Route>
                 <Route path="/select_view" exact>
                     <SelectViewPage/>

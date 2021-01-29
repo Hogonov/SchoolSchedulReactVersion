@@ -55,9 +55,14 @@ export const Sidebar = (props) => {
                     </Link>
                 </Nav.Item>
                 <Nav.Item>
-                    <Link className="nav-link" id="last-nav-link" to="/add_new_year">
+                    <Link className="nav-link" to="/add_new_year">
                         <svg className="toPlusIcon"/>
                         учебный год
+                    </Link>
+                </Nav.Item>
+                <Nav.Item>
+                    <Link className="nav-link" id="last-nav-link" to="/select_theme">
+                        Оформление   <svg className="toArrowIcon"/>
                     </Link>
                 </Nav.Item>
 
