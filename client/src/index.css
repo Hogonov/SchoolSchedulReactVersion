@@ -24,6 +24,13 @@
 }
 .withBackgroundImage {
     background-image: url("public/images/bg.jpg");
+    background-attachment: fixed;
+}
+
+body {
+    -moz-background-size: 100%;
+    -webkit-background-size: 100%;
+    -o-background-size: 100%;
 }
 
 #root {
@@ -32,7 +39,6 @@
     -moz-background-size: 100%;
     -webkit-background-size: 100%;
     -o-background-size: 100%;
-    background-attachment: fixed;
 }
 
 ::-webkit-scrollbar {
@@ -47,6 +53,9 @@
 ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
     background-color: #ffffff;
+}
+html {
+    overflow-x: hidden;
 }
 .custom-input {
     border-bottom: 1px solid #000 !important;

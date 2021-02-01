@@ -5,9 +5,12 @@
 }
 
 .auth > div {
+    width: 96%;
+    margin-left: 2%;
     background-color: #ffffff;
     padding: 5%;
     border-radius: 10px;
+    box-shadow: 20px 30px 30px rgba(0, 0, 0, 0.1), 30px 40px 40px rgba(0, 0, 0, 0.08), 40px 60px 60px rgba(0, 0, 0, 0.15);
 }
 .logo {
     background-image: url("../../public/icons/blueLogoItSchool.svg");
@@ -20,8 +23,8 @@
 
 .button {
     background-color: #6185c3;
-    margin-left: 80%;
-    width: 20%;
+    margin-left: 75%;
+    width: 25%;
     font-family: "GothamProBold", serif;
 }
 

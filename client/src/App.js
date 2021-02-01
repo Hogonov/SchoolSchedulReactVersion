@@ -17,9 +17,9 @@ function App() {
 
     useEffect(() => {
         if (window.location.href.indexOf("/login") === -1) {
-            document.getElementById('root').className = 'withBackgroundImage'
+            document.getElementById('bodyId').className = 'withBackgroundImage'
         } else {
-            document.getElementById('root').className = 'withBackgroundColor'
+            document.getElementById('bodyId').className = 'withBackgroundColor'
         }
     }, [routes])
 
@@ -31,7 +31,7 @@ function App() {
         <AuthContext.Provider value={{token, login, logout, userId, isAuthenticated, userRole}}>
             <Roter>
                 {isAuthenticated && flag && <Header/>}
-                {flag && <div style={{display: "flex", flexDirection: "row"}}>
+                {flag && <div id='fullScreen' style={{display: "flex", flexDirection: "row"}}>
                     {isAuthenticated && <Sidebar userRole={userRole}/>}
                     <div className="container main">
                         {routes}
