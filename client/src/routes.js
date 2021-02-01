@@ -3,7 +3,7 @@ import {Switch, Route, Redirect} from 'react-router-dom'
 import {ViewPage} from './pages/View/ViewPage'
 import {UserDashboardPage} from './pages/UserDashboard/UserDashboardPage'
 import {DetailPage} from './pages/User/DetailPage'
-import {AuthPage} from './pages/User/AuthPage'
+import {AuthPage} from './pages/Auth/AuthPage'
 import {AddClassPage} from './pages/Class/AddClassPage'
 import {AdminOfficePage} from './pages/Admin/AdminOfficePage'
 import {UsersPage} from "./pages/User/UsersPage";
@@ -138,7 +138,7 @@ export const useRoutes = (isAuthenticated, userRole) => {
 
     return (
         <Switch>
-            <Route path="/" exact>
+            <Route path="/login" exact>
                 <AuthPage/>
             </Route>
             <Route path="/select_view" exact>
@@ -147,7 +147,7 @@ export const useRoutes = (isAuthenticated, userRole) => {
             <Route path="/view/:id" exact>
                 <ViewPage/>
             </Route>
-            <Redirect to="/"/>
+            <Redirect to="/login"/>
         </Switch>
     )
 };

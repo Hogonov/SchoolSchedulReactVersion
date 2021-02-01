@@ -48,7 +48,7 @@ router.post(
                 await newSchool.save();
             await user.save();
 
-            res.status(201).json({message: 'Пользователь создан'})
+            res.status(201).json({message: 'Пользователь создан', ok: true})
 
         } catch (e) {
             console.log(e);
@@ -60,7 +60,7 @@ router.post(
 // /api/users/get_all
 router.get('/get_all', auth, async (req, res) => {
     try {
-        const users = await User.find({});
+        const users = await User.find({}).sort({role: 1});
         res.json(users);
     } catch (e) {
         console.log(e);
@@ -102,6 +102,27 @@ router.put('/edit_user/:id', auth, async (req, res) => {
 
         res.status(201).json({message: 'Пользователь изменён'});
 
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
+
+// /api/users/delete_user/:id
+router.delete('/delete_user/:id', auth, async (req, res) => {
+    try {
+
+        const user = await User.findById(req.user.userId);
+        if (user.role === 'ROLE_ADMIN') {
+            User.findByIdAndRemove({_id: req.params.id}, (err, data) => {
+                if(!!err){
+                    console.log(err)
+                }
+            })
+            res.status(201).json({message: 'Пользователь удален', ok: true});
+        } else {
+            res.status(403).json({message: 'Недостаточно прав для данной операции'});
+        }
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})

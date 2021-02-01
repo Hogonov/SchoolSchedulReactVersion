@@ -4,6 +4,7 @@
     font-family: "CourierNewRegular";
     src: local("CourierNewRegular"), url("public/fonts/CourierNewRegular.ttf");
 }
+
 @font-face {
     font-family: "GothamProRegular";
     src: local("GothamProRegular"), url("public/fonts/GothamProRegular.ttf");
@@ -18,8 +19,16 @@
     src: local("RobotoSlabBold"), url("public/fonts/RobotoSlabBold.ttf");
 }
 
-body {
+.withBackgroundColor {
+    background-color: #f1f1f1;
+}
+.withBackgroundImage {
     background-image: url("public/images/bg.jpg");
+}
+
+#root {
+    height: 100vh;
+    width: 100vw;
     -moz-background-size: 100%;
     -webkit-background-size: 100%;
     -o-background-size: 100%;
@@ -39,23 +48,19 @@ body {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.2);
     background-color: #ffffff;
 }
-
-input.yellow-input {
-    border-bottom: 1px solid #fff !important;
-    box-shadow: 0 1px 0 0 #fff !important;
+.custom-input {
+    border-bottom: 1px solid #000 !important;
+    box-shadow: 0 1px 0 0 #000 !important;
 }
-
-input.yellow-input + label {
-    color: #ffffff !important;
+.custom-input + label {
+    color: #000000 !important;
 }
-
-input.yellow-input:focus + label {
-    color: #ffeb3b !important;
+.custom-input:focus + label {
+    color: #3273AB !important;
 }
-
-input.yellow-input:focus {
-    border-bottom: 1px solid #ffeb3b !important;
-    box-shadow: 0 1px 0 0 #ffeb3b !important;
+.custom-input:focus {
+    border-bottom: 1px solid #3273AB !important;
+    box-shadow: 0 1px 0 0 #3273AB !important;
 }
 
 .schedule {
@@ -151,6 +156,10 @@ input.yellow-input:focus {
     margin-right: 20px;
     margin-top: 30px;
     color: orangered;
+}
+/*тень для главного блока на странице*/
+.main > div{
+    /*box-shadow: 20px 15px 20px rgba(0, 0, 0, 0.1), 15px 15px 15px rgba(0, 0, 0, 0.08);*/
 }
 
 /* Header */
@@ -269,12 +278,6 @@ input.yellow-input:focus {
 .container {
     margin-left: 20%;
     margin-top: 9%;
-}
-
-.auth {
-    margin-left: -10%;
-    margin-top: 10%;
-    width: 90%;
 }
 
 .timeRedactor {

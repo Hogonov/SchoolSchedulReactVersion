@@ -56,7 +56,7 @@ export const AddClassPage = () => {
                                     id="classroomName"
                                     type="text"
                                     name="classroomName"
-                                    className="yellow-input"
+                                    className="custom-input"
                                     value={form.classroomName}
                                     onChange={changeHandler}
                                 />
@@ -68,7 +68,7 @@ export const AddClassPage = () => {
                                     id="subjectName"
                                     type="text"
                                     name="subjectName"
-                                    className="yellow-input"
+                                    className="custom-input"
                                     value={form.subjectName}
                                     onChange={changeHandler}
                                 />

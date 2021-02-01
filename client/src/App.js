@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {BrowserRouter as Roter} from 'react-router-dom';
 
 import {useRoutes} from "./routes";
@@ -15,7 +15,15 @@ function App() {
     const routes = useRoutes(isAuthenticated, userRole);
     const flag = window.location.href.indexOf("/view") === -1;
 
-    if(!ready){
+    useEffect(() => {
+        if (window.location.href.indexOf("/login") === -1) {
+            document.getElementById('root').className = 'withBackgroundImage'
+        } else {
+            document.getElementById('root').className = 'withBackgroundColor'
+        }
+    }, [routes])
+
+    if (!ready) {
         return <Loader/>
     }
 
@@ -25,7 +33,7 @@ function App() {
                 {isAuthenticated && flag && <Header/>}
                 {flag && <div style={{display: "flex", flexDirection: "row"}}>
                     {isAuthenticated && <Sidebar userRole={userRole}/>}
-                    <div className="container" >
+                    <div className="container main">
                         {routes}
                     </div>
                 </div>

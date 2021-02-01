@@ -89,7 +89,7 @@ export const AddAdPage = () => {
                                     id="name"
                                     type="text"
                                     name="name"
-                                    className="yellow-input"
+                                    className="custom-input"
                                     value={form.name}
                                     onChange={changeHandler}
                                 />
@@ -114,7 +114,7 @@ export const AddAdPage = () => {
                                     id="image"
                                     type="file"
                                     name="image"
-                                    className="yellow-input"
+                                    className="custom-input"
                                     value={form.imageName}
                                     onChange={changeFileHandler}
                                 />

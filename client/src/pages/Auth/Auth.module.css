@@ -1,0 +1,54 @@
+.auth {
+    margin-left: 13%;
+    position: absolute;
+    width: 32%;
+}
+
+.auth > div {
+    background-color: #ffffff;
+    padding: 5%;
+    border-radius: 10px;
+}
+.logo {
+    background-image: url("../../public/icons/blueLogoItSchool.svg");
+    height: 191px;
+    width: 200px;
+    margin-left: 32%;
+    margin-bottom: 10%;
+    margin-top: -20%;
+}
+
+.button {
+    background-color: #6185c3;
+    margin-left: 80%;
+    width: 20%;
+    font-family: "GothamProBold", serif;
+}
+
+.button:hover, .addSpecialCourse:hover {
+    background-color: #7ba5c6;
+}
+
+.button:focus, .addSpecialCourse:focus {
+    background-color: #3a73ab;
+}
+
+.inputBlock h5 {
+    font-family: "GothamProRegular", serif;
+}
+
+.inputBlock {
+    border-radius: 10px;
+    padding: 2px;
+}
+
+.customInput {
+    border: 1px solid #f1f1f1 !important;
+    box-shadow: 1px 1px 1px 1px #f1f1f1 !important;
+    background-color: #f1f1f1 !important;
+    border-radius: 10px !important;
+}
+
+.customInput:focus {
+
+}

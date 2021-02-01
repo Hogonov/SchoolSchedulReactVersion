@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
 import {Loader} from "../../components/Loader";
-import {UserCard} from "../../components/UserCard";
+import {UserCard} from "./UserCard";
 import {useMessage} from "../../hooks/message.hook";
 
 
@@ -65,7 +65,7 @@ export const DetailPage = () => {
                                     id="login"
                                     type="text"
                                     name="login"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={user.login}
                                     onChange={changeHandler}
                                 />
@@ -79,7 +79,7 @@ export const DetailPage = () => {
                                     id="password"
                                     type="password"
                                     name="password"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={user.password}
                                     onChange={changeHandler}
                                 />
@@ -93,7 +93,7 @@ export const DetailPage = () => {
                                     id="role"
                                     type="text"
                                     name="role"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={user.role}
                                     onChange={changeHandler}
                                 />
@@ -107,7 +107,7 @@ export const DetailPage = () => {
                                     id="school"
                                     type="text"
                                     name="school"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={user.school}
                                     onChange={changeHandler}
                                 />

@@ -56,7 +56,7 @@ export const AddAnnouncementPage = () => {
                                     id="name"
                                     type="text"
                                     name="name"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={announcement.name}
                                     onChange={changeHandler}
                                 />
@@ -82,7 +82,7 @@ export const AddAnnouncementPage = () => {
                                 id="deleteDate"
                                 type="date"
                                 name="deleteDate"
-                                className="yellow-input white-text"
+                                className="custom-input white-text"
                                 value={announcement.deleteDate}
                                 onChange={changeHandler}
                             />

@@ -55,7 +55,7 @@ export const AddUserPage = () => {
                                     id="login"
                                     type="text"
                                     name="login"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={user.login}
                                     onChange={changeHandler}
                                 />
@@ -69,7 +69,7 @@ export const AddUserPage = () => {
                                     id="password"
                                     type="password"
                                     name="password"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={user.password}
                                     onChange={changeHandler}
                                 />
@@ -83,7 +83,7 @@ export const AddUserPage = () => {
                                     id="role"
                                     type="text"
                                     name="role"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={user.role}
                                     onChange={changeHandler}
                                 />
@@ -97,7 +97,7 @@ export const AddUserPage = () => {
                                     id="school"
                                     type="text"
                                     name="school"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={user.school}
                                     onChange={changeHandler}
                                 />

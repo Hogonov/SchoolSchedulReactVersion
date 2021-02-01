@@ -76,7 +76,7 @@ export const AddDirPage = () => {
                                     id="name"
                                     type="text"
                                     name="name"
-                                    className="yellow-input"
+                                    className="custom-input"
                                     value={form.name}
                                     onChange={changeHandler}
                                 />
@@ -89,7 +89,7 @@ export const AddDirPage = () => {
                                     id="text"
                                     type="text"
                                     name="text"
-                                    className="yellow-input"
+                                    className="custom-input"
                                     value={form.text}
                                     onChange={changeHandler}
                                 />
@@ -102,7 +102,7 @@ export const AddDirPage = () => {
                                     id="image"
                                     type="file"
                                     name="image"
-                                    className="yellow-input"
+                                    className="custom-input"
                                     value={form.imageName}
                                     onChange={changeFileHandler}
                                 />

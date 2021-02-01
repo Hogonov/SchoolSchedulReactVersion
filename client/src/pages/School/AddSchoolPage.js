@@ -59,7 +59,7 @@ export const AddSchoolPage = () => {
                                     id="schoolName"
                                     type="text"
                                     name="schoolName"
-                                    className="yellow-input"
+                                    className="custom-input"
                                     value={form.schoolName}
                                     onChange={changeHandler}
                                 />

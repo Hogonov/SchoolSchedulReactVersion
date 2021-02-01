@@ -3,7 +3,7 @@ import {useParams} from 'react-router-dom';
 import {useHttp} from "../../hooks/http.hook";
 import {AuthContext} from "../../context/AuthContext";
 import {Loader} from "../../components/Loader";
-import {UserCard} from "../../components/UserCard";
+import {UserCard} from "../User/UserCard";
 import {useMessage} from "../../hooks/message.hook";
 import DatePicker from "react-datepicker"
 
@@ -78,7 +78,7 @@ export const DetailAnnouncementPage = () => {
                                     id="name"
                                     type="text"
                                     name="name"
-                                    className="yellow-input white-text"
+                                    className="custom-input white-text"
                                     value={announcement.name}
                                     onChange={changeHandler}
                                 />
@@ -103,7 +103,7 @@ export const DetailAnnouncementPage = () => {
                                 id="deleteDate"
                                 type="date"
                                 name="deleteDate"
-                                className="yellow-input white-text"
+                                className="custom-input white-text"
                                 value={announcement.deleteDate}
                                 onChange={changeHandler}
                             />
