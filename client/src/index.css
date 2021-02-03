@@ -72,100 +72,19 @@ html {
     box-shadow: 0 1px 0 0 #3273AB !important;
 }
 
-.schedule {
-    display: grid;
-    grid-template-columns: 0.7fr repeat(10, 1fr);
-    grid-column-gap: 1px;
-    grid-row-gap: 1px;
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
 }
-
-.schedule {
-    /*border: 2px solid #f76707;*/
-    /*border-radius: 5px;*/
-    background-color: white;
-    margin: 0px 0px 0px 0px;
-    height: 35%;
-    font-family: Sans-Serif;
-    font-size: large;
+input[type="time"] {
+    text-align: center;
 }
-
-.schedule > div {
-    /*border: 2px solid rgb(191, 197, 207);*/
-    /*border-radius: 5px;*/
-    background-color: #E6E6FA;
-    /*padding: 0em;*/
-    color: #22130d;
-    display: flex;
-    justify-content: center; /*Центрирование по горизонтали*/
-    align-items: center; /*Центрирование по вертикали */
-    min-height: 32px;
-    min-width: 100px;
-}
-
-.schedule > .separation {
-    background-color: #1E90FF;
-    color: white;
-
-}
-
-.head {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    margin: 0px 0px 0px 0px;
-    font-family: Sans-Serif, bold;
-}
-
-#director {
-    margin-top: 20px;
-}
-
-#dirImage {
-    margin-right: 10px;
-}
-
-#directorText {
-    margin-left: 10px;
-}
-
-.foot {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    height: 15%;
-    font-family: Sans-Serif;
-    font-size: large;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 
-#caption {
-    color: #1E90FF;
-    display: flex;
-    justify-content: center; /*Центрирование по горизонтали*/
-    align-items: center; /*Центрирование по вертикали */
-    font-size: 30px;
-}
-
-#time {
-    display: flex;
-    justify-content: left; /*Центрирование по горизонтали*/
-    align-items: center; /*Центрирование по вертикали */
-    color: #1E90FF;
-    padding-left: 28px;
-}
-
-#hideCell {
-    background-color: white;
-}
-
-#ad1 {
-    margin-left: 20px;
-    margin-top: 30px;
-}
-
-#announcement {
-    margin-right: 20px;
-    margin-top: 30px;
-    color: orangered;
-}
 /*тень для главного блока на странице*/
 .main > div{
     /*box-shadow: 20px 15px 20px rgba(0, 0, 0, 0.1), 15px 15px 15px rgba(0, 0, 0, 0.08);*/
@@ -296,4 +215,14 @@ html {
 
 .session {
     margin-left: 50px;
+}
+
+.custom-button {
+    background-color: #3a73ab;
+}
+.custom-button:hover{
+    background-color: #7ba5c6;
+}
+.custom-button:focus{
+    background-color: #3a73ab;
 }

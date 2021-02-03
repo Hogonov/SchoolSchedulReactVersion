@@ -4,7 +4,7 @@ import {ViewPage} from './pages/View/ViewPage'
 import {UserDashboardPage} from './pages/UserDashboard/UserDashboardPage'
 import {DetailPage} from './pages/User/DetailPage'
 import {AuthPage} from './pages/Auth/AuthPage'
-import {AddClassPage} from './pages/Class/AddClassPage'
+import {AddClassAndSubjectPage} from './pages/ClassAndSubjects/AddClassAndSubjectPage'
 import {AdminOfficePage} from './pages/Admin/AdminOfficePage'
 import {UsersPage} from "./pages/User/UsersPage";
 import {AddUserPage} from "./pages/User/AddUserPage";
@@ -54,7 +54,7 @@ export const useRoutes = (isAuthenticated, userRole) => {
                     <EditorPage/>
                 </Route>
                 <Route path="/add_data" exact>
-                    <AddClassPage/>
+                    <AddClassAndSubjectPage/>
                 </Route>
                 <Route path="/office_admin" exact>
                     <AdminOfficePage/>
@@ -117,7 +117,7 @@ export const useRoutes = (isAuthenticated, userRole) => {
                     <EditorPage/>
                 </Route>
                 <Route path="/add_data" exact>
-                    <AddClassPage/>
+                    <AddClassAndSubjectPage/>
                 </Route>
                 <Route path="/add_time" exact>
                     <AddTimePage/>

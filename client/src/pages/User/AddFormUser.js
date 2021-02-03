@@ -8,6 +8,7 @@ export const AddFormUser = props => {
 
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
+
     const changeHandler = event => {
         props.setUser({...props.user, [event.target.name]: event.target.value});
         console.log(event.target)

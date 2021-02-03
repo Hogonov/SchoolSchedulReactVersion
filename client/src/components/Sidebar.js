@@ -40,12 +40,12 @@ export const Sidebar = (props) => {
                 <Nav.Item>
                     <Link className="nav-link" to="/add_data">
                         <svg className="toPlusIcon"/>
-                        данных</Link>
+                        классы и предметы</Link>
                 </Nav.Item>
                 <Nav.Item>
                     <Link className="nav-link" to="/add_time">
                         <svg className="toPlusIcon"/>
-                        время
+                        расписание звонков
                     </Link>
                 </Nav.Item>
                 <Nav.Item>

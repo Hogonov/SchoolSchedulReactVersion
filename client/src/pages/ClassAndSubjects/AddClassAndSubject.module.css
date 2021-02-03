@@ -1,0 +1,169 @@
+.main > div {
+
+}
+.classes, .subjects {
+    padding: 20px;
+}
+
+.classes > div, .subjects > div {
+    border-radius: 10px;
+    box-shadow: 20px 15px 20px rgba(0, 0, 0, 0.1), 15px 15px 15px rgba(0, 0, 0, 0.08);
+}
+
+.classes > div{
+
+}
+.subjects > div{
+
+}
+
+.classTitle, .subjectTitle{
+    height: 50px;
+    font-size: 30px;
+    padding-left: 30px;
+    background-color: white;
+    width: 34%;
+}
+
+.arrowDown{
+    background-image: url("../../public/icons/down-arrow.svg");
+    height: 40px;
+    width: 40px;
+    margin-bottom: -12px;
+    cursor: pointer;
+}
+
+.arrowUp{
+    background-image: url("../../public/icons/up-arrow.svg");
+    height: 60px;
+    width: 60px;
+    margin-bottom: -15px;
+    cursor: pointer;
+}
+
+.clickDiv {
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+}
+.checkedDiv {
+    background-color: #BBDCC9;
+}
+.checkMark {
+    background-image: url("../../public/icons/check-mark.svg");
+    width: 10px;
+    height: 10px;
+}
+.formClass table {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 5%;
+}
+.formClass table tbody tr td:not(.specialTd){
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 0;
+}
+.formClass table tbody tr .title{
+    background-color: #3a73ab;
+    color: white;
+}
+
+.specialTd {
+    padding: 0;
+}
+.classBlock {
+    width: 70%;
+    background-color: white;
+    padding: 50px;
+}
+
+.formClass > button {
+    margin-top: 4%;
+    margin-left: 43%;
+    width: 15%;
+}
+.formClass .inputBlock{
+    margin-left: 27%;
+}
+
+.formClass .inputBlock div{
+    width: 10%;
+    margin-left: 2%;
+    margin-top: 10px;
+}
+
+.formClass .inputBlock div input{
+    font-size: 25px;
+    text-align: center;
+}
+.formClass .inputBlock .specialDiv{
+    margin-left: 11%;
+}
+
+
+.subjectBlock {
+    width: 70%;
+    background-color: white;
+    padding: 50px;
+}
+.formSubject{
+
+}
+.formSubject > h3, .formClass > h3{
+    margin-top: -20px;
+    text-align: center;
+}
+.formSubject > button {
+    margin-top: 4%;
+    margin-left: 82%;
+}
+
+.inputBlock {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+.formSubject .inputBlock > h4 {
+    margin-left: 3%;
+}
+.formSubject .inputBlock div{
+     width: 70%;
+     margin-left: 2%;
+    margin-top: 10px;
+ }
+.formSubject .inputBlock div input{
+    font-size: 25px;
+}
+.redCross{
+    background-image: url("../../public/icons/delete.svg");
+    width: 20px;
+    height: 30px;
+    cursor: pointer;
+}
+.deleteTh {
+    background-image: url("../../public/icons/rubbish.svg");
+    width: 23px;
+    height: 30px;
+}
+
+
+.subjectList {
+    margin-top: 4%;
+    margin-left: 15%;
+    width: 70%;
+}
+.subjectList table{
+
+}
+.subjectList table thead tr th{
+    font-size: 20px;
+    text-align: center;
+}
+
+.subjectList table tbody tr td{
+    border-collapse: collapse;
+    text-align: center;
+    padding: 10px;
+}

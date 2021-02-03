@@ -14,32 +14,28 @@ const SpecialDate = require('../models/SpecialDate');
 const router = Router();
 
 
-// /api/table/subjects
+// /api/table/subject
 router.post('/subject',
     [check('subjectName', 'Введите название предмета').exists()],
     auth,
     async (req, res) => {
         try {
-            const errors = validationResult(req);
 
+            const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     errors: errors.array(),
                     message: 'Некорректный данные при добавлении предмета'
                 });
             }
-
-
             const {subjectName} = req.body;
+            console.log(subjectName)
+            const candidate = await DataSubject.findOne({name: subjectName, school: req.user.school});
 
-            /* const candidate = await DataSubject.findOne({name: subjectName});
-
-             if (candidate) {
-                 return res.status(400).json({message: 'Такой предмет уже добавлен'})
-             }*/
-
-            const user = await User.findById(req.user.userId);
-            const subject = new DataSubject({name: subjectName, school: user.school});
+            if (candidate) {
+                return res.status(400).json({message: 'Такой предмет уже добавлен'})
+            }
+            const subject = new DataSubject({name: subjectName, school: req.user.school});
 
             await subject.save();
 
@@ -47,7 +43,7 @@ router.post('/subject',
 
 
         } catch (e) {
-            //console.log(e);
+            console.log(e);
             res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
         }
     });
@@ -56,25 +52,17 @@ router.post('/subject',
 // /api/table/classroom
 router.post('/classroom',
     auth,
-    [check('classroomName', 'Введите название класса').exists()],
     async (req, res) => {
         try {
-            const errors = validationResult(req);
 
-
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    errors: errors.array(),
-                    message: 'Некорректный данные при добавлении класса'
-                });
-            }
-
-
-            const {classroomName} = req.body;
+            const {classes} = req.body;
 
             const user = await User.findById(req.user.userId);
 
-            const classroom = new DataClassroom({name: classroomName, school: user.school});
+            const classroom = new DataClassroom({
+                name: classroomName,
+                school: user.school
+            });
 
             await classroom.save();
 
@@ -91,7 +79,8 @@ router.post('/classroom',
 // /api/table/get_subject
 router.get('/get_subject', auth, async (req, res) => {
     try {
-        const subjects = await DataSubject.find({school: req.user.school});
+        const user = await User.findById(req.user.userId);
+        const subjects = await DataSubject.find({school: user.school});
         res.json(subjects);
     } catch (e) {
         console.log(e);
@@ -99,6 +88,32 @@ router.get('/get_subject', auth, async (req, res) => {
     }
 });
 
+// /api/table/delete_subject/:id
+router.delete('/delete_subject/:id', auth, async (req, res) => {
+    try {
+
+        DataSubject.findByIdAndRemove({_id: req.params.id}, (err, data) => {
+            if (!!err) {
+                console.log(err)
+            }
+        })
+        res.status(201).json({message: 'Предмет удален', ok: true});
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
+// /api/table/get_classes
+router.get('/get_classes', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId);
+        const classrooms = await DataClassroom.find({school: user.school}).sort({name: 1});
+        res.json(classrooms);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
 
 // /api/table/add_school
 router.post('/add_school',
