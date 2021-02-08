@@ -1,7 +1,8 @@
 const {Schema, model, Types} = require('mongoose');
 
 const schema = new Schema({
-    name: {type: String, required: true},
+    classes: [String],
+    checkedArr: [[Boolean]],
     school: {type: String, required: true}
 });
 

@@ -19,6 +19,8 @@ export const SubjectList = props => {
                 props.setReady({...props.flag, update: true})
             }
             message(fetched.message)
+            const fetchedSubjects = await request('/api/table/get_subject', 'GET', null, {Authorization: `Bearer ${auth.token}`});
+            props.setData({...props.data, subjects: fetchedSubjects});
         } catch (e) {
         }
     };

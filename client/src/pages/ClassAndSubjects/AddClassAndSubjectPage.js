@@ -7,6 +7,7 @@ import style from './AddClassAndSubject.module.css'
 import {SubjectForm} from "./SubjectForm";
 import {ClassForm} from "./ClassForm";
 import {SubjectList} from "./SubjectList";
+import {Loader} from "../../components/Loader";
 
 
 export const AddClassAndSubjectPage = () => {
@@ -75,7 +76,32 @@ export const AddClassAndSubjectPage = () => {
         subjects: false,
         classes: false,
     })
+    const getData = useCallback(async () => {
+        try {
+            const fetchedSubjects = await request('/api/table/get_subject', 'GET', null, {Authorization: `Bearer ${token}`});
+            const fetchedClasses = await request('/api/table/get_classes', 'GET', null, {Authorization: `Bearer ${token}`});
+            const fetchedCandidate = await request('/api/table/get_checked_classroom', 'GET', null, {Authorization: `Bearer ${token}`});
+            if (fetchedCandidate.candidate) {
+                let index = AlphabetRu.indexOf(fetchedCandidate.lastLetter) + 1
+                setForm({
+                    ...form, classes: {
+                        ...form.classes,
+                        checkedClass: fetchedCandidate.classrooms.classes,
+                        lastLetter: fetchedCandidate.lastLetter,
+                        classLetters: AlphabetRu.slice(0, index)
+                    }
+                })
+                setFlag({...flag, checkedArr: fetchedCandidate.classrooms.checkedArr})
+            }
+            setData({classes: fetchedClasses, subjects: fetchedSubjects});
+        } catch (e) {
 
+        }
+    }, [token, request]);
+
+    useEffect(() => {
+        getData()
+    }, [getData, ready.subject]);
 
     const changeHandler = event => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -91,28 +117,6 @@ export const AddClassAndSubjectPage = () => {
     }, []);
 
 
-    const getData = useCallback(async () => {
-        try {
-            const fetchedSubjects = await request('/api/table/get_subject', 'GET', null, {Authorization: `Bearer ${token}`});
-            const fetchedClasses = await request('/api/table/get_classes', 'GET', null, {Authorization: `Bearer ${token}`});
-            setData({classes: fetchedClasses, subjects: fetchedSubjects});
-            let arr1 = []
-            for (let i = 0; i < AlphabetRu.length; i++) {
-                arr1.push([])
-                for (let j = 0; j < MaxLessons; j++) {
-                    arr1[i].push(false)
-                }
-            }
-            console.log(arr1)
-        } catch (e) {
-
-        }
-    }, [token, request]);
-
-    useEffect(() => {
-        getData();
-    }, [getData, ready.subject]);
-
     const addClassroomHandler = async () => {
         try {
             const data = await request('/api/table/classroom', 'POST', {...form}, {Authorization: `Bearer ${auth.token}`});
@@ -122,18 +126,20 @@ export const AddClassAndSubjectPage = () => {
     };
 
     const changeFlag = event => {
-        console.log(event.target)
         setFlag({...flag, [event.target.id]: !flag[event.target.id]})
     }
 
+    if (loading){
+        return <Loader/>
+    }
     return (
         <div className={style.main}>
             <div className={style.classes}>
-                {flag.classes && <div className={style.classTitle}>Добавить класс <svg className={style.arrowDown}
+                {!flag.classes && <div className={style.classTitle}>Добавить класс <svg className={style.arrowDown}
                                                                                        id="classes"
                                                                                        onClick={changeFlag}/>
                 </div>}
-                {!flag.classes && <div className={style.classBlock}>
+                {flag.classes && <div className={style.classBlock}>
                     <ClassForm
                         AlphabetRu={AlphabetRu}
                         changeFlag={changeFlag}
@@ -158,8 +164,10 @@ export const AddClassAndSubjectPage = () => {
                         form={form}
                         changeHandler={changeHandler}
                         changeFlag={changeFlag}
+                        data={data}
+                        setData={setData}
                     />
-                    <SubjectList subjects={data.subjects} setReady={setReady} ready={ready}/>
+                    <SubjectList subjects={data.subjects} setReady={setReady} ready={ready} data={data} setData={setData}/>
                 </div>}
             </div>
         </div>

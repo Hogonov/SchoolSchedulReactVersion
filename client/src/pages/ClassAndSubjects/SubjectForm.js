@@ -16,6 +16,8 @@ export const SubjectForm = props => {
         try {
             const data = await request('/api/table/subject', 'POST', {subjectName: props.form.subjectName}, {Authorization: `Bearer ${auth.token}`});
             message(data.message)
+            const fetchedSubjects = await request('/api/table/get_subject', 'GET', null, {Authorization: `Bearer ${auth.token}`});
+            props.setData({...props.data, subjects: fetchedSubjects});
         } catch (e) {
         }
     };

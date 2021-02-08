@@ -15,7 +15,7 @@ export const ClassForm = props => {
 
     const addClassroomsHandler = async () => {
         try {
-            const data = await request('/api/table/classroom', 'POST', {...props.form},
+            const data = await request('/api/table/classroom', 'POST', {...props.form.classes, checkedArr: props.flag.checkedArr},
                 {Authorization: `Bearer ${auth.token}`});
             message(data.message)
         } catch (e) {

@@ -29,14 +29,13 @@ router.post('/subject',
                 });
             }
             const {subjectName} = req.body;
-            console.log(subjectName)
-            const candidate = await DataSubject.findOne({name: subjectName, school: req.user.school});
+            const user = await User.findById(req.user.userId);
+            const candidate = await DataSubject.findOne({name: subjectName, school: user.school});
 
             if (candidate) {
                 return res.status(400).json({message: 'Такой предмет уже добавлен'})
             }
-            const subject = new DataSubject({name: subjectName, school: req.user.school});
-
+            const subject = new DataSubject({name: subjectName, school: user.school});
             await subject.save();
 
             res.status(201).json({message: 'Предмет добавлен'})
@@ -55,18 +54,29 @@ router.post('/classroom',
     async (req, res) => {
         try {
 
-            const {classes} = req.body;
+            const {classLetters, lastLetter, lengthLetters, checkedClass, checkedArr} = req.body;
 
             const user = await User.findById(req.user.userId);
+            const candidate = await DataClassroom.find({school: user.school})
 
-            const classroom = new DataClassroom({
-                name: classroomName,
-                school: user.school
-            });
-
-            await classroom.save();
-
-            res.status(201).json({message: 'Класс добавлен'})
+            if (candidate.length > 0) {
+                const classroom = new DataClassroom({
+                    _id: candidate[0]._id,
+                    classes: checkedClass,
+                    checkedArr: checkedArr,
+                    school: user.school
+                });
+                await DataClassroom.findByIdAndUpdate({_id: classroom._id}, classroom);
+                res.status(201).json({message: 'Классы изменены'})
+            } else {
+                const classroom = new DataClassroom({
+                    classes: checkedClass,
+                    checkedArr: checkedArr,
+                    school: user.school
+                });
+                await classroom.save();
+                res.status(201).json({message: 'Классы добавлен'})
+            }
 
 
         } catch (e) {
@@ -74,6 +84,30 @@ router.post('/classroom',
             res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
         }
     });
+
+// /api/table/get_checked_classroom
+router.get('/get_checked_classroom', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId);
+        const classrooms = await DataClassroom.find({school: user.school});
+        if (classrooms.length > 0) {
+            let lastLetter = 'A'
+            classrooms[0].classes.forEach(e => {
+                let letter = e.charAt(e.length - 1)
+                if (letter > lastLetter){
+                    lastLetter = letter
+                }
+            })
+            res.json({classrooms: classrooms[0], candidate: true, lastLetter: lastLetter})
+        } else {
+            res.json({candidate: false});
+        }
+
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
 
 
 // /api/table/get_subject
@@ -336,9 +370,9 @@ router.get('/get_all_data', auth, async (req, res) => {
 
         const user = await User.findById(req.user.userId);
         const subjects = await DataSubject.find({school: user.school});
-        const classrooms = await DataClassroom.find({school: user.school}).sort({name: 1});
+        const classrooms = (await DataClassroom.find({school: user.school}))[0].classes;
         const times = await Time.find({school: user.school});
-
+        console.log('classrooms', classrooms)
         let newArrSubjects = []
         for (let i = 0; i < subjects.length; i++) {
             newArrSubjects.push({value: subjects[i].name, label: subjects[i].name, name: 'subject'});
@@ -346,7 +380,7 @@ router.get('/get_all_data', auth, async (req, res) => {
         let sub = {
             subjects: newArrSubjects,
             classrooms: Array.from(classrooms, classroom => {
-                return {value: classroom.name, label: classroom.name, name: 'classname'}
+                return {value: classroom, label: classroom, name: 'classname'}
             })
         };
         try {
