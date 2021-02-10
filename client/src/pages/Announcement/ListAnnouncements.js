@@ -5,33 +5,33 @@ import {Loader} from "../../components/Loader";
 import Button from "react-bootstrap/Button";
 import {Link} from "react-router-dom";
 import {useMessage} from "../../hooks/message.hook";
+import style from "../Announcement/StyleAnnouncementsPage.module.css";
 
 
-export const ListAnnouncementPage = () => {
-    const [announcements, setAnnouncements] = useState([]);
+export const ListAnnouncements = props => {
     const {loading, request} = useHttp();
     const {token} = useContext(AuthContext);
     const message = useMessage();
 
-    const fetchAnnouncements = useCallback(async () => {
-        try {
-            const fetched = await request('/api/announcement/get_all', 'GET', null, {Authorization: `Bearer ${token}`});
-            setAnnouncements(fetched);
-        } catch (e) {
 
-        }
-    }, [token, request]);
-
-    useEffect(() => {
-        fetchAnnouncements();
-    }, [fetchAnnouncements]);
-
+    const chosenHandler = event => {
+        let index = +event.target.id
+        props.setAnnouncement({
+            id: props.announcements[index]._id,
+            name: props.announcements[index].name,
+            school: props.announcements[index].school,
+            deleteDate: props.announcements[index].deleteDate.split('T')[0],
+            text: props.announcements[index].text
+        })
+        props.setEdit({text: `Редактирование объявления ${index + 1}`, flag: true})
+        props.setFlag({...props.flag, form: true})
+    }
 
     const deleteHandler = async (event) => {
         try {
             const response = await request(`/api/announcement/delete/${event.target.id}`, 'DELETE', null, {Authorization: `Bearer ${token}`});
             message(response.message);
-            fetchAnnouncements();
+            props.fetchAnnouncements();
         } catch (e) {
             console.log(e)
         }
@@ -41,16 +41,15 @@ export const ListAnnouncementPage = () => {
         return <Loader/>
     }
 
-    if (!announcements.length) {
+    if (!props.announcements.length) {
         return <div>
             <p className="center">Объявлений пока нет</p>
             <h1/>
-            <Button href="/add_new_announcement" className="btn yellow darken-4">Добавить объявление</Button>
         </div>
     }
 
     return (
-        <div>
+        <div className={style.announcementsList}>
             <table>
                 <thead>
                 <tr>
@@ -58,40 +57,30 @@ export const ListAnnouncementPage = () => {
                     <th>Название</th>
                     <th>Школа</th>
                     <th>Дата удаления</th>
-                    <th>Открыть</th>
-                    <th>Удалить</th>
+                    <th><svg className={style.editGray}/></th>
+                    <th><svg className={style.deleteTh}/></th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {announcements.map((announcement, index) => {
+                {props.announcements.map((announcement, index) => {
                     return (
-                        <tr key={announcement._id}>
+                        <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{announcement.name}</td>
                             <td>{announcement.school}</td>
                             <td>{announcement.deleteDate.split('T')[0]}</td>
                             <td>
-                                <Link to={`/detail_announcement/${announcement._id}`}  className="btn yellow darken-4" >Открыть</Link>
+                                <svg onClick={chosenHandler} id={index} className={style.editBlue}/>
                             </td>
                             <td>
-                                <button
-                                    className="btn yellow darken-4"
-                                    disabled={loading}
-                                    style={{marginRight: 10}}
-                                    onClick={deleteHandler}
-                                    id={announcement._id}
-                                >
-                                    Удалить
-                                </button>
+                                <svg onClick={deleteHandler} id={announcement._id} className={style.redCross}/>
                             </td>
                         </tr>
                     )
                 })}
                 </tbody>
             </table>
-            <h1/>
-            <Button href="/add_new_announcement" className="btn yellow darken-4">Добавить объявление</Button>
         </div>
     )
 };

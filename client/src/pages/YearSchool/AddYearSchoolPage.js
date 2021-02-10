@@ -45,7 +45,7 @@ export const AddYearSchoolPage = () => {
 
 
     return (
-        <div className={stylesYearSchoolPage.main}>
+        <div className={stylesYearSchoolPage.main} id='main'>
             <h3 className={stylesYearSchoolPage.title}>Редактор расписания даты занятий</h3>
             <input className={stylesYearSchoolPage.titleYear}
                    type="text"

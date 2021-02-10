@@ -346,7 +346,7 @@ export const EditorPage = () => {
 
     if (loading)
         return <Loader/>;
-    return <div className={styleEditorPage.main}>
+    return <div id='main' className={styleEditorPage.main}>
         <h3 className={styleEditorPage.title}>Редактирование текущего расписания</h3>
 
         <div className={styleEditorPage.filterSelectors}>

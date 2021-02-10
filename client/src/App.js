@@ -33,7 +33,7 @@ function App() {
                 {isAuthenticated && flag && <Header/>}
                 {flag && <div id='fullScreen' style={{display: "flex", flexDirection: "row"}}>
                     {isAuthenticated && <Sidebar userRole={userRole}/>}
-                    <div className="container main">
+                    <div className="container">
                         {routes}
                     </div>
                 </div>

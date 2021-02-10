@@ -31,7 +31,7 @@ router.post('/add', auth,
 
             const {text, deleteDate, name} = req.body;
 
-            if(text.length > 500){
+            if (text.length > 500) {
                 return res.status(400).json({message: 'Введенно больше 500 символов'});
             }
 
@@ -55,14 +55,22 @@ router.post('/add', auth,
 router.get('/get_all', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId);
-        if(user.role === 'ROLE_ADMIN'){
-            const announcements = await Announcement.find({});
-            res.json(announcements);
+        let announcements
+        if (user.role === 'ROLE_ADMIN') {
+            announcements = await Announcement.find({});
         } else {
-            const announcements = await Announcement.find({school: user.school});
-            res.json(announcements);
+            announcements = await Announcement.find({school: user.school});
         }
-
+        let arr = Array.from(announcements, announcement => {
+            return {
+                _id: announcement._id,
+                name: announcement.name,
+                text: announcement.text,
+                school: announcement.school,
+                deleteDate: !announcement.deleteDate ? 'T' : announcement.deleteDate
+            }
+        })
+        res.json(arr);
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
@@ -99,20 +107,15 @@ router.put('/edit/:id', auth, async (req, res) => {
         const {text, deleteDate, name} = req.body;
 
 
-        if (deleteDate.split('-')[0] > new Date().getFullYear() + 800) {
-            console.log(deleteDate.split('-')[0].length + " " + new Date().getFullYear().length);
-            res.status(400).json({message: 'Слишком далекое будущее'})
+        if (deleteDate.split('-')[0] > new Date().getFullYear() + 800 && !(deleteDate.length < 1)) {
+            return res.status(400).json({message: 'Слишком далекое будущее'})
         }
 
-
-        const announcement = new Announcement({
-                _id: req.params.id, name: name, text: text,
-                school: user.school, deleteDate: deleteDate
-            }
-        );
-
-
-        await Announcement.findByIdAndUpdate({_id: req.params.id}, announcement);
+        console.log(req.params.id)
+        await Announcement.findByIdAndUpdate({_id: req.params.id}, {
+            _id: req.params.id, name, text,
+            school: user.school, deleteDate
+        });
 
         res.status(201).json({message: 'Объявление изменено'})
 

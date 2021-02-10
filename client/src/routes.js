@@ -2,17 +2,13 @@ import React from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
 import {ViewPage} from './pages/View/ViewPage'
 import {UserDashboardPage} from './pages/UserDashboard/UserDashboardPage'
-import {DetailPage} from './pages/User/DetailPage'
 import {AuthPage} from './pages/Auth/AuthPage'
 import {AddClassAndSubjectPage} from './pages/ClassAndSubjects/AddClassAndSubjectPage'
 import {AdminOfficePage} from './pages/Admin/AdminOfficePage'
 import {UsersPage} from "./pages/User/UsersPage";
-import {AddUserPage} from "./pages/User/AddUserPage";
 import {EditorPage} from "./pages/Editor/EditorPage";
 import {AddTimePage} from "./pages/Time/AddTimePage";
-import {ListAnnouncementPage} from "./pages/Announcement/ListAnnouncementPage";
-import {AddAnnouncementPage} from "./pages/Announcement/AddAnnouncementPage";
-import {DetailAnnouncementPage} from "./pages/Announcement/DetailAnnouncementPage";
+import {AnnouncementsPage} from "./pages/Announcement/AnnouncementsPage";
 import {SelectViewPage} from "./pages/View/SelectViewPage";
 import {AddDirPage} from "./pages/Dir/AddDirPage";
 import {AddAdPage} from "./pages/Ad/AddAdPage";
@@ -35,20 +31,8 @@ export const useRoutes = (isAuthenticated, userRole) => {
                 <Route path="/select_view" exact>
                     <SelectViewPage/>
                 </Route>
-                <Route path="/detail/:id" exact>
-                    <DetailPage/>
-                </Route>
                 <Route path="/announcement" exact>
-                    <ListAnnouncementPage/>
-                </Route>
-                <Route path="/add_new_announcement" exact>
-                    <AddAnnouncementPage/>
-                </Route>
-                <Route path="/detail_announcement/:id" exact>
-                    <DetailAnnouncementPage/>
-                </Route>
-                <Route path="/add_new_user" exact>
-                    <AddUserPage/>
+                    <AnnouncementsPage/>
                 </Route>
                 <Route path="/editor" exact>
                     <EditorPage/>
@@ -61,9 +45,6 @@ export const useRoutes = (isAuthenticated, userRole) => {
                 </Route>
                 <Route path="/users" exact>
                     <UsersPage/>
-                </Route>
-                <Route path="/detail_user/:id" exact>
-                    <DetailPage/>
                 </Route>
                 <Route path="/add_time" exact>
                     <AddTimePage/>
@@ -101,17 +82,8 @@ export const useRoutes = (isAuthenticated, userRole) => {
                 <Route path="/main" exact>
                     <UserDashboardPage/>
                 </Route>
-                <Route path="/detail/:id" exact>
-                    <DetailPage/>
-                </Route>
                 <Route path="/announcement" exact>
-                    <ListAnnouncementPage/>
-                </Route>
-                <Route path="/add_new_announcement" exact>
-                    <AddAnnouncementPage/>
-                </Route>
-                <Route path="/detail_announcement/:id" exact>
-                    <DetailAnnouncementPage/>
+                    <AnnouncementsPage/>
                 </Route>
                 <Route path="/editor" exact>
                     <EditorPage/>

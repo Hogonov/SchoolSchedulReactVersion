@@ -145,7 +145,7 @@ export const AddTimePage = () => {
 
 
     return (
-        <div className={stylesTimePage.main + " " + (!flag && stylesTimePage.oneMain)}>
+        <div className={stylesTimePage.main + " " + (!flag && stylesTimePage.oneMain)} id='main'>
             <h3 className={stylesTimePage.title}>{title.text}
                 <svg onClick={switcherSpecialDay}
                      className={`${stylesTimePage.buttonSpecialDay} ${form.isSpecial ? stylesTimePage.buttonUsualDay : ''}`}

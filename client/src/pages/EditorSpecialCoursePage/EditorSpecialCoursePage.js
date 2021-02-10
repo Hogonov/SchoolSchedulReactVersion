@@ -47,7 +47,7 @@ export const EditorSpecialCoursePage = () => {
     if (loading)
         return <Loader/>;
     return (
-        <div className={styleEditorSpecialCourse.main}>
+        <div id='main' className={styleEditorSpecialCourse.main}>
             <h3 className={styleEditorSpecialCourse.title}>Редактирование расписания спецкурсов</h3>
             <table className={styleEditorSpecialCourse.mainTable}>
                 <tbody>
