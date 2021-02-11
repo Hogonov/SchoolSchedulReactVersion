@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
@@ -16,8 +16,30 @@ export const AddDirPage = () => {
     });
     const [image, setImage] = useState();
 
+    const getData = useCallback(async () => {
+        try {
+            const data = await request('/api/dir/get_data_form', 'GET', null,
+                {Authorization: `Bearer ${auth.token}`});
+            if(data.candidate){
+                setForm({...form,
+                    name: data.name,
+                    phone: data.phone,
+                    email: data.email,
+                })
+            }
+
+        } catch (e) {
+
+        }
+    }, [request, auth.token])
+
+    useEffect(() => {
+        getData()
+    }, [getData])
+
     const changeHandler = event => {
         try {
+            console.log(form)
             setForm({...form, [event.target.name]: event.target.value});
         } catch (e) {
             console.log(e)
@@ -84,15 +106,15 @@ export const AddDirPage = () => {
                         type='text'
                         onChange={changeHandler}
                         placeholder='Введите номер телефона приемной школы'
-                        value={form.text}
+                        value={form.phone}
                     />
                     <input
                         className='custom-input'
                         name='email'
-                        type='email'
+                        type='text'
                         onChange={changeHandler}
                         placeholder='Введите адрес электронной почты школы'
-                        value={form.text}
+                        value={form.email}
                     />
                 </div>
             </div>

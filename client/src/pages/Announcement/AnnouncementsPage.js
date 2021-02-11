@@ -30,7 +30,7 @@ export const AnnouncementsPage = () => {
         } catch (e) {
 
         }
-    }, [token, request]);
+    }, [token, request])
 
     useEffect(() => {
         fetchAnnouncements();

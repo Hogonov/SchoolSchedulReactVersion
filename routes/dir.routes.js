@@ -103,7 +103,27 @@ router.get('/get/:id', async (req, res) => {
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
     }
 });
+// /api/dir/get_data_form
+router.get('/get_data_form', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId);
+        const dir = await Director.find({school: user.school});
+        if (dir.length > 0){
+            res.json({
+                name: dir[0].name,
+                phone: dir[0].phone,
+                email: dir[0].email,
+                candidate: true
+            })
+        } else {
+            res.json({candidate: false})
+        }
 
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
 
 //api/dir/get_data/:id
 router.get('/get_data/:id', async (req, res) => {
@@ -112,7 +132,8 @@ router.get('/get_data/:id', async (req, res) => {
         const dir = await Director.find({school: school.name});
         res.json({
             name: dir[0].name,
-            text: dir[0].text,
+            phone: dir[0].phone,
+            email: dir[0].email,
             urlImage: `/api/dir/get/${dir[0].id}`,
             isDataReady: true
         })
