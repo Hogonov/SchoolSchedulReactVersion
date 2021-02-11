@@ -22,7 +22,6 @@ const router = Router();
 router.post('/add', auth,
     [
         check('name', 'Некорректный login').exists(),
-        check('text', 'Минимальная длина пароля 6 символов').exists()
     ],
     async (req, res) => {
         try {
@@ -35,7 +34,7 @@ router.post('/add', auth,
                 });
             }
             let id;
-            const {name, text} = req.body;
+            const {name, phone, email} = req.body;
             const user = await User.findById(req.user.userId);
             const candidateArr = await Director.find({school: user.school});
             candidateArr.forEach(candidate => {
@@ -46,7 +45,7 @@ router.post('/add', auth,
 
             });
 
-            const dir = new Director({name: name, text: text, school: user.school});
+            const dir = new Director({name, phone, email, school: user.school});
             const savedDir = await dir.save();
 
             res.status(200).json({message: 'OK', id: savedDir.id})

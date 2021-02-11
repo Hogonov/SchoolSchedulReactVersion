@@ -4,6 +4,7 @@ import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
 import axios from "axios";
+import style from './DirStyle.module.css'
 
 export const AddDirPage = () => {
 
@@ -11,15 +12,13 @@ export const AddDirPage = () => {
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
     const [form, setForm] = useState({
-        name: '', text: '', imageName: ''
+        name: '', phone: '', email: '',imageName: ''
     });
     const [image, setImage] = useState();
 
     const changeHandler = event => {
         try {
             setForm({...form, [event.target.name]: event.target.value});
-            console.log(form);
-            console.log(image);
         } catch (e) {
             console.log(e)
         }
@@ -31,7 +30,6 @@ export const AddDirPage = () => {
         } catch (e) {
             console.log(e)
         }
-
     };
 
     useEffect(() => {
@@ -62,66 +60,55 @@ export const AddDirPage = () => {
     };
 
     return (
-        <div className="row">
-            <h1/>
-            <div className="col s6 offset-s3">
-                <div className="card blue darken-1">
-                    <div className="card-content white-text">
-                        <span className="card-title">Добавление данных</span>
-                        <div className="input-group mb-3">
-                            <h1/>
-                            <div className="input-field">
-                                <input
-                                    placeholder="Введите ФИО директора"
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                    className="custom-input"
-                                    value={form.name}
-                                    onChange={changeHandler}
-                                />
-                                <label htmlFor="name">ФИО</label>
-                            </div>
-                            <h1/>
-                            <div className="input-field">
-                                <input
-                                    placeholder="Введите текст"
-                                    id="text"
-                                    type="text"
-                                    name="text"
-                                    className="custom-input"
-                                    value={form.text}
-                                    onChange={changeHandler}
-                                />
-                                <label htmlFor="text">Текст</label>
-                            </div>
-                            <h1/>
-                            <label className="white-text">Фотография</label>
-                            <div style={{marginTop: 10}}>
-                                <input
-                                    id="image"
-                                    type="file"
-                                    name="image"
-                                    className="custom-input"
-                                    value={form.imageName}
-                                    onChange={changeFileHandler}
-                                />
-                            </div>
-                            <h1/>
-                        </div>
-                    </div>
-                    <div className="card-action">
-                        <button
-                            className="btn yellow darken-4"
-                            style={{marginRight: 10}}
-                            disabled={loading}
-                            onClick={addDirHandler}
-                        >
-                            Добавить директора
-                        </button>
-                    </div>
+        <div id='main' className={style.main}>
+            <div className={style.title}>Добавление данных директора</div>
+            <div className={style.formGrope}>
+                <div className={style.title}>1) ФИО</div>
+                <div className={style.group}>
+                    <input
+                        name='name'
+                        onChange={changeHandler}
+                        className='custom-input'
+                        type='text'
+                        placeholder='Введите ФИО'
+                        value={form.name}
+                    />
                 </div>
             </div>
+            <div className={style.formGrope}>
+                <div className={style.title}>2) Дополнительная информация</div>
+                <div className={style.group}>
+                    <input
+                        className='custom-input'
+                        name='phone'
+                        type='text'
+                        onChange={changeHandler}
+                        placeholder='Введите номер телефона приемной школы'
+                        value={form.text}
+                    />
+                    <input
+                        className='custom-input'
+                        name='email'
+                        type='email'
+                        onChange={changeHandler}
+                        placeholder='Введите адрес электронной почты школы'
+                        value={form.text}
+                    />
+                </div>
+            </div>
+            <div className={style.formGrope}>
+                <div className={style.title}>3) Фотография</div>
+                <div className={style.group}>
+                    <input
+                        name='image'
+                        onChange={changeFileHandler}
+                        className={`custom-input-file ${style.photo}`}
+                        type='file'
+                        value={form.imageName}
+                    />
+                </div>
+            </div>
+            <button onClick={addDirHandler} className={`btn ${style.button}`}>Добавить</button>
         </div>
     )
 };

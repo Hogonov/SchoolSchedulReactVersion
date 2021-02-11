@@ -60,9 +60,17 @@ body {
 html {
     overflow-x: hidden;
 }
+
+textarea {
+    border: 1px solid #8cc3f3 !important;
+}
+textarea:focus{
+    border: 2px solid #3273AB !important;
+    outline: none;
+}
 .custom-input {
-    border-bottom: 1px solid #000 !important;
-    box-shadow: 0 1px 0 0 #000 !important;
+    border-bottom: 1px solid #8cc3f3 !important;
+    box-shadow: 0 1px 0 0 #8cc3f3 !important;
 }
 .custom-input + label {
     color: #000000 !important;
@@ -87,6 +95,27 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
+.custom-input-file {
+    border-bottom: 1px solid #8cc3f3 !important;
+    box-shadow: 0 1px 0 0 #8cc3f3 !important;
+}
+.custom-input-file::-webkit-file-upload-button{
+    background-color: #3a73ab;
+    padding: 10px;
+    border-radius: 5px;
+    border: 0;
+    color: white;
+    outline: none;
+    margin-bottom: 2px;
+}
+.custom-input-file::-webkit-file-upload-button:hover{
+    background-color: #7ba5c6;
+}
+.custom-input-file:focus{
+    outline: none !important;
+    border-bottom: 1px solid #3273AB !important;
+    box-shadow: 0 1px 0 0 #3273AB !important;
+}
 
 /*тень для главного блока на странице*/
 #main{
@@ -184,8 +213,8 @@ input::-webkit-inner-spin-button {
     color: white;
     z-index: 2;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 5px 10px rgba(0, 0, 0, 0.22);
-    overflow-y: scroll;
-    height: 72%;
+    /*overflow-y: scroll;
+    height: 72%;*/
 }
 
 /*sidebar*/

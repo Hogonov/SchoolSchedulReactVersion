@@ -1,0 +1,46 @@
+.main {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px 5px 5px 5px;
+    width: 60%;
+}
+
+.button {
+    background-color: #3a73ab;
+    margin-left: 40%;
+    margin-top: 20px;
+    width: 20%;
+}
+
+.button:hover, .addSpecialCourse:hover{
+    background-color: #7ba5c6;
+}
+.button:focus, .addSpecialCourse:focus {
+    background-color: #3a73ab;
+}
+.title{
+    text-align: center;
+    font-size: 32px;
+    font-family: "GothamProBold", serif;
+    margin-bottom: 15px;
+}
+.formGrope > .title{
+    text-align: left;
+    font-size: 25px;
+    font-family: "GothamProRegular", serif;
+}
+
+.group{
+}
+.formGrope {
+    margin-bottom: 20px;
+}
+.formGrope > .title {
+    margin-bottom: 10px;
+}
+.group input, .group textarea {
+    color: #3a73ab;
+}
+.photo{
+    width: 100%;
+}
