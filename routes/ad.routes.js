@@ -21,35 +21,41 @@ const router = Router();
 
 //api/ad/add
 router.post('/add', auth,
-    [
-        check('name', 'Некорректноен название').exists(),
-        check('school', 'Некорректная школа').exists()
-    ],
     async (req,res) => {
         try {
-            const errors = validationResult(req);
             const user = await User.findById(req.user.userId);
             if (user.role !== "ROLE_ADMIN"){
                 return res.status(401).json({message: 'Недостаточно прав'})
             }
-            if (!errors.isEmpty()) {
-                return res.status(400).json({
-                    errors: errors.array(),
-                    message: 'Некорректный данные при добавлении'
-                });
-            }
             const {name, school} = req.body;
-
-            const ad = new Ad({name: name, school: school});
+            console.log(name, school)
+            const ad = new Ad({name: name, school: school.label});
             const savedAd = await ad.save();
 
             res.status(200).json({message: 'OK', id: savedAd.id})
-
         } catch (e) {
-            // console.log(e);
+             console.log(e);
             res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
         }
     });
+
+// /api/ad/edit/:id
+router.put('/edit/:id', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId);
+        if (user.role !== "ROLE_ADMIN"){
+            return res.status(401).json({message: 'Недостаточно прав'})
+        }
+        const {name, school} = req.body;
+        await Ad.findByIdAndUpdate({_id:req.params.id},{
+            _id:req.params.id, name, school: school.label
+        })
+        res.status(200).json({message: 'OK', id: savedAd.id})
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
 
 //api/ad/add_file
 router.put('/add_file/:id', upload.single('image'), auth, async (req, res) => {
@@ -113,7 +119,7 @@ router.get('/get_data_ad/:id', async (req, res) => {
 router.get('/get_all', async (req, res) => {
     try {
         const ad = await Ad.find({});
-        res.json(ad)
+        res.json({ad, isReady: true})
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
@@ -124,11 +130,13 @@ router.get('/get_all', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
    try {
        const ad = await Ad.findById(req.params.id);
-
        fs.unlink(ad.image, async (e) => {
-           if (e) throw e;
-
-           await Ad.findByIdAndRemove(req.params.id);
+           try {
+               await Ad.findByIdAndRemove(req.params.id);
+           } catch (e) {
+               console.log(e)
+               await Ad.findByIdAndRemove(req.params.id);
+           }
        });
        res.status(200).json({message: 'Реклама удалена'});
    } catch (e) {

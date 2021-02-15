@@ -1,0 +1,101 @@
+.main {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px 5px 5px 5px;
+    text-align: center;
+    width: 60%;
+}
+
+.title {
+    font-family: 'GothamProBold';
+    margin-top: -10px;
+}
+
+.button {
+    background-color: #3a73ab;
+}
+
+.button:hover{
+    background-color: #7ba5c6;
+}
+.button:focus{
+    background-color: #3a73ab;
+}
+
+.adList {
+    text-align: center;
+}
+
+.adList table{
+    border-collapse: collapse;
+    border: 1px #393838 solid;
+}
+.adList table thead tr th{
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-size: 15px;
+    text-align: center;
+}
+
+.adList table tbody tr td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+    padding: 0;
+}
+
+.adForm {
+    text-align: center;
+    border: 1px #393838 solid;
+    border-radius: 5px 5px 5px 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.inputBlock {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+}
+.inputBlock h5{
+
+}
+.inputBlock > div{
+    margin-left: auto;
+    width: 60%;
+}
+.inputFile {
+    width: 100%;
+}
+.redCross{
+    background-image: url("../../public/icons/delete.svg");
+    width: 20px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.redCrossTitle {
+    width: 20px;
+    height: 30px;
+    float: right;
+}
+.deleteTh {
+    background-image: url("../../public/icons/rubbish.svg");
+    width: 23px;
+    height: 30px;
+}
+
+.editGray{
+    background-image: url("../../public/icons/grey pen.svg");
+    width: 25px;
+    height: 25px;
+}
+
+.editBlue{
+    background-image: url("../../public/icons/blue pen.svg");
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+}

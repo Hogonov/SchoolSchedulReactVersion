@@ -36,7 +36,6 @@ export const AnnouncementForm = props => {
     const sendHandler = async () => {
         try {
             let data
-            console.log(props.announcement.id)
             if(props.announcement.id){
                 data = await request(`/api/announcement/edit/${props.announcement.id}`, 'PUT', {...props.announcement}, {Authorization: `Bearer ${token}`});
             } else {

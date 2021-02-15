@@ -53,7 +53,7 @@ export const useRoutes = (isAuthenticated, userRole) => {
                     <AddDirPage/>
                 </Route>
                 <Route path="/ad" exact>
-                    <AdListPage/>
+                    <AddAdPage/>
                 </Route>
                 <Route path="/add_new_ad" exact>
                     <AddAdPage/>

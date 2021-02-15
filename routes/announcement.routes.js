@@ -90,7 +90,7 @@ router.get('/get_data/:id', auth, async (req, res) => {
     }
 });
 
-// /api/users/edit_user/:id
+// /api/announcement/edit/:id
 router.put('/edit/:id', auth, async (req, res) => {
     try {
         const errors = validationResult(req);
@@ -111,7 +111,6 @@ router.put('/edit/:id', auth, async (req, res) => {
             return res.status(400).json({message: 'Слишком далекое будущее'})
         }
 
-        console.log(req.params.id)
         await Announcement.findByIdAndUpdate({_id: req.params.id}, {
             _id: req.params.id, name, text,
             school: user.school, deleteDate

@@ -5,17 +5,39 @@ import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
 import axios from "axios";
 import Select from "react-select";
+import style from './AdPage.module.css'
+import {Loader} from "../../components/Loader";
+import {AdListPage} from "./AdListPage";
+import {AddFormPage} from "./AdFormPage";
 
 export const AddAdPage = () => {
-
+    const {token} = useContext(AuthContext);
     const auth = useContext(AuthContext);
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
     const [options, setOptions] = useState({schools: []});
+    const [ads, setAds] = useState([]);
+    const [edit, setEdit] = useState({
+        text: 'Новая реклама', flag: false
+    })
+    const [flag, setFlag] = useState({
+        view: false,
+        update: false,
+        isReady: false
+    })
     const [form, setForm] = useState({
         name: '', school: '',imageName: ''
     });
     const [image, setImage] = useState();
+
+    const fetchAds = useCallback(async () => {
+        try {
+            const fetched = await request('/api/ad/get_all', 'GET', null, {Authorization: `Bearer ${token}`});
+            setAds(fetched.ad);
+            setFlag({...flag, isReady: fetched.isReady})
+        } catch (e) {
+        }
+    }, [token, request])
 
     const getSchool = useCallback(async () => {
         try {
@@ -24,116 +46,70 @@ export const AddAdPage = () => {
         } catch (e) {
 
         }
-    }, [request]);
+    }, [token, request])
 
-    const changeHandler = event => {
+    const deleteHandler = async (event) => {
         try {
-            setForm({...form, [event.target.name]: event.target.value});
-        } catch (e) {
-        }
-    };
-    const changeFileHandler = event => {
-        try {
-            setForm({...form, imageName: event.target.value});
-            setImage({image: event.target.files[0]});
+            const response = await request(`/api/ad/delete/${event.target.id}`, 'DELETE', null, {Authorization: `Bearer ${token}`});
+            message(response.message);
+            fetchAds();
         } catch (e) {
             console.log(e)
         }
-
     };
 
+    useEffect(() => {
+        fetchAds()
+        getSchool()
+    }, [getSchool, fetchAds]);
 
     useEffect(() => {
-        getSchool();
-        message(error);
+        message(error)
         clearError()
-    }, [getSchool, error, message, clearError]);
+    }, [error, message, clearError]);
 
     useEffect(() => {
         window.M.updateTextFields()
     }, []);
 
-    const sendHandler = async () => {
-        try {
-            let formData = new FormData();
-            formData.append('image', image.image);
 
-            const data = await request('/api/ad/add', 'POST', {...form}, {Authorization: `Bearer ${auth.token}`});
-            const dataFile = await axios.put(`/api/ad/add_file/${data.id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    Authorization: `Bearer ${auth.token}`
-                },
-            });
-            message(dataFile.data.message)
-        } catch (e) {
-        }
-    };
+    const viewForm = () => {
+        setFlag({...flag, view: !flag.view})
+    }
 
-    const changeHandlerSchool = event => {
-        setForm({...form, school: event.label});
-    };
-
+    if (loading || !flag.isReady) {
+        return <Loader/>
+    }
     return (
-        <div className="row">
+        <div id='main' className={style.main}>
+            <h1 className={style.title}>Реклама</h1>
+            {!loading &&<AdListPage
+                edit={edit}
+                setEdit={setEdit}
+                options={options}
+                setOptions={setOptions}
+                form={form}
+                setForm={setForm}
+                ads={ads}
+                setAds={setAds}
+                flag={flag}
+                setFlag={setFlag}
+                deleteHandler={deleteHandler}
+            />}
             <h1/>
-            <div className="col s6 offset-s3">
-                <div className="card blue darken-1">
-                    <div className="card-content white-text">
-                        <span className="card-title">Добавление данных</span>
-                        <div className="input-group mb-3">
-                            <h1/>
-                            <div className="input-field">
-                                <input
-                                    placeholder="Введите название"
-                                    id="name"
-                                    type="text"
-                                    name="name"
-                                    className="custom-input"
-                                    value={form.name}
-                                    onChange={changeHandler}
-                                />
-                                <label htmlFor="name">Название</label>
-                            </div>
-                            <h1/>
-                            <div>
-
-                                <label htmlFor="school" className="white-text">Класс</label>
-                                <Select onChange={changeHandlerSchool}
-                                        id="school"
-                                        placeholder="Выберите школу"
-                                        className="black-text"
-                                        options={options.schools}
-                                        name="school"
-                                />
-                            </div>
-                            <h1/>
-                            <label className="white-text">Картинка</label>
-                            <div style={{marginTop: 10}}>
-                                <input
-                                    id="image"
-                                    type="file"
-                                    name="image"
-                                    className="custom-input"
-                                    value={form.imageName}
-                                    onChange={changeFileHandler}
-                                />
-                            </div>
-                            <h1/>
-                        </div>
-                    </div>
-                    <div className="card-action">
-                        <button
-                            className="btn yellow darken-4"
-                            style={{marginRight: 10}}
-                            disabled={loading}
-                            onClick={sendHandler}
-                        >
-                            Добавить рекламу
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <button className={`btn ${style.button}`} onClick={viewForm}>Новая реклама</button>
+            {flag.view && <AddFormPage
+                edit={edit}
+                setEdit={setEdit}
+                form={form}
+                setForm={setForm}
+                image={image}
+                setImage={setImage}
+                options={options}
+                setOptions={setOptions}
+                message={message}
+                fetchAds={fetchAds}
+            />}
         </div>
     )
 };

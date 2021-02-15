@@ -4,87 +4,69 @@ import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Loader} from "../../components/Loader";
 import Button from "react-bootstrap/Button";
 import {useMessage} from "../../hooks/message.hook";
+import style from "../Ad/AdPage.module.css";
 
 
-export const AdListPage = () => {
-    const [ads, setAds] = useState([]);
-    const {loading, request} = useHttp();
-    const {token} = useContext(AuthContext);
-    const message = useMessage();
-
-    const fetchAds = useCallback(async () => {
-        try {
-            const fetched = await request('/api/ad/get_all', 'GET', null, {Authorization: `Bearer ${token}`});
-            setAds(fetched);
-        } catch (e) {
-
-        }
-    }, [token, request]);
+export const AdListPage = props => {
 
 
-    useEffect(() => {
-        fetchAds();
-    }, [fetchAds]);
-
-    if (loading) {
-        return <Loader/>
+    const chosenHandler = event => {
+        let index = +event.target.id
+        let ad = props.ads[index]
+        let searchSchool = null
+        Array.from(props.options.schools, school => {
+            if (school.label === ad.school) {
+               return searchSchool = school
+            }
+        })
+        console.log(searchSchool)
+        props.setForm({...props.form, name: ad.name, school: searchSchool, id: ad._id})
+        props.setEdit({text: `Редактирование рекламы ${index + 1}`, flag: true})
+        props.setFlag({...props.flag, view: true})
     }
 
-    if (!ads.length) {
+
+    if (!props.ads.length) {
         return <div>
             <p className="center">Рекламы пока нет</p>
-            <h1/>
-            <Button href="/add_new_ad" className="btn yellow darken-4">Добавить рекламу</Button>
         </div>
     }
 
-    const deleteHandler = async (event) => {
-        try {
-            const response = await request(`/api/ad/delete/${event.target.id}`, 'DELETE', null, {Authorization: `Bearer ${token}`});
-            message(response.message);
-            fetchAds();
-        } catch (e) {
-            console.log(e)
-        }
-    };
-
     return (
-        <div>
+        <div className={style.adList}>
             <table>
                 <thead>
                 <tr>
                     <th>№</th>
                     <th>Название</th>
                     <th>Школа</th>
-                    <th>Удалить</th>
+                    <th>
+                        <svg className={style.editGray}/>
+                    </th>
+                    <th>
+                        <svg className={style.deleteTh}/>
+                    </th>
                 </tr>
                 </thead>
 
                 <tbody>
-                {ads.map((ad, index) => {
+                {props.ads.map((ad, index) => {
                     return (
-                        <tr key={ad._id}>
+                        <tr key={index}>
                             <td>{index + 1}</td>
                             <td>{ad.name}</td>
                             <td>{ad.school}</td>
                             <td>
-                                <button
-                                    className="btn yellow darken-4"
-                                    disabled={loading}
-                                    style={{marginRight: 10}}
-                                    onClick={deleteHandler}
-                                    id={ad._id}
-                                >
-                                    Удалить
-                                </button>
+                                <svg onClick={chosenHandler} id={index} className={style.editBlue}/>
+                            </td>
+                            <td>
+                                <svg onClick={props.deleteHandler} id={ad._id} className={style.redCross}/>
                             </td>
                         </tr>
                     )
                 })}
                 </tbody>
             </table>
-            <h1/>
-            <Button href="/add_new_ad" className="btn yellow darken-4">Добавить рекламу</Button>
         </div>
     );
 };
