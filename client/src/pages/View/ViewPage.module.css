@@ -1,0 +1,35 @@
+.main {
+    text-align: center;
+
+}
+.schoolChoose{
+    width: 35%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 20px 30px 30px rgba(0, 0, 0, 0.1), 30px 40px 40px rgba(0, 0, 0, 0.08), 40px 60px 60px rgba(0, 0, 0, 0.15);
+}
+.classChoose {
+    width: 35%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 20px 30px 30px rgba(0, 0, 0, 0.1), 30px 40px 40px rgba(0, 0, 0, 0.08), 40px 60px 60px rgba(0, 0, 0, 0.15);
+
+}
+.selector {
+    margin-top: 15px;
+}
+
+
+.button {
+    background-color: #6185c3;
+    margin-top: 30px;
+    font-family: "GothamProBold", serif;
+}
+
+.button:hover {
+    background-color: #7ba5c6;
+}
+
+.button:focus {
+    background-color: #3a73ab;
+}

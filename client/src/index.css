@@ -252,6 +252,13 @@ input::-webkit-inner-spin-button {
 .container {
     margin-left: 21%;
     margin-top: 9%;
+
+}
+
+.view {
+    margin-top: 9%;
+    text-align: center;
+    width: 100%;
 }
 
 .timeRedactor {

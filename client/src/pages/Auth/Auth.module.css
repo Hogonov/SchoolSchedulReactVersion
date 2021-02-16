@@ -20,14 +20,19 @@
     margin-bottom: 10%;
     margin-top: -20%;
 }
-
-.button {
+.buttonGroup {
+    display: flex;
+}
+.button:not(.button2) {
     background-color: #6185c3;
-    margin-left: 75%;
+    margin-left: 45%;
     width: 25%;
     font-family: "GothamProBold", serif;
 }
-
+.button2 {
+    background-color: #6185c3;
+    font-family: "GothamProBold", serif;
+}
 .button:hover, .addSpecialCourse:hover {
     background-color: #7ba5c6;
 }

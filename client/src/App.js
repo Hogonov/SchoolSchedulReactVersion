@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Roter} from 'react-router-dom';
 
 import {useRoutes} from "./routes";
@@ -13,32 +13,38 @@ function App() {
     const {token, login, logout, userId, ready, userRole} = useAuth();
     const isAuthenticated = !!token;
     const routes = useRoutes(isAuthenticated, userRole);
-    const flag = window.location.href.indexOf("/view") === -1;
+    let [flag, setFlag] = useState(window.location.href.indexOf("/view") === -1)
+    let [flagLogin, setFlagLogin] = useState(window.location.href.indexOf("/login") === -1)
 
     useEffect(() => {
-        if (window.location.href.indexOf("/login") === -1) {
+        if (isAuthenticated) {
             document.getElementById('bodyId').className = 'withBackgroundImage'
         } else {
             document.getElementById('bodyId').className = 'withBackgroundColor'
         }
+        flag = window.location.href.indexOf("/view") === -1;
+        flagLogin = window.location.href.indexOf("/login") === -1;
+        console.log('flagLogin', flagLogin)
+        console.log('flag', flag)
+        console.log(window.location.href, window.location.href.indexOf("/login"))
     }, [routes])
+
+
 
     if (!ready) {
         return <Loader/>
     }
 
     return (
-        <AuthContext.Provider value={{token, login, logout, userId, isAuthenticated, userRole}}>
+        <AuthContext.Provider value={{flagLogin, setFlagLogin, flag, setFlag, token, login, logout, userId, isAuthenticated, userRole}}>
             <Roter>
-                {isAuthenticated && flag && <Header/>}
-                {flag && <div id='fullScreen' style={{display: "flex", flexDirection: "row"}}>
+                <div style={{display: "flex", flexDirection: "row"}}>
+                    {(isAuthenticated || flagLogin) && <Header/>}
                     {isAuthenticated && <Sidebar userRole={userRole}/>}
                     <div className="container">
                         {routes}
                     </div>
                 </div>
-                }
-                {!flag && routes}
             </Roter>
         </AuthContext.Provider>
     );

@@ -3,6 +3,7 @@ import {useHttp} from '../../hooks/http.hook'
 import {useMessage} from '../../hooks/message.hook'
 import {AuthContext} from '../../context/AuthContext'
 import style from './Auth.module.css'
+import {Link} from "react-router-dom";
 
 
 export const AuthPage = () => {
@@ -27,13 +28,13 @@ export const AuthPage = () => {
         setForm({...form, [event.target.name]: event.target.value})
     };
 
-    const registerHandler = async () => {
+   /* const registerHandler = async () => {
         try {
             const data = await request('/api/auth/register', 'POST', {...form});
             message(data.message)
         } catch (e) {
         }
-    };
+    };*/
 
     const loginHandler = async () => {
         try {
@@ -77,7 +78,10 @@ export const AuthPage = () => {
                     </div>
                 </form>
                 <h1/>
-                <button onClick={loginHandler} className={`btn ${style.button}`}>Войти</button>
+                <div className={style.buttonGroup}>
+                    <Link className={`btn ${style.button} ${style.button2}`} to="/view">Расписание</Link>
+                    <button onClick={loginHandler} className={`btn ${style.button}`}>Войти</button>
+                </div>
             </div>
         </div>
     )

@@ -149,6 +149,18 @@ router.get('/get_classes', auth, async (req, res) => {
     }
 });
 
+// /api/table/get_view_classes/:id
+router.get('/get_view_classes/:id', async (req, res) => {
+    try {
+        const school = await School.findById(req.params.id);
+        const classrooms = await DataClassroom.find({school: school.name}).sort({name: 1});
+        res.json(classrooms);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
+
 // /api/table/add_school
 router.post('/add_school',
     [check('schoolName', 'Введите название школы').isLength({min: 1})], auth,

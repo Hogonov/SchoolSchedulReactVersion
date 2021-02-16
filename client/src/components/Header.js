@@ -10,7 +10,7 @@ export const Header = () => {
     const logoutHandler = event => {
         event.preventDefault();
         auth.logout();
-        history.push('/')
+        history.push('/login')
     };
 
     return (
@@ -24,7 +24,7 @@ export const Header = () => {
                         <li><Link className="headerNavLink" to="/main">Главная страница
                             <svg className="toHomeIcon"/>
                         </Link></li>
-                        <li><Link className="headerNavLink" to="/select_view">Расписание
+                        <li><Link className="headerNavLink" to="/view">Расписание
                             <svg className="toViewIcon"/>
                         </Link></li>
                         <li><Link className="headerNavLink" to="/" onClick={logoutHandler}>Выйти
