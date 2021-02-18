@@ -1,24 +1,87 @@
 .main {
-    text-align: center;
+
 
 }
-.schoolChoose{
+.selectBlock {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    margin-top: -30px;
+}
+.selectBlock > div{
     width: 35%;
-    background-color: white;
     border-radius: 10px;
     box-shadow: 20px 30px 30px rgba(0, 0, 0, 0.1), 30px 40px 40px rgba(0, 0, 0, 0.08), 40px 60px 60px rgba(0, 0, 0, 0.15);
+}
+.schoolChoose {
+    z-index: 5;
 }
 .classChoose {
-    width: 35%;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 20px 30px 30px rgba(0, 0, 0, 0.1), 30px 40px 40px rgba(0, 0, 0, 0.08), 40px 60px 60px rgba(0, 0, 0, 0.15);
-
+   margin-left: 10px;
+    z-index: 5;
+}
+.sessionChoose{
+    margin-left: 10px;
 }
 .selector {
     margin-top: 15px;
 }
 
+.viewTable {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #E4DFDE;
+    box-shadow: 20px 30px 30px rgba(0, 0, 0, 0.1), 30px 40px 40px rgba(0, 0, 0, 0.08), 40px 60px 60px rgba(0, 0, 0, 0.15);
+}
+.viewTable > div {
+    z-index: 4;
+}
+.timeBlock{
+
+}
+.classBlock{
+
+}
+.leftMargin {
+    margin-left: 2px;
+}
+.lastMargin {
+    margin-bottom: 2px;
+}
+.paddingTop {
+    padding-top: 12px;
+}
+.specialPaddingTop {
+    padding-top: 2px;
+}
+.time {
+    height: 50px;
+    background-color: white;
+    text-align: center;
+}
+.subject {
+    height: 50px;
+    background-color: white;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+}
+.subjectTitle {
+    font-family: GothamProBold, serif;
+}
+.office{
+    background-color: white;
+ }
+.titleTable {
+    background-color: #69A1D0;
+    text-align: center;
+    padding: 5px;
+    font-family: GothamProBold, serif;
+}
+.firstIndexSecondSession{
+    /*margin-top: 10px;*/
+}
 
 .button {
     background-color: #6185c3;

@@ -27,6 +27,7 @@
     background-attachment: fixed;
 }
 
+
 body {
     -moz-background-size: 100%;
     -webkit-background-size: 100%;
@@ -128,7 +129,7 @@ input::-webkit-inner-spin-button {
     background-color: #3273ab;
     padding: 0 2rem;
     height: 100px;
-    z-index: 1;
+    z-index: 10;
     border-radius: 0 0 30px 0;
 }
 

@@ -86,8 +86,44 @@ router.get('/get_data', auth, async (req, res) => {
                 lengthLesson: minutes,
                 candidate: true
             }
+        }
+        res.json(sendData)
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
+// /api/time/get_data/:id
+router.get('/get_data/:id',async (req, res) => {
+    try {
+        const school = await School.findById(req.params.id);
+        const times = await Time.find({school: school.name});
+        let minutes = []
+        let sendData = {candidate: false}
+        if (times.length > 0 ) {
+            let getDate = string => new Date(0, 0, 0, string.split(':')[0], string.split(':')[1]);
+            let different = [
+                (getDate(times[0].time.firstSession[0].endTime) - getDate(times[0].time.firstSession[0].startTime)),
+                (getDate(times[0].time.secondSession[0].endTime) - getDate(times[0].time.secondSession[0].startTime)),
+                (getDate(times[0].special.firstSpecialSession[0].endTime) - getDate(times[0].special.firstSpecialSession[0].startTime)),
+                (getDate(times[0].special.secondSpecialSession[0].endTime) - getDate(times[0].special.secondSpecialSession[0].startTime))
+            ]
+            minutes = [
+                Math.round(((different[0] % 86400000)) / 60000),
+                Math.round(((different[1] % 86400000)) / 60000),
+                Math.round(((different[2] % 86400000)) / 60000),
+                Math.round(((different[3] % 86400000)) / 60000)
+            ]
 
-
+            sendData = {
+                firstSession: times[0].time.firstSession,
+                secondSession: times[0].time.secondSession,
+                specialFirstSession: times[0].special.firstSpecialSession,
+                specialSecondSession: times[0].special.secondSpecialSession,
+                specialDates: times[0].special.dates,
+                lengthLesson: minutes,
+                candidate: true
+            }
         }
         res.json(sendData)
     } catch (e) {

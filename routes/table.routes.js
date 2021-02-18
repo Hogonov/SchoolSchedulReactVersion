@@ -62,7 +62,7 @@ router.post('/classroom',
             if (candidate.length > 0) {
                 const classroom = new DataClassroom({
                     _id: candidate[0]._id,
-                    classes: checkedClass,
+                    classes: checkedClass.sort(),
                     checkedArr: checkedArr,
                     school: user.school
                 });
@@ -70,7 +70,7 @@ router.post('/classroom',
                 res.status(201).json({message: 'Классы изменены'})
             } else {
                 const classroom = new DataClassroom({
-                    classes: checkedClass,
+                    classes: checkedClass.sort(),
                     checkedArr: checkedArr,
                     school: user.school
                 });
@@ -153,8 +153,12 @@ router.get('/get_classes', auth, async (req, res) => {
 router.get('/get_view_classes/:id', async (req, res) => {
     try {
         const school = await School.findById(req.params.id);
-        const classrooms = await DataClassroom.find({school: school.name}).sort({name: 1});
-        res.json(classrooms);
+        const classrooms = await Classroom.find({school: school.name}).sort({name: 1});
+        let classes = Array.from(classrooms, classroom => {
+            return {label: classroom.name, value: classroom.name}
+        })
+        console.log(classes)
+        res.json(classes);
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
@@ -223,6 +227,7 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId);
         const candidate = await Classroom.find({name: req.params.classname, school: user.school});
+        console.log(candidate)
         const time = await Time.find({school: user.school});
         const timeObj = {
             firstSession: time[0].time.firstSession,
@@ -251,7 +256,6 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
                     },
                     day: candidate[0].days[i].day,
                     subjects: Array.from(candidate[0].days[i].subjects, subject => {
-                        console.log(subject.time)
                         return {
                             index: subject.index,
                             name: `subject-${subject.index}`,
@@ -266,7 +270,66 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
                 school: candidate[0].school,
                 days: daysArr
             }
-            res.json({candidateData: prepareData, candidate: true});
+            res.json({candidateData: prepareData, candidate: true,
+                maxLength: Math.max(timeObj.firstSession.length, timeObj.secondSession.length)});
+        } else {
+            res.json({candidate: false});
+        }
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+// /api/table/get_data_class/:classname/:school
+router.get('/get_data_class/:classname/:id', async (req, res) => {
+    try {
+        const school = await School.findById(req.params.id);
+        const candidate = await Classroom.find({name: req.params.classname, school: school.name});
+        console.log(candidate)
+        const time = await Time.find({school: school.name});
+        const timeObj = {
+            firstSession: time[0].time.firstSession,
+            secondSession: time[0].time.secondSession,
+            firstSpecialSession: time[0].special.firstSpecialSession,
+            secondSpecialSession: time[0].special.secondSpecialSession,
+        }
+        const index = {
+            firstSession: 0,
+            secondSession: 1,
+            firstSpecialSession: 2,
+            secondSpecialSession: 3,
+        }
+        if (candidate.length > 0) {
+            let daysArr = []
+            for (let i = 0; i < candidate[0].days.length; i++) {
+                daysArr.push({
+                    classname: {
+                        value: candidate[0].name,
+                        label: candidate[0].name,
+                        name: "classname"
+                    }, session: {
+                        ...candidate[0].days[i].session,
+                        index: index[candidate[0].days[i].session.value],
+                        time: timeObj[candidate[0].days[i].session.value]
+                    },
+                    day: candidate[0].days[i].day,
+                    subjects: Array.from(candidate[0].days[i].subjects, subject => {
+                        return {
+                            index: subject.index,
+                            name: `subject-${subject.index}`,
+                            office: subject.office,
+                            option: {value: subject.name, label: subject.name, name: 'subject'}
+                        }
+                    })
+                })
+            }
+            const prepareData = {
+                name: candidate[0].name,
+                school: candidate[0].school,
+                days: daysArr
+            }
+            res.json({candidateData: prepareData, candidate: true,
+                maxLength: Math.max(timeObj.firstSession.length, timeObj.secondSession.length)});
         } else {
             res.json({candidate: false});
         }
@@ -433,5 +496,6 @@ router.get('/get_all_data', auth, async (req, res) => {
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
     }
 });
+
 
 module.exports = router;

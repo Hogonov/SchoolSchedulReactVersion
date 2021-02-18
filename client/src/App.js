@@ -24,9 +24,6 @@ function App() {
         }
         flag = window.location.href.indexOf("/view") === -1;
         flagLogin = window.location.href.indexOf("/login") === -1;
-        console.log('flagLogin', flagLogin)
-        console.log('flag', flag)
-        console.log(window.location.href, window.location.href.indexOf("/login"))
     }, [routes])
 
 
