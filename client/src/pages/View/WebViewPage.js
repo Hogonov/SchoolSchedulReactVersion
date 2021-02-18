@@ -9,6 +9,7 @@ import {Loader} from "../../components/Loader";
 import style from "./ViewPage.module.css"
 import {useAuth} from "../../hooks/auth.hook";
 import {ViewTable} from "./ViewTable";
+import DatePicker from "react-multi-date-picker"
 
 
 export const WebViewPage = () => {
@@ -139,27 +140,35 @@ export const WebViewPage = () => {
     return (
         <div className={style.main}>
             <div className={style.selectBlock}>
-                <div>
+                <div className={`${style.schoolChoose}`}>
                     <Select
                         onChange={changeSelectHandler}
                         id="school"
                         placeholder="Выберите школу"
-                        className={`${style.selector} ${style.schoolChoose}`}
+                        className={`${style.selector}`}
                         options={options.schools}
                         value={form.school}
                         name="school"
                     />
                 </div>
-                <div>
+                <div className={`${style.classChoose}`}>
                     <Select
                         onChange={changeSelectHandler}
                         id="classroom"
                         placeholder="Выберите класс"
-                        className={`${style.selector} ${style.classChoose}`}
+                        className={`${style.selector}`}
                         options={options.classes}
                         value={form.classroom}
                         isDisabled={flag.disable}
                         name="classroom"
+                    />
+                </div>
+                <div className={`${style.datePickerDiv} ${!flag.table ? style.greyBack : ''}`}>
+                    <DatePicker
+                        inputClass="custom-input"
+                        placeholder="Выберите дату"
+                        disabled={!flag.table}
+                        className={`${style.datePicker}`}
                     />
                 </div>
             </div>

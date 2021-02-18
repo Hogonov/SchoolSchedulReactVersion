@@ -8,24 +8,41 @@
     flex-direction: row;
     margin-top: -30px;
 }
-.selectBlock > div{
+.selectBlock > div:not(.datePickerDiv){
     width: 35%;
-    border-radius: 10px;
+    border-radius: 4px;
+    margin-top: 15px;
     box-shadow: 20px 30px 30px rgba(0, 0, 0, 0.1), 30px 40px 40px rgba(0, 0, 0, 0.08), 40px 60px 60px rgba(0, 0, 0, 0.15);
 }
 .schoolChoose {
-    z-index: 5;
+
 }
 .classChoose {
-   margin-left: 10px;
-    z-index: 5;
+    margin-left: 10px;
 }
 .sessionChoose{
     margin-left: 10px;
 }
 .selector {
-    margin-top: 15px;
+    z-index: 5;
 }
+.datePickerDiv {
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    border-radius: 4px;
+    margin-left: 10px;
+    margin-top: 15px;
+    box-shadow: 20px 30px 30px rgba(0, 0, 0, 0.1), 30px 40px 40px rgba(0, 0, 0, 0.08), 40px 60px 60px rgba(0, 0, 0, 0.15);
+}
+.datePicker{
+
+}
+.greyBack {
+    background-color: #F2F2F2;
+}
+
 
 .viewTable {
     margin-top: 20px;
@@ -74,10 +91,11 @@
     background-color: white;
  }
 .titleTable {
-    background-color: #69A1D0;
+    background-color: #3273AB;
     text-align: center;
     padding: 5px;
     font-family: GothamProBold, serif;
+    color: white;
 }
 .firstIndexSecondSession{
     /*margin-top: 10px;*/
