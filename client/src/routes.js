@@ -12,13 +12,12 @@ import {AnnouncementsPage} from "./pages/Announcement/AnnouncementsPage";
 import {WebViewPage} from "./pages/View/WebViewPage";
 import {AddDirPage} from "./pages/Dir/AddDirPage";
 import {AddAdPage} from "./pages/Ad/AddAdPage";
-import {AdListPage} from "./pages/Ad/AdListPage";
 import {AddYearSchoolPage} from "./pages/YearSchool/AddYearSchoolPage";
 import {EditorSpecialCoursePage} from "./pages/EditorSpecialCoursePage/EditorSpecialCoursePage";
 import {SelectTheme} from "./pages/SelectTheme/SelectTheme";
 
 
-export const useRoutes = (isAuthenticated, userRole) => {
+export const useRoutes = (isAuthenticated, userRole, flag, setFlag) => {
     if (userRole === 'ROLE_ADMIN') {
         return (
             <Switch>
@@ -26,7 +25,7 @@ export const useRoutes = (isAuthenticated, userRole) => {
                     <SelectTheme/>
                 </Route>
                 <Route path="/view" exact>
-                    <WebViewPage/>
+                    <WebViewPage isAuthenticated={isAuthenticated}/>
                 </Route>
                 <Route path="/announcement" exact>
                     <AnnouncementsPage/>
@@ -71,7 +70,7 @@ export const useRoutes = (isAuthenticated, userRole) => {
                     <SelectTheme/>
                 </Route>
                 <Route path="/view" exact>
-                    <WebViewPage/>
+                    <WebViewPage isAuthenticated={isAuthenticated}/>
                 </Route>
                 <Route path="/main" exact>
                     <UserDashboardPage/>
@@ -105,10 +104,10 @@ export const useRoutes = (isAuthenticated, userRole) => {
     return (
         <Switch>
             <Route path="/login" exact>
-                <AuthPage/>
+                <AuthPage flag={flag} setFlag={setFlag}/>
             </Route>
             <Route path="/view" exact>
-                <WebViewPage/>
+                <WebViewPage isAuthenticated={isAuthenticated}/>
             </Route>
             <Redirect to="/login"/>
         </Switch>

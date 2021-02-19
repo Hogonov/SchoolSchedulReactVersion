@@ -109,6 +109,7 @@ router.get('/get_data_form', auth, async (req, res) => {
         const user = await User.findById(req.user.userId);
         const dir = await Director.find({school: user.school});
         if (dir.length > 0){
+            console.log(dir[0])
             res.json({
                 name: dir[0].name,
                 phone: dir[0].phone,

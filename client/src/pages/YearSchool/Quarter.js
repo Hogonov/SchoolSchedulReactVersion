@@ -9,7 +9,6 @@ import stylesYearSchoolPage from './YearSchoolPage.module.css';
 
 export const Quarter = (props) => {
 
-
     const changeHandler = event => {
         props.setForm({...props.form, [event.target.name]: event.target.value})
     };

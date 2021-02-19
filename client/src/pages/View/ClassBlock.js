@@ -10,11 +10,10 @@ import style from "./ViewPage.module.css"
 
 
 export const ClassBlock = props => {
-
-
+    let flag = props.options.sessions.specialDates.indexOf(props.form.dates[props.index]) !== -1
     return (
         <div className={style.classBlock}>
-            <div className={`${style.titleTable} ${style.leftMargin} ${style.lastMargin}`}>{props.day}</div>
+            <div className={`${style.titleTable} ${style.leftMargin} ${style.lastMargin} ${flag ? style.specialTitle : ''}`}>{props.day}<br/>{props.form.dates[props.index]}</div>
             {props.fullForm.form[props.index].subjects.map((subject, index) => {
                 if (subject.option !== null && props.fullForm.form[props.index].session.value.indexOf('first') !== -1) {
                     return <div className={`${style.subject} ${style.leftMargin} ${style.lastMargin}`}

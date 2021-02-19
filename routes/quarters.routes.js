@@ -38,10 +38,10 @@ router.post('/add', auth, async (req, res) => {
             school: user.school,
             interval: {start: startQuarter1, end: endQuarter4},
             quarter: [
-                {name: "Quarter1", start: startQuarter1, end: endQuarter1},
-                {name: "Quarter2", start: startQuarter2, end: endQuarter2},
-                {name: "Quarter3", start: startQuarter3, end: endQuarter3},
-                {name: "Quarter4", start: startQuarter4, end: endQuarter4}
+                {name: "Quarter1", start: new Date(startQuarter1), end: new Date(endQuarter1)},
+                {name: "Quarter2", start: new Date(startQuarter2), end: new Date(endQuarter2)},
+                {name: "Quarter3", start: new Date(startQuarter3), end: new Date(endQuarter3)},
+                {name: "Quarter4", start: new Date(startQuarter4), end: new Date(endQuarter4)}
             ]
         });
 

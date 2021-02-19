@@ -9,7 +9,7 @@
     margin-top: -30px;
 }
 .selectBlock > div:not(.datePickerDiv){
-    width: 35%;
+    width: 21%;
     border-radius: 4px;
     margin-top: 15px;
     box-shadow: 20px 30px 30px rgba(0, 0, 0, 0.1), 30px 40px 40px rgba(0, 0, 0, 0.08), 40px 60px 60px rgba(0, 0, 0, 0.15);
@@ -27,6 +27,7 @@
     z-index: 5;
 }
 .datePickerDiv {
+    border: 1px solid #B3B3B3;
     background-color: white;
     padding-left: 20px;
     padding-right: 20px;
@@ -45,6 +46,7 @@
 
 
 .viewTable {
+    /*margin-left: -28%;*/
     margin-top: 20px;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -57,6 +59,12 @@
 .timeBlock{
 
 }
+.specialTime{
+    color: red;
+}
+.specialTitle{
+    background-color: red !important;
+}
 .classBlock{
 
 }
@@ -65,6 +73,9 @@
 }
 .lastMargin {
     margin-bottom: 2px;
+}
+.paddingTopTitle{
+    padding-top: 16px !important;
 }
 .paddingTop {
     padding-top: 12px;
@@ -96,6 +107,8 @@
     padding: 5px;
     font-family: GothamProBold, serif;
     color: white;
+    height: 54px;
+    /*width: 215px;*/
 }
 .firstIndexSecondSession{
     /*margin-top: 10px;*/

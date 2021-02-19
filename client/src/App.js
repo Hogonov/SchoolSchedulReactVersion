@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Roter} from 'react-router-dom';
-
 import {useRoutes} from "./routes";
 import {useAuth} from "./hooks/auth.hook";
 import 'materialize-css';
@@ -12,9 +11,11 @@ import {Sidebar} from "./components/Sidebar";
 function App() {
     const {token, login, logout, userId, ready, userRole} = useAuth();
     const isAuthenticated = !!token;
-    const routes = useRoutes(isAuthenticated, userRole);
-    let [flag, setFlag] = useState(window.location.href.indexOf("/view") === -1)
-    let [flagLogin, setFlagLogin] = useState(window.location.href.indexOf("/login") === -1)
+    let [flag, setFlag] = useState({
+        isView: window.location.href.indexOf("/view") !== -1,
+        isLogin: window.location.href.indexOf("/login") !== -1
+    })
+    const routes = useRoutes(isAuthenticated, userRole, flag, setFlag);
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -22,10 +23,7 @@ function App() {
         } else {
             document.getElementById('bodyId').className = 'withBackgroundColor'
         }
-        flag = window.location.href.indexOf("/view") === -1;
-        flagLogin = window.location.href.indexOf("/login") === -1;
     }, [routes])
-
 
 
     if (!ready) {
@@ -33,12 +31,21 @@ function App() {
     }
 
     return (
-        <AuthContext.Provider value={{flagLogin, setFlagLogin, flag, setFlag, token, login, logout, userId, isAuthenticated, userRole}}>
+        <AuthContext.Provider
+            value={{token, login, logout, userId, isAuthenticated, userRole}}>
             <Roter>
                 <div style={{display: "flex", flexDirection: "row"}}>
-                    {(isAuthenticated || flagLogin) && <Header/>}
-                    {isAuthenticated && <Sidebar userRole={userRole}/>}
-                    <div className="container">
+                    {(isAuthenticated || !flag.isLogin) && <Header
+                        flag={flag}
+                        setFlag={setFlag}
+                        isAuthenticated={isAuthenticated}
+                    />}
+                    {isAuthenticated && <Sidebar
+                        userRole={userRole}
+                        flag={flag}
+                        setFlag={setFlag}
+                    />}
+                    <div id='routerDiv' className="container">
                         {routes}
                     </div>
                 </div>

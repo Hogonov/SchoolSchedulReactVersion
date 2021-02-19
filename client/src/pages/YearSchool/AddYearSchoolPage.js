@@ -15,10 +15,10 @@ export const AddYearSchoolPage = () => {
     const {loading, request, error, clearError} = useHttp();
     const [form, setForm] = useState({
         nameYear: '',
-        startQuarter1: Date, endQuarter1: Date,
-        startQuarter2: Date, endQuarter2: Date,
-        startQuarter3: Date, endQuarter3: Date,
-        startQuarter4: Date, endQuarter4: Date
+        startQuarter1: '', endQuarter1: '',
+        startQuarter2: '', endQuarter2: '',
+        startQuarter3: '', endQuarter3: '',
+        startQuarter4: '', endQuarter4: ''
     });
 
     const changeHandler = event => {
@@ -47,7 +47,7 @@ export const AddYearSchoolPage = () => {
     return (
         <div className={stylesYearSchoolPage.main} id='main'>
             <h3 className={stylesYearSchoolPage.title}>Редактор расписания даты занятий</h3>
-            <input className={stylesYearSchoolPage.titleYear}
+            <input className={`custom-input ${stylesYearSchoolPage.titleYear}`}
                    type="text"
                    placeholder="Введите название года"
                    onChange={changeHandler}

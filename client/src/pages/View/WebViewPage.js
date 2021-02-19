@@ -12,16 +12,23 @@ import {ViewTable} from "./ViewTable";
 import DatePicker from "react-multi-date-picker"
 
 
-export const WebViewPage = () => {
+export const WebViewPage = props => {
+    if (!props.isAuthenticated) {
+        try {
+            document.getElementById('routerDiv').className = 'specialContainer'
+        } catch (e) {
 
+        }
+    }
     const message = useMessage();
-    const auth = useAuth(AuthContext)
     const {loading, request, error, clearError} = useHttp();
     const [options, setOptions] = useState({schools: [], classes: [], sessions: []});
-    const [flag, setFlag] = useState({disable: true, table: false})
+    const [flag, setFlag] = useState({disable: true, table: false, specialDate: false})
     const [form, setForm] = useState({
         school: '',
         classroom: '',
+        dates: [],
+        date: ''
     });
     const [fullForm, setFullForm] = useState({
         classname: '',
@@ -67,8 +74,6 @@ export const WebViewPage = () => {
     });
 
 
-
-
     const getData = useCallback(async () => {
         try {
             const fetched = await request(`/api/table/get_school`, 'GET', null);
@@ -80,7 +85,45 @@ export const WebViewPage = () => {
 
     useEffect(() => {
         getData();
+        setForm({...form, dates: calculateDates()})
     }, [getData]);
+
+    const calculateDates = (strDate) => {
+        try {
+            let nowDate = !!strDate ? new Date(strDate[0], strDate[1], strDate[2]) : new Date()
+            while (nowDate.getDay() !== 1) {
+                nowDate.setDate(nowDate.getDate() - 1)
+            }
+            let monday = nowDate
+            let weekDatesArr = [`${monday.getDate()}.${monday.getMonth() < 10 ? `0${monday.getMonth() + 1}` : monday.getMonth() + 1}.${monday.getFullYear()}`]
+            while (monday.getDay() !== 6) {
+                monday.setDate(monday.getDate() + 1)
+                weekDatesArr.push(`${monday.getDate()}.${monday.getMonth() < 10 ? `0${monday.getMonth() + 1}` : monday.getMonth() + 1}.${monday.getFullYear()}`)
+            }
+            return weekDatesArr
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    const changeDateHandler = event => {
+        try {
+            console.log(flag)
+            let year = event.year
+            let month = event.month.number < 10 ? `0${event.month.number}` : event.month.number
+            let day = event.day < 10 ? `0${event.day}` : event.day
+            let weekDatesArr = calculateDates([year, month - 1, day])
+            setForm({...form, date: `${year}/${month}/${day}`, dates: weekDatesArr})
+            let specialDate = false
+            for (let i = 0; i < options.sessions.specialDates.length; i++) {
+                if(weekDatesArr.indexOf(options.sessions.specialDates[i]) !== -1){
+                    specialDate = true
+                }
+            }
+            setFlag({...flag, specialDate: specialDate})
+
+        } catch (e) { console.log(e)}
+    }
 
 
     const getClasses = useCallback(async (event) => {
@@ -104,34 +147,42 @@ export const WebViewPage = () => {
                     } else {
                         fullFormArr.push({...fullForm.form[i], classname: classname})
                     }
-                    console.log(i,fullFormArr[i])
                 }
                 for (let i = 0; i < fullForm.form.length; i++) {
                     for (let j = fullFormArr[i].subjects.length; j < data.maxLength; j++) {
-                        fullFormArr[i].subjects.push({index: j, name: `subject-${j}`, option: {label: '', value: ''}, office: '', time: ''})
+                        fullFormArr[i].subjects.push({
+                            index: j,
+                            name: `subject-${j}`,
+                            option: {label: '', value: ''},
+                            office: '',
+                            time: ''
+                        })
                     }
                 }
-
                 setFullForm({classname: classname, form: fullFormArr})
-                setFlag({...flag, table: true})
-                console.log(fullFormArr)
+                let flagSpecialDate = false
+                for (let i = 0; i < options.sessions.specialDates.length; i++) {
+                    if(form.dates.indexOf(options.sessions.specialDates[i]) !== -1){
+                        flagSpecialDate = true
+                        break
+                    }
+                }
+                setFlag({...flag, table: true, specialDate: flagSpecialDate})
             }
         } catch (e) {
             console.log(e);
         }
-    }, [auth.token, setForm, form]);
+    }, [setFlag, flag, setForm, form, setFullForm, fullForm, options, setOptions]);
 
     const changeSelectHandler = useCallback(async (event, action) => {
         setForm({...form, [action.name]: event});
         if (action.name === 'school') {
-            console.log(flag)
             setFlag({...flag, disable: false})
             await getClasses(event)
         } else if (action.name === 'classroom') {
             await getDataClassroom(event)
         }
     }, [getClasses, setForm, form])
-
 
     if (loading) {
         return <Loader/>
@@ -165,16 +216,49 @@ export const WebViewPage = () => {
                 </div>
                 <div className={`${style.datePickerDiv} ${!flag.table ? style.greyBack : ''}`}>
                     <DatePicker
+                        months={[
+                            ["Январь", "Янв"],
+                            ["Февраль", "Фев"],
+                            ["Март", "Мар"],
+                            ["Апрель", "Апр"],
+                            ["Май", "Май"],
+                            ["Июнь", "Июн"],
+                            ["Июль", "Июл"],
+                            ["Август", "Авг"],
+                            ["Сентябрь", "Сен"],
+                            ["Октябрь", "Окт"],
+                            ["Ноябрь", "Ноя"],
+                            ["Декабрь", "Дек"],
+                        ]}
+                        weekDays={[
+                            ["Воскресенье", "Вс"],
+                            ["Понедельник", "Пн"],
+                            ["Вторник", "Вто"],
+                            ["Среда", "Ср"],
+                            ["Четверг", "Чт"],
+                            ["Пятница", "Пт"],
+                            ["Суббота", "Сб"],
+                        ]}
+                        mapDays={({ date }) => {
+                            let props = {}
+                            let isWeekend = [0].includes(date.weekDay.index)
+                            if (isWeekend) props.className = "highlight highlight-red"
+                            return props
+                        }}
                         inputClass="custom-input"
                         placeholder="Выберите дату"
                         disabled={!flag.table}
                         className={`${style.datePicker}`}
+                        onChange={changeDateHandler}
+                        value={form.date}
                     />
                 </div>
             </div>
             {flag.table && <ViewTable
                 fullForm={fullForm}
                 options={options}
+                form={form}
+                flag={flag}
             />}
 
         </div>

@@ -26,6 +26,7 @@ export const ViewTable = props => {
             <TimeBlock
                 fullForm={props.fullForm}
                 options={props.options}
+                flag={props.flag}
             />
             {days.map((day, index) => {
                 return <ClassBlock
@@ -34,6 +35,8 @@ export const ViewTable = props => {
                     index={index}
                     fullForm={props.fullForm}
                     options={props.options}
+                    form={props.form}
+                    flag={props.flag}
                 />
             })}
         </div>

@@ -21,7 +21,6 @@ export default class CustomDatePicker extends React.Component {
             let dates = Array.from(event, date => {
                 let year = date.year
                 let month = date.month.number < 10 ? `0${date.month.number}` : date.month.number
-                console.log(date.month.number)
                 let day = date.day < 10 ? `0${date.day}` : date.day
                 return `${year}/${month}/${day}`
             })

@@ -23,10 +23,9 @@ const router = Router();
 // /api/time/add
 router.post('/add', auth, async (req, res) => {
     try {
-        const {isSpecial, lengthLesson, times, dates} = req.body;
+        const {isSpecial, lengthLesson, times, specialDates} = req.body;
         const user = await User.findById(req.user.userId);
         const candidate = await Time.find({school: user.school});
-
         const subTime = {
             school: user.school,
             time: {
@@ -36,7 +35,7 @@ router.post('/add', auth, async (req, res) => {
             special: {
                 firstSpecialSession: times.specialFirstSession,
                 secondSpecialSession: times.specialSecondSession,
-                dates: dates
+                dates: specialDates
             }
         };
         if (candidate[0]) {
@@ -115,12 +114,17 @@ router.get('/get_data/:id',async (req, res) => {
                 Math.round(((different[3] % 86400000)) / 60000)
             ]
 
+            let specialDates = Array.from(times[0].special.dates, date => {
+                let subDate = date.split('/')
+                return `${subDate[2]}.${subDate[1]}.${subDate[0]}`
+            })
+
             sendData = {
                 firstSession: times[0].time.firstSession,
                 secondSession: times[0].time.secondSession,
                 specialFirstSession: times[0].special.firstSpecialSession,
                 specialSecondSession: times[0].special.secondSpecialSession,
-                specialDates: times[0].special.dates,
+                specialDates: specialDates,
                 lengthLesson: minutes,
                 candidate: true
             }

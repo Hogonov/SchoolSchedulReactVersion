@@ -3,12 +3,13 @@ import {useHttp} from '../../hooks/http.hook'
 import {useMessage} from '../../hooks/message.hook'
 import {AuthContext} from '../../context/AuthContext'
 import style from './Auth.module.css'
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 
-export const AuthPage = () => {
+export const AuthPage = props => {
     const auth = useContext(AuthContext);
     const message = useMessage();
+    const history = useHistory();
     const {request, error, clearError} = useHttp();
     const [form, setForm] = useState({
         login: '', password: ''
@@ -41,8 +42,16 @@ export const AuthPage = () => {
             const data = await request('/api/auth/login', 'POST', {...form});
             auth.login(data.token, data.userId, data.userRole)
         } catch (e) {
+            console.log(e)
         }
     };
+    const checkHandler = () => {
+        props.setFlag({
+            isView: false,
+            isLogin: false
+        })
+        history.push('/view')
+    }
 
     return (
         <div className={style.auth}>
@@ -79,7 +88,7 @@ export const AuthPage = () => {
                 </form>
                 <h1/>
                 <div className={style.buttonGroup}>
-                    <Link className={`btn ${style.button} ${style.button2}`} to="/view">Расписание</Link>
+                    <Link onClick={checkHandler} className={`btn ${style.button} ${style.button2}`} to="/view">Расписание</Link>
                     <button onClick={loginHandler} className={`btn ${style.button}`}>Войти</button>
                 </div>
             </div>
