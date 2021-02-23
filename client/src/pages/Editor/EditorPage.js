@@ -416,7 +416,7 @@ export const EditorPage = () => {
                                 <td>
                                     <input name={`office-${subject.index}`}
                                            type="number"
-                                           className={styleEditorPage.input}
+                                           className={`${styleEditorPage.input} custom-input`}
                                            value={subject.office}
                                            onChange={changeSubjectHandler}
                                            disabled={isChose.session}

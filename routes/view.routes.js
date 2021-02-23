@@ -140,19 +140,24 @@ router.get('/get/:id', async (req, res) => {
         for (let i = 0; i <timeForSend.length; i++) {
             subjectsClassroom.push({...emptySubject, index: i + 1})
         }
-        while (classroomsArr.length < 10) {
+        console.log(classroomsArr)
+        while (classroomsArr.length < 22) {
             classroomsArr.push({
-                name: '|',
+                name: '-',
                 index: indexClassroom++,
                 day: classroomsArr[0].day,
                 session: classroomsArr[0].session,
                 subjects: subjectsClassroom
             })
         }
-
+        let firstTable = classroomsArr.slice(0, 11)
+        let secondTable = []
+        for (let i = 11; i < classroomsArr.length; i++) {
+           secondTable.push(classroomsArr[i])
+        }
 
         res.json({
-            classrooms: classroomsArr,
+            classrooms: [firstTable, secondTable],
             times: timeForSend,
             session: session,
             editDate: editDate,
