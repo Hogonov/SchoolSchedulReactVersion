@@ -7,7 +7,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "babel-plugin-transform-react-statements": "^0.7.3",
     "bootstrap": "^4.5.0",
     "materialize-css": "^1.0.0-rc.2",
@@ -17,7 +17,7 @@
     "react-dom": "^16.12.0",
     "react-multi-date-picker": "^2.0.4",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0",
+    "react-scripts": "^4.0.3",
     "react-select": "^3.1.0"
   },
   "scripts": {

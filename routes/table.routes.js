@@ -232,14 +232,10 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
         const timeObj = {
             firstSession: time[0].time.firstSession,
             secondSession: time[0].time.secondSession,
-            firstSpecialSession: time[0].special.firstSpecialSession,
-            secondSpecialSession: time[0].special.secondSpecialSession,
         }
         const index = {
             firstSession: 0,
             secondSession: 1,
-            firstSpecialSession: 2,
-            secondSpecialSession: 3,
         }
         if (candidate.length > 0) {
             let daysArr = []
@@ -290,14 +286,10 @@ router.get('/get_data_class/:classname/:id', async (req, res) => {
         const timeObj = {
             firstSession: time[0].time.firstSession,
             secondSession: time[0].time.secondSession,
-            firstSpecialSession: time[0].special.firstSpecialSession,
-            secondSpecialSession: time[0].special.secondSpecialSession,
         }
         const index = {
             firstSession: 0,
             secondSession: 1,
-            firstSpecialSession: 2,
-            secondSpecialSession: 3,
         }
         if (candidate.length > 0) {
             let daysArr = []
@@ -345,7 +337,6 @@ router.post('/editor', auth, async (req, res) => {
         const user = await User.findById(req.user.userId);
 
         const {classname, form} = req.body
-
         const candidate = await Classroom.find({name: classname.value, school: user.school});
         let daysArr = []
         if (candidate.length > 0) {
@@ -380,11 +371,16 @@ router.post('/editor', auth, async (req, res) => {
                             date: new Date()
                         })
                     }
-
                     daysArr.push({
                         day: form[i].day,
                         session: form[i].session,
                         subjects: subjectArr
+                    })
+                } else {
+                    daysArr.push({
+                        day: form[i].day,
+                        session: {value: 'firstSession', label: 'Первая смена', name: 'session'},
+                        subjects: [{index: 1, name: '', option: null, office: '', time: '', update: false, date: new Date()}]
                     })
                 }
             }
@@ -410,7 +406,6 @@ router.post('/editor', auth, async (req, res) => {
                             name: form[i].session.label
                         },
                         subjects: Array.from(form[i].subjects, subject => {
-                            console.log("subject = ", subject)
                             return {
                                 index: subject.index,
                                 name: subject.option.value,
@@ -419,6 +414,12 @@ router.post('/editor', auth, async (req, res) => {
                                 date: new Date()
                             }
                         })
+                    })
+                } else {
+                    daysArr.push({
+                        day: form[i].day,
+                        session: {value: 'firstSession', label: 'Первая смена', name: 'session'},
+                        subjects: [{index: 1, name: '', option: null, office: '', time: '', update: false, date: new Date()}]
                     })
                 }
             }
@@ -447,7 +448,6 @@ router.get('/get_all_data', auth, async (req, res) => {
         const subjects = await DataSubject.find({school: user.school});
         const classrooms = (await DataClassroom.find({school: user.school}))[0].classes;
         const times = await Time.find({school: user.school});
-        console.log('classrooms', classrooms)
         let newArrSubjects = []
         for (let i = 0; i < subjects.length; i++) {
             newArrSubjects.push({value: subjects[i].name, label: subjects[i].name, name: 'subject'});

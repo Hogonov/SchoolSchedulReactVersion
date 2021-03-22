@@ -149,16 +149,12 @@ export const EditorPage = () => {
                 times: [
                     {...data.times.firstSession.options, time: data.times.firstSession.time, index: 0},
                     {...data.times.secondSession.options, time: data.times.secondSession.time, index: 1},
-                    {...data.times.firstSpecialSession.options, time: data.times.firstSpecialSession.time, index: 2},
-                    {...data.times.secondSpecialSession.options, time: data.times.secondSpecialSession.time, index: 3},
                 ],
             });
             setMaxLesson({
                 maxLesson: [
                     data.times.firstSession.time.length,
                     data.times.secondSession.time.length,
-                    data.times.firstSpecialSession.time.length,
-                    data.times.secondSpecialSession.time.length
                 ]
             })
         } catch (e) {
@@ -189,8 +185,10 @@ export const EditorPage = () => {
     }, [form, setForm])
 
 
+
+
     const sendHandler = async () => {
-        try {
+        try {console.log(fullForm)
             const data = await request('/api/table/editor', 'POST', {...fullForm}, {Authorization: `Bearer ${auth.token}`});
             message(data.message)
         } catch (e) {
@@ -213,20 +211,20 @@ export const EditorPage = () => {
                         fullFormArr.push({...fullForm.form[i], classname: classname})
                     }
                 }
+                if (fullFormArr[0].session !== '') {
+                    setIsChose({...isChose, class: false, session: false})
+                } else {
+                    setIsChose({...isChose, class: false, session: true})
+                }
                 setFullForm({classname: classname, form: fullFormArr})
                 setForm(fullFormArr[0])
-                if (fullFormArr[0].session !== '') {
-                    setIsChose({class: false, session: false})
-                } else {
-                    setIsChose({class: false, session: true})
-                }
             } else {
                 setIsChose({...isChose, class: false})
             }
         } catch (e) {
             console.log(e);
         }
-    }, [auth.token, setForm, setIndexDay, setFullForm, form, fullForm, setIsChose, isChose]);
+    }, [auth.token, isChose, setIsChose, form, setForm, fullForm, setFullForm]);
 
     const searchHandler = useCallback(async (event) => {
         try {

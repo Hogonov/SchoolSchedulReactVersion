@@ -127,6 +127,7 @@ input::-webkit-inner-spin-button {
 .navHeader {
     position: fixed;
     background-color: #3273ab;
+    width: 100%;
     padding: 0 2rem;
     height: 80px;
     z-index: 10;
@@ -198,9 +199,8 @@ input::-webkit-inner-spin-button {
     font-family: "GothamProRegular", serif;
 }
 @media only screen and (max-width: 992px){
-    .leftBlock .brand-logo{
-        float: left;
-        margin-left: 10%;
+    nav .brand-logo{
+        left: 10%;
     }
 }
 .leftBlock {
