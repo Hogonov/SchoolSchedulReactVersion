@@ -35,7 +35,7 @@ function App() {
             value={{token, login, logout, userId, isAuthenticated, userRole}}>
             <Roter>
                 <div style={{display: "flex", flexDirection: "row"}}>
-                    {(isAuthenticated || !flag.isLogin) && <Header
+                    {window.location.href.indexOf("/login") === -1 && <Header
                         flag={flag}
                         setFlag={setFlag}
                         isAuthenticated={isAuthenticated}

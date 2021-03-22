@@ -128,51 +128,57 @@ input::-webkit-inner-spin-button {
     position: fixed;
     background-color: #3273ab;
     padding: 0 2rem;
-    height: 100px;
+    height: 80px;
     z-index: 10;
     border-radius: 0 0 30px 0;
 }
 
 .toHomeIcon {
     background-image: url("public/icons/home.svg");
-    width: 27px;
-    height: 40px;
+    /*width: 27px;*/
+    /*height: 40px;*/
+    width: 20px;
+    height: 30px;
     margin-left: 10px;
-    margin-bottom: -15px;
+    /*margin-bottom: -15px;*/
+    margin-bottom: -11px;
 }
 .toViewIcon {
     background-image: url("public/icons/next.svg");
-    width: 27px;
-    height: 40px;
+    width: 19px;
+    height: 30px;
     margin-left: 10px;
-    margin-bottom: -15px;
+    /*margin-bottom: -15px;*/
+    margin-bottom: -11px;
 }
 .toExitIcon {
     background-image: url("public/icons/logout.svg");
-    width: 27px;
-    height: 40px;
+    width: 19px;
+    height: 30px;
     margin-left: 10px;
-    margin-bottom: -15px;
+    /*margin-bottom: -15px;*/
+    margin-bottom: -11px;
 }
 .toArrowIcon {
     background-image: url("public/icons/next.svg");
-    width: 27px;
-    height: 40px;
+    width: 18px;
+    height: 30px;
     margin-left: 10px;
     margin-bottom: -12px;
 }
 .toPlusIcon {
     background-image: url("public/icons/plus.svg");
-    width: 27px;
-    height: 40px;
+    width: 19px;
+    height: 30px;
     margin-right: 10px;
-    margin-bottom: -15px;
+    margin-bottom: -13px;
 }
 
 .headerNavLink {
     margin-right: 2rem;
-    margin-top: 15px;
-    font-size: large;
+    /*margin-top: 15px;*/
+    margin-top: 5px;
+    /*font-size: large;*/
     border-radius: 5px 5px 5px 5px;
     box-shadow: 20px 15px 20px rgba(0, 0, 0, 0.1), 15px 15px 15px rgba(0, 0, 0, 0.08);
     font-family: "GothamProRegular", serif;
@@ -191,24 +197,33 @@ input::-webkit-inner-spin-button {
     border-radius: 5px 5px 5px 5px;
     font-family: "GothamProRegular", serif;
 }
-.left {
+@media only screen and (max-width: 992px){
+    .leftBlock .brand-logo{
+        float: left;
+        margin-left: 10%;
+    }
+}
+.leftBlock {
     float: left;
 }
 
 .brand-logo {
-    margin-top: 15px;
+    /*margin-top: 15px;*/
+    margin-top: 5px;
     font-family: "CourierNewRegular", serif;
     font-weight: bold;
 }
 
 /*Sidebar*/
 .sidebar {
-    margin-top: 103px;
+    /*margin-top: 103px;*/
+    margin-top: 83px;
 }
 .sidebar > div{
     position: fixed;
     display: block;
-    width: 19%;
+    /*width: 19%;*/
+    width: 15%;
     opacity: 1;
     border-radius: 0 0 30px 0;
     color: white;
@@ -227,7 +242,8 @@ input::-webkit-inner-spin-button {
     display: block;
     padding: 15px;
     margin-top: 2px;
-    font-size: x-large;
+    /*font-size: x-large;*/
+    font-size: large;
     background-color: #3273ab;
     text-decoration: none;
     text-align: left;

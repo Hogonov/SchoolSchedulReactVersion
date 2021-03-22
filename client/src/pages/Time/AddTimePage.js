@@ -6,6 +6,7 @@ import stylesTimePage from './TimePage.module.css';
 import {otherTimeSetter, TimeTable} from "./TimeTable";
 import DatePicker from "react-multi-date-picker";
 import CustomDatePicker from "./CustomDatePicker";
+import {Loader} from "../../components/Loader";
 
 // the locale you want  https://react-day-picker.js.org/examples/localization
 
@@ -143,6 +144,7 @@ export const AddTimePage = () => {
         }
     };
 
+    if (loading) return <Loader/>
 
     return (
         <div className={stylesTimePage.main + " " + (!flag && stylesTimePage.oneMain)} id='main'>

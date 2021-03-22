@@ -15,13 +15,19 @@ export const Header = props => {
         history.push('/login')
     };
 
+    if(window.location.href.indexOf("/login") !== -1) {
+        return <></>
+    }
+
     return (
         <>
             {props.flag &&
             <nav className="navHeader">
                 <div>
-                    <ul className="left">
-                        <div className="brand-logo">IT Школа</div>
+                    <ul className="leftBlock">
+                        <li>
+                            <div className="brand-logo">IT Школа</div>
+                        </li>
                     </ul>
                     <ul className="right">
                         {

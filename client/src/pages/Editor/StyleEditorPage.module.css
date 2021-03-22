@@ -35,7 +35,7 @@
 .filterSelectors .selector{
     margin-bottom: 10px;
     color: black;
-    font-size: larger;
+    /*font-size: larger;*/
 }
 
 .tableHead tr td{

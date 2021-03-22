@@ -4,7 +4,7 @@
     width: 32%;
 }
 
-.auth > div {
+.auth > div:not(.logo) {
     width: 96%;
     margin-left: 2%;
     background-color: #ffffff;
@@ -17,6 +17,8 @@
     height: 191px;
     width: 200px;
     margin-left: 32%;
+    text-align: center;
+    left: auto;
     margin-bottom: 10%;
     margin-top: -20%;
 }
@@ -25,8 +27,9 @@
 }
 .button:not(.button2) {
     background-color: #6185c3;
-    margin-left: 45%;
-    width: 25%;
+    margin-left: auto;
+    float: right;
+    width: 100px;
     font-family: "GothamProBold", serif;
 }
 .button2 {
