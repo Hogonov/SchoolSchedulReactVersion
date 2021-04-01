@@ -2,6 +2,8 @@ import React, {useCallback, useContext, useEffect, useState} from "react";
 import style from './StyleUsersPage.module.css'
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
+import Select from "react-select";
+import styleEditorPage from "../Editor/StyleEditorPage.module.css";
 
 
 export const AddFormUser = props => {
@@ -11,8 +13,11 @@ export const AddFormUser = props => {
 
     const changeHandler = event => {
         props.setUser({...props.user, [event.target.name]: event.target.value});
-        console.log(event.target)
     };
+
+    const selectHandler = (event, action) => {
+        props.setUser({...props.user, school: event});
+    }
 
     const sendHandler = async () => {
         try {
@@ -71,13 +76,13 @@ export const AddFormUser = props => {
                 <div className={style.inputBlock}>
                     <h5>Школа:</h5>
                     <div>
-                        <input
-                            className='custom-input'
-                            onChange={changeHandler}
-                            name='school'
-                            type='text'
-                            placeholder='Введите название школы'
+                        <Select
+                            placeholder="Введите название школы"
+                            className={style.selector}
+                            name="session"
+                            onChange={selectHandler}
                             value={props.user.school}
+                            options={props.schoolForm.schools}
                         />
                     </div>
                 </div>

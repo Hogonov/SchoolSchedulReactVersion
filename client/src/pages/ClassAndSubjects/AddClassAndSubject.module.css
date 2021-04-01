@@ -108,14 +108,14 @@
     background-color: white;
     padding: 50px;
 }
-.formSubject{
+.form{
 
 }
-.formSubject > h3, .formClass > h3{
+.form > h3, .formClass > h3{
     margin-top: -20px;
     text-align: center;
 }
-.formSubject > button {
+.form > button {
     margin-top: 4%;
     margin-left: 82%;
 }
@@ -125,15 +125,15 @@
     flex-direction: row;
     text-align: center;
 }
-.formSubject .inputBlock > h4 {
+.form .inputBlock > h4 {
     margin-left: 3%;
 }
-.formSubject .inputBlock div{
+.form .inputBlock div{
      width: 70%;
      margin-left: 2%;
     margin-top: 10px;
  }
-.formSubject .inputBlock div input{
+.form .inputBlock div input{
     font-size: 25px;
 }
 .redCross{

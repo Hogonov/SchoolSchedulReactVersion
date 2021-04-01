@@ -4,5 +4,6 @@
   "mongoUri": "mongodb+srv://Admin:Honda1@school-shedule.eyyk2.azure.mongodb.net/schedule?retryWrites=true&w=majority",
   "ADMIN": "Admin",
   "PASS": "Honda1",
-  "baseUrl": "http://localhost:5000"
+  "HASH_PASS": "$2a$12$ABDAJM592lsQJn6ghNkUlegvrJbzTTliKBKEhYfDtO.ZJWoPz3A72",
+  "baseUrl": "http://localhost:80"
 }

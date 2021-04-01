@@ -27,20 +27,20 @@
     border-radius: 5px 5px 5px 5px;
 }
 
-.addFormUser form  {
+.addFormUser > form  {
     text-align: center;
     width: 70%;
     margin-left: 15%;
 }
-.inputBlock {
+.inputBlock{
     display: flex;
     flex-direction: row;
     text-align: center;
 }
-.inputBlock h5{
+.inputBlock > h5{
 
 }
-.inputBlock div{
+.inputBlock > div:not(.selector){
     margin-left: auto;
     width: 75%;
  }
@@ -87,4 +87,11 @@
     width: 25px;
     height: 25px;
     cursor: pointer;
+}
+
+.addSchoolBlock{
+
+}
+.selector{
+
 }

@@ -26,7 +26,7 @@ export const UserList = (props) => {
             login: props.users[index].login,
             password: props.users[index].password,
             role: props.users[index].role,
-            school: props.users[index].school
+            school: {value: props.users[index].school, label: props.users[index].school}
         })
         props.setFlag({...props.flag, form: true})
     }

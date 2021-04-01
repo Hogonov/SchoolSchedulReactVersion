@@ -1,0 +1,34 @@
+.inputBlock h4{
+
+}
+
+.inputBlock > div{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+.inputBlock button{
+    margin-left: 10px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.form{
+
+}
+
+.inputBlock {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
+.form .inputBlock > h4 {
+    margin-left: 3%;
+}
+.form .inputBlock div{
+    width: 70%;
+    margin-left: 2%;
+    margin-top: 10px;
+}
+.form .inputBlock div input{
+    font-size: 25px;
+}

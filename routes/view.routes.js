@@ -44,10 +44,10 @@ router.get('/get/:id', async (req, res) => {
         if (specialDates[specialDates.indexOf(date)]) {
             timeArr = time[0].special
             if (dateStr > timeArr.firstSpecialSession[timeArr.firstSpecialSession.length - 1].endTime) {
-                session = 'secondSpecialSession';
+                session = 'secondSession';
                 timeForSend = timeArr.secondSpecialSession
             } else {
-                session = 'firstSpecialSession';
+                session = 'firstSession';
                 timeForSend = timeArr.firstSpecialSession
             }
         } else {

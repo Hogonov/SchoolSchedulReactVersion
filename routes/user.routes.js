@@ -17,7 +17,8 @@ router.post(
     '/add_user', auth,
     [
         check('login', 'Некорректный login').exists(),
-        check('password', 'Минимальная длина пароля 6 символов').isLength({min: 6})
+        check('password', 'Минимальная длина пароля 6 символов').isLength({min: 6}),
+        check('role', 'Введите роль').exists()
     ],
     async (req, res) => {
         try {
@@ -31,21 +32,25 @@ router.post(
             }
 
             const {login, password, school, role} = req.body;
+            console.log(school)
 
             const candidate = await User.findOne({login});
 
-            const newSchool = new School({name: school});
+            const newSchool = new School({name: school.value});
 
             if (candidate) {
-                return res.status(400).json({message: 'Такой пользователь уже существует'})
+                return res.status(201).json({message: 'Такой пользователь уже существует', ok: true})
             }
+
+            let candidateSchool = await School.findOne({name: school.value})
+            if (!candidateSchool)
+                await newSchool.save();
+
 
             const hashedPassword = await bcrypt.hash(password, 12);
 
-            const user = new User({login, password: hashedPassword, school, role});
+            const user = new User({login, password: hashedPassword, school: school.value, role});
 
-            if (!await School.findOne({name: school}))
-                await newSchool.save();
             await user.save();
 
             res.status(201).json({message: 'Пользователь создан', ok: true})
@@ -82,21 +87,16 @@ router.get('/get_user/:id', auth, async (req, res) => {
 // /api/users/edit_user/:id
 router.put('/edit_user/:id', auth, async (req, res) => {
     try {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                errors: errors.array(),
-                message: 'Некорректный данные при регистрации'
-            });
-        }
 
         const {login, password, school, role} = req.body;
 
+        const candidateSchool = await School.findOne({name: school.value})
+        const newSchool = new School({_id: candidateSchool.id, name: school.value})
+        await School.findByIdAndUpdate({_id: newSchool.id}, newSchool);
 
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        const user = new User({_id: req.params.id, login, password: hashedPassword, school, role});
+        const user = new User({_id: req.params.id, login, password: hashedPassword, school: school.value, role});
 
         await User.findByIdAndUpdate({_id: req.params.id}, user);
 

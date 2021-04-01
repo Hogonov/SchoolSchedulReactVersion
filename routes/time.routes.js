@@ -25,6 +25,8 @@ router.post('/add', auth, async (req, res) => {
     try {
         const {isSpecial, lengthLesson, times, specialDates} = req.body;
         const user = await User.findById(req.user.userId);
+        console.log("userSchool = ", user.school)
+        console.log("user = ", user)
         const candidate = await Time.find({school: user.school});
         const subTime = {
             school: user.school,
@@ -40,11 +42,11 @@ router.post('/add', auth, async (req, res) => {
         };
         if (candidate[0]) {
             const time = new Time({...subTime, _id: candidate[0]._id})
-            await Time.findByIdAndUpdate({_id: candidate[0]._id}, time);
+            //await Time.findByIdAndUpdate({_id: candidate[0]._id}, time);
             res.status(201).json({message: 'Данные изменены'})
         } else {
             const time = new Time(subTime)
-            await time.save();
+            //await time.save();
             res.status(201).json({message: 'Добавлено'})
         }
 

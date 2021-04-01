@@ -19,6 +19,8 @@ app.use('/api/auth', require('./routes/auth.routes'));
 app.use('/api/table', require('./routes/table.routes'));
 //данные о пользователях
 app.use('/api/users', require('./routes/user.routes'));
+//данные о школах
+app.use('/api/school', require('./routes/school.routes'));
 //данные об объявлениях
 app.use('/api/announcement', require('./routes/announcement.routes'));
 app.use('/api/view', require('./routes/view.routes'));
