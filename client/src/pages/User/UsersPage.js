@@ -3,7 +3,6 @@ import {AuthContext} from "../../context/AuthContext";
 import React, {useCallback, useContext, useEffect, useState} from "react";
 import {Loader} from "../../components/Loader";
 import {UserList} from "./UserList";
-import Button from "react-bootstrap/Button";
 import style from './StyleUsersPage.module.css'
 import {AddFormUser} from "./AddFormUser";
 import {InputForm} from "../../components/InputForm";

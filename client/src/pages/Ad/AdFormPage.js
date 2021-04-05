@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useContext} from "react";
 import style from './AdPage.module.css'
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
@@ -10,7 +10,7 @@ import {AuthContext} from "../../context/AuthContext";
 export const AddFormPage = props => {
     const {token} = useContext(AuthContext);
     const message = useMessage();
-    const {loading, request, error, clearError} = useHttp();
+    const {request} = useHttp();
 
     const changeHandler = (event, action) => {
         try {

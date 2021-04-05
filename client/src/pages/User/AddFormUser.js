@@ -1,15 +1,15 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React from "react";
 import style from './StyleUsersPage.module.css'
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
 import Select from "react-select";
-import styleEditorPage from "../Editor/StyleEditorPage.module.css";
+
 
 
 export const AddFormUser = props => {
 
     const message = useMessage();
-    const {loading, request, error, clearError} = useHttp();
+    const {request} = useHttp();
 
     const changeHandler = event => {
         props.setUser({...props.user, [event.target.name]: event.target.value});

@@ -1,5 +1,6 @@
 const express = require('express');
-const config = require('config');
+const config = require('./config/default.json');
+const configProd = require('./config/production.json');
 const path = require('path');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -43,11 +44,12 @@ if (process.env.NODE_ENV === 'production') {
     })
 }
 
-const PORT = config.get('port') || 5000;
+const PORT = process.env.NODE_ENV === 'production' ? configProd.port : config.port;
+
 
 async function start() {
     try {
-        await mongoose.connect(config.get('mongoUri'), {
+        await mongoose.connect(config.mongoUri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true

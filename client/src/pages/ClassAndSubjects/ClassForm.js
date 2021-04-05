@@ -1,5 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
+import React, {useContext} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
@@ -10,8 +9,7 @@ export const ClassForm = props => {
 
     const auth = useContext(AuthContext);
     const message = useMessage();
-    const {loading, request, error, clearError} = useHttp();
-    const [flagTable, setFlagTable] = useState(false)
+    const {request} = useHttp();
 
     const addClassroomsHandler = async () => {
         try {

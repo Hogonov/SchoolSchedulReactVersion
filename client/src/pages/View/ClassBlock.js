@@ -1,11 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
-import {AuthContext} from "../../context/AuthContext";
-import {useMessage} from "../../hooks/message.hook";
-import {useHistory} from 'react-router-dom'
-import {useHttp} from "../../hooks/http.hook";
-import Select from "react-select";
-import {Button} from "react-bootstrap";
-import {Loader} from "../../components/Loader";
+import React from "react";
 import style from "./ViewPage.module.css"
 
 

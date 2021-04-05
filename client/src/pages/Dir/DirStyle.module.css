@@ -3,13 +3,13 @@
     padding: 20px;
     border-radius: 5px 5px 5px 5px;
     width: 60%;
+    text-align: center;
 }
 
 .button {
     background-color: #3a73ab;
-    margin-left: 40%;
     margin-top: 20px;
-    width: 20%;
+
 }
 
 .button:hover, .addSpecialCourse:hover{

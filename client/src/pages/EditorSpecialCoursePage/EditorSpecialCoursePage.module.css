@@ -59,8 +59,8 @@
 
 .button {
     background-color: #3a73ab;
-    margin-left: 45%;
-    width: 15%;
+    display: block;
+    margin: 0 auto;
 }
 
 .button:hover, .addSpecialCourse:hover{

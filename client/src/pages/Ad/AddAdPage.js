@@ -1,10 +1,7 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
-import axios from "axios";
-import Select from "react-select";
 import style from './AdPage.module.css'
 import {Loader} from "../../components/Loader";
 import {AdListPage} from "./AdListPage";
@@ -12,7 +9,6 @@ import {AddFormPage} from "./AdFormPage";
 
 export const AddAdPage = () => {
     const {token} = useContext(AuthContext);
-    const auth = useContext(AuthContext);
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
     const [options, setOptions] = useState({schools: []});

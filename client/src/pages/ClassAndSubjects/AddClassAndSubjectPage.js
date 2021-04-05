@@ -1,5 +1,4 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
@@ -12,7 +11,7 @@ import {Loader} from "../../components/Loader";
 
 export const AddClassAndSubjectPage = () => {
 
-    const {auth, token} = useContext(AuthContext);
+    const {token} = useContext(AuthContext);
     const message = useMessage();
     const {loading, request, error, clearError} = useHttp();
     const AlphabetRu = [
@@ -104,7 +103,12 @@ export const AddClassAndSubjectPage = () => {
     }, [getData, ready.subject]);
 
     const changeHandler = event => {
-        setForm({...form, [event.target.name]: event.target.value})
+        if ( event.target.name === "subjectName" && event.target.value.length > 12){
+            message("Слишком длинное название предмета")
+        } else {
+            setForm({...form, [event.target.name]: event.target.value})
+        }
+
     };
 
     useEffect(() => {
@@ -116,14 +120,6 @@ export const AddClassAndSubjectPage = () => {
         window.M.updateTextFields()
     }, []);
 
-
-    const addClassroomHandler = async () => {
-        try {
-            const data = await request('/api/table/classroom', 'POST', {...form}, {Authorization: `Bearer ${auth.token}`});
-            message(data.message)
-        } catch (e) {
-        }
-    };
 
     const changeFlag = event => {
         setFlag({...flag, [event.target.id]: !flag[event.target.id]})

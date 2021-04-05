@@ -14,16 +14,12 @@ import {AddDirPage} from "./pages/Dir/AddDirPage";
 import {AddAdPage} from "./pages/Ad/AddAdPage";
 import {AddYearSchoolPage} from "./pages/YearSchool/AddYearSchoolPage";
 import {EditorSpecialCoursePage} from "./pages/EditorSpecialCoursePage/EditorSpecialCoursePage";
-import {SelectTheme} from "./pages/SelectTheme/SelectTheme";
 
 
 export const useRoutes = (isAuthenticated, userRole, flag, setFlag) => {
     if (userRole === 'ROLE_ADMIN') {
         return (
             <Switch>
-                <Route path="/select_theme" exact>
-                    <SelectTheme/>
-                </Route>
                 <Route path="/view" exact>
                     <WebViewPage isAuthenticated={isAuthenticated}/>
                 </Route>
@@ -66,9 +62,6 @@ export const useRoutes = (isAuthenticated, userRole, flag, setFlag) => {
     } else if(isAuthenticated){
         return (
             <Switch>
-                <Route path="/select_theme" exact>
-                    <SelectTheme/>
-                </Route>
                 <Route path="/view" exact>
                     <WebViewPage isAuthenticated={isAuthenticated}/>
                 </Route>

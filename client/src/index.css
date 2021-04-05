@@ -23,7 +23,8 @@
     background-color: #f1f1f1;
 }
 .withBackgroundImage {
-    background-image: url("public/images/bg.jpg");
+    /*background-image: url("public/images/bg.jpg");*/
+    background-color: #E4DFDE;
     background-attachment: fixed;
 }
 

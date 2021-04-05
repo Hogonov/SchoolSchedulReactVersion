@@ -3,8 +3,8 @@ import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
 import stylesTimePage from './TimePage.module.css';
-import {otherTimeSetter, TimeTable} from "./TimeTable";
-import DatePicker from "react-multi-date-picker";
+import {TimeTable} from "./TimeTable";
+
 import CustomDatePicker from "./CustomDatePicker";
 import {Loader} from "../../components/Loader";
 

@@ -54,6 +54,21 @@ router.post('/add', auth, async (req, res) => {
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '});
     }
 });
+//api/special_course/get_course
+router.get('/get_course', auth,async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId);
+        const specialCourse = await SpecialCourse.findOne({school: user.school});
+        res.json({
+            courses: specialCourse,
+            ok: true
+        })
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
+    }
+});
+
 
 //api/special_course/get/:id
 router.get('/get/:id', async (req, res) => {

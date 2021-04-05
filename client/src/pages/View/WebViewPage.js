@@ -1,13 +1,8 @@
-import React, {useCallback, useContext, useEffect, useState} from "react";
-import {AuthContext} from "../../context/AuthContext";
-import {useMessage} from "../../hooks/message.hook";
-import {useHistory} from 'react-router-dom'
+import React, {useCallback, useEffect, useState} from "react";
 import {useHttp} from "../../hooks/http.hook";
 import Select from "react-select";
-import {Button} from "react-bootstrap";
 import {Loader} from "../../components/Loader";
 import style from "./ViewPage.module.css"
-import {useAuth} from "../../hooks/auth.hook";
 import {ViewTable} from "./ViewTable";
 import DatePicker from "react-multi-date-picker"
 
@@ -20,8 +15,8 @@ export const WebViewPage = props => {
 
         }
     }
-    const message = useMessage();
-    const {loading, request, error, clearError} = useHttp();
+
+    const {loading, request} = useHttp();
     const [options, setOptions] = useState({schools: [], classes: [], sessions: []});
     const [flag, setFlag] = useState({disable: true, table: false, specialDate: false})
     const [form, setForm] = useState({

@@ -54,6 +54,10 @@
     width: 10px;
     height: 10px;
 }
+.formClass {
+    text-align: center;
+}
+
 .formClass table {
     width: 80%;
     margin-left: 10%;
@@ -81,11 +85,10 @@
 
 .formClass > button {
     margin-top: 4%;
-    margin-left: 43%;
-    width: 15%;
+
 }
-.formClass .inputBlock{
-    margin-left: 27%;
+.formClass > .inputBlock{
+    margin-left: 20%;
 }
 
 .formClass .inputBlock div{
@@ -119,23 +122,25 @@
     margin-top: 4%;
     margin-left: 82%;
 }
+.formSubject .inputBlock > div{
+    margin-top: 10px;
+    width: 95%;
+    margin-left: 10px;
+}
+.formSubject > h3{
+
+}
+.formSubject > button {
+    float: right;
+
+}
 
 .inputBlock {
     display: flex;
     flex-direction: row;
     text-align: center;
 }
-.form .inputBlock > h4 {
-    margin-left: 3%;
-}
-.form .inputBlock div{
-     width: 70%;
-     margin-left: 2%;
-    margin-top: 10px;
- }
-.form .inputBlock div input{
-    font-size: 25px;
-}
+
 .redCross{
     background-image: url("../../public/icons/delete.svg");
     width: 20px;

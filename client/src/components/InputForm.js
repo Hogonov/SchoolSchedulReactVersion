@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React from "react";
 import style from './Style/StyleComponent.module.css'
 
 export const InputForm = props => {

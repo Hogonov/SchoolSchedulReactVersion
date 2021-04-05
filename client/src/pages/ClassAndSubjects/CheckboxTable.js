@@ -1,10 +1,6 @@
-import React, {useContext, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import {AuthContext} from "../../context/AuthContext";
-import {useMessage} from "../../hooks/message.hook";
-import {useHttp} from "../../hooks/http.hook";
+import React from "react";
 import style from './AddClassAndSubject.module.css'
-import DatePicker from "react-multi-date-picker"
+
 
 export const CheckboxTable = props => {
 

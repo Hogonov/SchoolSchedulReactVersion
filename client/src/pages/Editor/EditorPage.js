@@ -4,7 +4,6 @@ import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
 import Select from 'react-select';
 import {Loader} from "../../components/Loader";
-import Grid from "@material-ui/core/Grid";
 import styleEditorPage from "./StyleEditorPage.module.css"
 
 

@@ -87,9 +87,8 @@
 
 .button {
     background-color: #3a73ab;
-    margin-top: 5%;
-    width: 20%;
-    margin-left: 40%;
+    display: block;
+    margin: 5% auto 0;
 }
 
 .button:hover{

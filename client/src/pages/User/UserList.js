@@ -1,13 +1,11 @@
 import React, {useEffect} from 'react'
-import {Link} from 'react-router-dom'
-import Button from "react-bootstrap/Button";
 import style from './StyleUsersPage.module.css'
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
 
 export const UserList = (props) => {
     const message = useMessage();
-    const {loading, request, error, clearError} = useHttp();
+    const {request} = useHttp();
     const deleteUser = async event => {
         try {
             const data = await request(`/api/users/delete_user/${event.target.id}`, 'DELETE', null, {Authorization: `Bearer ${props.token}`});

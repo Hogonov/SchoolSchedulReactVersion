@@ -1,5 +1,5 @@
-import React, {useContext, useEffect} from 'react'
-import {Link, NavLink, useHistory} from 'react-router-dom'
+import React, {useContext} from 'react'
+import {Link, useHistory} from 'react-router-dom'
 import {AuthContext} from '../context/AuthContext'
 
 

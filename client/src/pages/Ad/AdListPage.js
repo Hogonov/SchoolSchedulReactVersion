@@ -1,9 +1,4 @@
-import {useHttp} from "../../hooks/http.hook";
-import {AuthContext} from "../../context/AuthContext";
-import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Loader} from "../../components/Loader";
-import Button from "react-bootstrap/Button";
-import {useMessage} from "../../hooks/message.hook";
+import React from "react";
 import style from "../Ad/AdPage.module.css";
 
 

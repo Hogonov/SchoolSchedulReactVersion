@@ -2,11 +2,8 @@ import React, {useCallback, useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
-import Select from 'react-select';
 import {Loader} from "../../components/Loader";
-import Grid from "@material-ui/core/Grid";
 import styleEditorSpecialCourse from "./EditorSpecialCoursePage.module.css";
-import stylesTimePage from "../Time/TimePage.module.css";
 import {DayBock} from "./DayBlock";
 
 export const EditorSpecialCoursePage = () => {
@@ -24,6 +21,17 @@ export const EditorSpecialCoursePage = () => {
             {day: 'Суббота', course: [{index: 1, name: '', time: ''}]}
         ]
     });
+    const getHandler =useCallback( async () => {
+        try {
+            const data = await request('/api/special_course/get_course', 'GET', null, {Authorization: `Bearer ${auth.token}`});
+            setForm({...form, courses: data.courses.courses})
+        } catch (e) {
+        }
+    },[auth.token])
+
+    useEffect(() => {
+        getHandler()
+    }, [getHandler]);
 
     useEffect(() => {
         message(error);
@@ -34,11 +42,12 @@ export const EditorSpecialCoursePage = () => {
         window.M.updateTextFields()
     }, []);
 
+
+
     const sendHandler = async (event) => {
         try {
             const data = await request('/api/special_course/add', 'POST', {...form}, {Authorization: `Bearer ${auth.token}`});
             message(data.message)
-            console.log(form)
         } catch (e) {
         }
     };

@@ -48,7 +48,6 @@
 .table {
     border-spacing: 7px 11px;
     border-collapse: separate;
-
 }
 
 .table tbody tr td{
@@ -72,8 +71,10 @@
 
 .button {
     background-color: #3a73ab;
-    margin-top: 5%;
-    margin-left: 38%;
+    /*margin-top: 5%;*/
+    display: block;
+    margin: 0 auto;
+
 }
 .button:focus {
     background-color: #3a73ab;
