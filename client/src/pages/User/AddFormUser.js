@@ -18,10 +18,24 @@ export const AddFormUser = props => {
     const selectHandler = (event, action) => {
         props.setUser({...props.user, school: event});
     }
+    const clearFormUser = () => {
+        props.setEdit({...props.edit,
+            isEdit: false,
+            textTitleEdit: `Новый пользователь:`,
+            textButtonEdit: 'Добавить'
+        })
+        props.setUser({login: '', password: '', role: '', school: ''})
+    }
 
     const sendHandler = async () => {
         try {
-            const data = await request('/api/users/add_user', 'POST', {...props.user}, {Authorization: `Bearer ${props.token}`});
+            let reqUrl = '/api/users/add_user'
+            let reqType = 'POST'
+            if (props.user.id){
+                reqUrl = `/api/users/edit_user/${props.user.id}`
+                reqType = 'PUT'
+            }
+            const data = await request(reqUrl, reqType, {...props.user}, {Authorization: `Bearer ${props.token}`});
             message(data.message);
             if(data.ok) {
                 props.setFlag({...props.flag, update: true})
@@ -32,7 +46,8 @@ export const AddFormUser = props => {
 
     return (
         <div className={style.addFormUser}>
-            <h2>Новый пользователь:</h2>
+            {props.user.id && <svg onClick={clearFormUser} className={`${style.redCross} ${style.clearFormUser}`}/>}
+            <h2>{props.edit.textTitleEdit}</h2>
             <form>
                 <div className={style.inputBlock}>
                     <h5>Логин:</h5>
@@ -88,7 +103,7 @@ export const AddFormUser = props => {
                 </div>
             </form>
             <h2/>
-            <button onClick={sendHandler} className={`btn ${style.button}`}>Добавить</button>
+            <button onClick={sendHandler} className={`btn ${style.button}`}>{props.edit.textButtonEdit}</button>
             <h2/>
         </div>
     );

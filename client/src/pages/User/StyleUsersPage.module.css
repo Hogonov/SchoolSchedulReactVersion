@@ -22,6 +22,7 @@
 
 
 .addFormUser {
+    padding: 10px;
     text-align: center;
     border: 1px #393838 solid;
     border-radius: 5px 5px 5px 5px;
@@ -94,4 +95,8 @@
 }
 .selector{
 
+}
+
+.clearFormUser{
+    float: right;
 }

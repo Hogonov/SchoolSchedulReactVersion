@@ -20,6 +20,11 @@ export const UsersPage = () => {
         form: false,
         update: false
     })
+    const [edit, setEdit] = useState({
+        isEdit: false,
+        textTitleEdit: 'Новый пользователь',
+        textButtonEdit: 'Добавить'
+    })
     const [schoolForm, setSchoolForm] = useState({
         name: '',
         schools: []
@@ -88,11 +93,11 @@ export const UsersPage = () => {
             </div>
 
             <h2 className={style.title}>Пользователи</h2>
-            {!loading && <UserList setFlag={setFlag} flag={flag} token={token} users={users} user={user} setUser={setUser}/>}
+            {!loading && <UserList edit={edit} setEdit={setEdit} setFlag={setFlag} flag={flag} token={token} users={users} user={user} setUser={setUser}/>}
             <h1/>
             <button onClick={viewFormAddUser} className={`btn ${style.button}`}>+ пользователь</button>
             <h1/>
-            {flag.form && <AddFormUser schoolForm={schoolForm} token={token} setFlag={setFlag} flag={flag} user={user} setUser={setUser}/>}
+            {flag.form && <AddFormUser edit={edit} setEdit={setEdit} schoolForm={schoolForm} token={token} setFlag={setFlag} flag={flag} user={user} setUser={setUser}/>}
         </div>
     );
 };

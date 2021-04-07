@@ -19,8 +19,14 @@ export const UserList = (props) => {
 
 
     const chosenUser = event => {
-        let index = event.target.id
+        let index = +event.target.id
+        props.setEdit({...props.edit,
+            isEdit: true,
+            textTitleEdit: `Редактирование пользователя №${index + 1}:`,
+            textButtonEdit: 'Редактировать'
+        })
         props.setUser({
+            id: props.users[index]._id,
             login: props.users[index].login,
             password: props.users[index].password,
             role: props.users[index].role,
