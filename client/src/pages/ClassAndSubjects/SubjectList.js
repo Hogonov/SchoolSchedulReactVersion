@@ -10,6 +10,10 @@ export const SubjectList = props => {
     const message = useMessage();
     const {request} = useHttp();
 
+    const chosePagination = (event) => {
+        props.setData({...props.data, indexPagination: +event.target.id})
+    }
+
     const deleteSubjectHandler = async event => {
         try {
             const fetched = await request(`/api/table/delete_subject/${event.target.id}`, 'DELETE', null,
@@ -23,7 +27,6 @@ export const SubjectList = props => {
         } catch (e) {
         }
     };
-
     return ( <div className={style.subjectList}>
         <table>
             <thead>
@@ -34,7 +37,7 @@ export const SubjectList = props => {
             </tr>
             </thead>
             <tbody>
-            {props.subjects.map((subject, index) => {
+            {props.subjects[props.data.indexPagination].map((subject, index) => {
                 return (
                     <tr key={subject._id}>
                         <td>{index + 1}</td>
@@ -47,5 +50,17 @@ export const SubjectList = props => {
             })}
             </tbody>
         </table>
+        <div className={style.paginationBlock}>
+            {props.subjects.length > 1 && props.subjects.map((subject, index) => {
+                let indexPag = props.data.indexPagination
+                return (
+                    <div key={index}
+                         id={index}
+                         onClick={chosePagination}
+                         className={index === indexPag ? `${style.activePagination}` : ''}
+                    >{index + 1}</div>
+                )
+            })}
+        </div>
     </div>)
 }

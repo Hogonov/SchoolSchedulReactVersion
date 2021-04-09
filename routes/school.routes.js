@@ -47,6 +47,40 @@ router.post(
     });
 
 
+// /api/school/edit/:id
+router.put(
+    '/edit/:id', auth,
+    [
+        check('school', 'Некорректное название школы').exists()
+    ],
+    async (req, res) => {
+        try {
+            const errors = validationResult(req);
+
+            if (!errors.isEmpty()) {
+                return res.status(400).json({
+                    errors: errors.array(),
+                    message: 'Некорректный данные при регистрации'
+                });
+            }
+
+            const {school} = req.body;
+
+
+            await School.findByIdAndUpdate(req.params.id,{name: school})
+
+
+
+            res.status(201).json({message: 'Название школы измененно', ok: true})
+
+        } catch (e) {
+            console.log(e);
+            res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
+        }
+    });
+
+
+
 // /api/school/get_all
 router.get('/get_all', auth, async (req, res) => {
     try {

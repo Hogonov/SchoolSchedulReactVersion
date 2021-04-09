@@ -30,7 +30,7 @@ export const AddClassAndSubjectPage = () => {
         }
     });
     const [data, setData] = useState({
-        subjects: [], classes: []
+        subjects: [], classes: [], indexPagination: 0
     });
     const [flag, setFlag] = useState({
         classes: false,
@@ -92,7 +92,7 @@ export const AddClassAndSubjectPage = () => {
                 })
                 setFlag({...flag, checkedArr: fetchedCandidate.classrooms.checkedArr})
             }
-            setData({classes: fetchedClasses, subjects: fetchedSubjects});
+            setData({...data, classes: fetchedClasses, subjects: fetchedSubjects});
         } catch (e) {
 
         }

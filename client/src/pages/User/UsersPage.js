@@ -80,24 +80,27 @@ export const UsersPage = () => {
 
     return (
         <div className={style.main}>
-            <div className={style.addSchoolBlock}>
-                <InputForm
-                    placeholderComp="Введите название школы"
-                    nameComp='school'
-                    idComp='school'
-                    addHandler={addHandler}
-                    changeHandler={changeHandler}
-                    form={schoolForm}
-                />
-
+            <div className={style.schoolBlock}>
+                <div className={style.addSchoolBlock}>
+                    <InputForm
+                        placeholderComp="Введите название школы"
+                        nameComp='school'
+                        idComp='school'
+                        addHandler={addHandler}
+                        changeHandler={changeHandler}
+                        form={schoolForm}
+                    />
+                </div>
             </div>
 
-            <h2 className={style.title}>Пользователи</h2>
-            {!loading && <UserList edit={edit} setEdit={setEdit} setFlag={setFlag} flag={flag} token={token} users={users} user={user} setUser={setUser}/>}
-            <h1/>
-            <button onClick={viewFormAddUser} className={`btn ${style.button}`}>+ пользователь</button>
-            <h1/>
-            {flag.form && <AddFormUser edit={edit} setEdit={setEdit} schoolForm={schoolForm} token={token} setFlag={setFlag} flag={flag} user={user} setUser={setUser}/>}
+            <div className={style.usersBlock}>
+                <h2 className={style.title}>Пользователи</h2>
+                {!loading && <UserList edit={edit} setEdit={setEdit} setFlag={setFlag} flag={flag} token={token} users={users} user={user} setUser={setUser}/>}
+                <h1/>
+                <button onClick={viewFormAddUser} className={`btn ${style.button}`}>+ пользователь</button>
+                <h1/>
+                {flag.form && <AddFormUser edit={edit} setEdit={setEdit} schoolForm={schoolForm} token={token} setFlag={setFlag} flag={flag} user={user} setUser={setUser}/>}
+            </div>
         </div>
     );
 };

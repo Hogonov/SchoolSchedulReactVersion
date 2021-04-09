@@ -1,16 +1,12 @@
 const {Router} = require('express');
-const config = require('config');
-const jwt = require('jsonwebtoken');
 const {check, validationResult} = require('express-validator');
 const auth = require('../middleware/auth.middleware');
 const DataSubject = require('../models/DataSubject');
-const Table = require('../models/Table');
 const DataClassroom = require('../models/DataClassroom');
 const School = require('../models/School');
 const User = require('../models/User');
 const Time = require('../models/Time');
 const Classroom = require('../models/Classroom');
-const SpecialDate = require('../models/SpecialDate');
 const router = Router();
 
 
@@ -113,9 +109,11 @@ router.get('/get_checked_classroom', auth, async (req, res) => {
 // /api/table/get_subject
 router.get('/get_subject', auth, async (req, res) => {
     try {
-        const user = await User.findById(req.user.userId);
-        const subjects = await DataSubject.find({school: user.school});
-        res.json(subjects);
+        const user = await User.findById(req.user.userId)
+        const subjects = await DataSubject.find({school: user.school})
+        let readySend = []
+        while (subjects.length > 0) readySend.push(subjects.splice(0, 5))
+        res.json(readySend)
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})

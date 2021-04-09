@@ -172,3 +172,28 @@
     text-align: center;
     padding: 10px;
 }
+
+.paginationBlock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.paginationBlock > div{
+    cursor: pointer;
+    margin-right: 20px;
+    margin-top: 20px;
+    color: white;
+    font-size: 25px;
+    min-width: 25px;
+    text-align: center;
+    background-color: #3a73ab;
+    border-radius: 5px;
+}
+
+.paginationBlock > div:hover {
+    background-color: #7BA5C6 !important;
+}
+.activePagination{
+    background-color: #8cc3f3 !important;
+}

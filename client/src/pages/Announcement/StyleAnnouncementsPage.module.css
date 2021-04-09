@@ -87,13 +87,13 @@
 
 .editGray{
     background-image: url("../../public/icons/grey pen.svg");
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
 }
 
 .editBlue{
     background-image: url("../../public/icons/blue pen.svg");
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 }

@@ -5,7 +5,7 @@ const schema = new Schema({
         day: String,
         course: [{index: Number, name: String, time: String}]
     }],
-    school: {type: String, required: true}
+    school: {type: String, ref: 'School', required: true}
 });
 
 module.exports = model('SpecialCourse', schema);
