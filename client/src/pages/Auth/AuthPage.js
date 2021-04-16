@@ -45,6 +45,7 @@ export const AuthPage = props => {
             console.log(e)
         }
     };
+
     const checkHandler = () => {
         props.setFlag({
             isView: false,

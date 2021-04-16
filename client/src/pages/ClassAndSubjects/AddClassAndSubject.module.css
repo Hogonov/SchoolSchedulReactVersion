@@ -22,7 +22,7 @@
     font-size: 30px;
     padding-left: 30px;
     background-color: white;
-    width: 34%;
+    width: 365px;
 }
 
 .arrowDown{
@@ -128,7 +128,8 @@
     margin-left: 10px;
 }
 .formSubject > h3{
-
+    text-align: center;
+    margin-top: 0;
 }
 .formSubject > button {
     float: right;
