@@ -3,11 +3,11 @@
 # dependencies
 /node_modules
 /client/node_modules/
-/.pnp
-.pnp.js
-.png
-.jpng
-/public/images/
+# /.pnp
+# .pnp.js
+# .png
+# .jpng
+# /public/images/
 .idea
 
 # testing
