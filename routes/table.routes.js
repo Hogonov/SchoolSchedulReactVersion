@@ -50,7 +50,7 @@ router.post('/classroom',
     async (req, res) => {
         try {
 
-            const {classLetters, lastLetter, lengthLetters, checkedClass, checkedArr} = req.body;
+            const {checkedClass, checkedArr} = req.body;
 
             const user = await User.findById(req.user.userId);
             const candidate = await DataClassroom.find({school: user.school})
@@ -152,11 +152,11 @@ router.get('/get_classes', auth, async (req, res) => {
 router.get('/get_view_classes/:id', async (req, res) => {
     try {
         const school = await School.findById(req.params.id);
-        const classrooms = await Classroom.find({school: school.name}).sort({name: 1});
+        const classrooms = await Classroom.find({school: school.name}).sort({name: 1})
+            .collation({locale: "en_US", numericOrdering: true})
         let classes = Array.from(classrooms, classroom => {
             return {label: classroom.name, value: classroom.name}
         })
-        console.log(classes)
         res.json(classes);
     } catch (e) {
         console.log(e);
@@ -226,7 +226,6 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId);
         const candidate = await Classroom.find({name: req.params.classname, school: user.school});
-        console.log(candidate)
         const time = await Time.find({school: user.school});
         const timeObj = {
             firstSession: time[0].time.firstSession,
@@ -282,7 +281,6 @@ router.get('/get_data_class/:classname/:id', async (req, res) => {
     try {
         const school = await School.findById(req.params.id);
         const candidate = await Classroom.find({name: req.params.classname, school: school.name});
-        console.log(candidate)
         const time = await Time.find({school: school.name});
         const timeObj = {
             firstSession: time[0].time.firstSession,

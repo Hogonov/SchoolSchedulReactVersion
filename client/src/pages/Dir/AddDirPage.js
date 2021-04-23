@@ -1,5 +1,4 @@
 import React, {useCallback, useContext, useEffect, useState} from "react";
-import {Link} from "react-router-dom";
 import {AuthContext} from "../../context/AuthContext";
 import {useMessage} from "../../hooks/message.hook";
 import {useHttp} from "../../hooks/http.hook";
@@ -10,7 +9,7 @@ export const AddDirPage = () => {
 
     const auth = useContext(AuthContext);
     const message = useMessage();
-    const {loading, request, error, clearError} = useHttp();
+    const {request, error, clearError} = useHttp();
     const [form, setForm] = useState({
         name: '', phone: '', email: '',imageName: ''
     });

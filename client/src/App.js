@@ -29,22 +29,29 @@ function App() {
     if (!ready) {
         return <Loader/>
     }
-
+    console.log(window.location.href)
     return (
         <AuthContext.Provider
             value={{token, login, logout, userId, isAuthenticated, userRole}}>
             <Roter>
                 <div style={{display: "flex", flexDirection: "row"}}>
-                    {window.location.href.indexOf("/login") === -1 && <Header
+                    {window.location.href.indexOf("/view") !== -1 && <Header
                         flag={flag}
                         setFlag={setFlag}
                         isAuthenticated={isAuthenticated}
                     />}
-                    {isAuthenticated && <Sidebar
+                    {isAuthenticated && <>
+                        <Header
+                            flag={flag}
+                            setFlag={setFlag}
+                            isAuthenticated={isAuthenticated}
+                        />
+                        <Sidebar
                         userRole={userRole}
                         flag={flag}
                         setFlag={setFlag}
-                    />}
+                    />
+                    </>}
                     <div id='routerDiv' className="container">
                         {routes}
                     </div>

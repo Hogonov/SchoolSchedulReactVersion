@@ -1,15 +1,7 @@
 const {Router} = require('express');
-const config = require('config');
-const jwt = require('jsonwebtoken');
-const {check, validationResult} = require('express-validator');
 const auth = require('../middleware/auth.middleware');
-const DataSubject = require('../models/DataSubject');
-const Table = require('../models/Table');
-const DataClassroom = require('../models/DataClassroom');
 const School = require('../models/School');
 const User = require('../models/User');
-const Time = require('../models/Time');
-const Classroom = require('../models/Classroom');
 const SpecialCourse = require('../models/SpecialCourse');
 const router = Router();
 

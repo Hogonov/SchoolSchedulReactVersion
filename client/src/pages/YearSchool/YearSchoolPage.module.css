@@ -7,7 +7,7 @@
 
 .title {
     text-align: center;
-    font-family: "GothamProBold";
+    font-family: "GothamProBold", serif;
     color: #314d59;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .quarter h3{
-    font-family: "RobotoSlabBold";
+    font-family: "RobotoSlabBold", serif;
     color: #314d59;
     text-decoration: underline;
 }
@@ -35,7 +35,7 @@
 .time {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    font-family: "GothamProRegular";
+    font-family: "GothamProRegular", serif;
 }
 .time input{
     color: #578cb7;

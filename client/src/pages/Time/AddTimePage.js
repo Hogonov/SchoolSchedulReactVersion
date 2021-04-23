@@ -8,8 +8,6 @@ import {TimeTable} from "./TimeTable";
 import CustomDatePicker from "./CustomDatePicker";
 import {Loader} from "../../components/Loader";
 
-// the locale you want  https://react-day-picker.js.org/examples/localization
-
 
 export const AddTimePage = () => {
     const auth = useContext(AuthContext);
@@ -128,7 +126,7 @@ export const AddTimePage = () => {
         if (form.isSpecial) {
             setTitle({text: 'Редактор звонков'})
         } else {
-            setTitle({text: 'Редактор празднечных звонков'})
+            setTitle({text: 'Редактор праздничных звонков'})
         }
         setForm({...form, isSpecial: !form.isSpecial});
     }

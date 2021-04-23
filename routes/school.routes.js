@@ -1,12 +1,6 @@
 const {Router} = require('express');
-const config = require('config');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const {check, validationResult} = require('express-validator');
 const auth = require('../middleware/auth.middleware');
-const Subject = require('../models/DataSubject');
-const Table = require('../models/Table');
-const Classroom = require('../models/DataClassroom');
 const School = require('../models/School');
 const User = require('../models/User');
 const router = Router();

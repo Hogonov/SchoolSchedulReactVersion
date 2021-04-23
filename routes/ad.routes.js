@@ -1,19 +1,8 @@
 const {Router} = require('express');
-const config = require('config');
-const jwt = require('jsonwebtoken');
-const {check, validationResult} = require('express-validator');
 const auth = require('../middleware/auth.middleware');
-const DataSubject = require('../models/DataSubject');
-const Table = require('../models/Table');
-const DataClassroom = require('../models/DataClassroom');
 const School = require('../models/School');
 const User = require('../models/User');
-const Time = require('../models/Time');
-const Classroom = require('../models/Classroom');
-const Director = require('../models/Director');
 const Ad = require('../models/Ad');
-const SpecialDate = require('../models/SpecialDate');
-const crypto = require('crypto');
 const fs = require('fs');
 const multer  = require('multer');
 const upload = multer({ dest: 'public/images/Ad' });
@@ -28,7 +17,6 @@ router.post('/add', auth,
                 return res.status(401).json({message: 'Недостаточно прав'})
             }
             const {name, school} = req.body;
-            console.log(name, school)
             const ad = new Ad({name: name, school: school.label});
             const savedAd = await ad.save();
 

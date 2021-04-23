@@ -10,7 +10,7 @@
 }
 .session h3 {
     text-align: center;
-    font-family: "RobotoSlabBold";
+    font-family: "RobotoSlabBold", serif;
     color: #314d59;
     text-decoration: underline;
 }
@@ -26,7 +26,7 @@
 
 .title {
     text-align: center;
-    font-family: "GothamProBold";
+    font-family: "GothamProBold", serif;
 }
 
 .nameTimePack {
@@ -120,7 +120,7 @@
     fill: #314d59;
     stroke: blue;
     width: 35px;
-    height: 39px;
+    height: 38px;
     margin-left: 10px;
     margin-bottom: -5px;
     cursor: pointer;

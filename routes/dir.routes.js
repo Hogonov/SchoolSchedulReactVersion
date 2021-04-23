@@ -1,18 +1,9 @@
 const {Router} = require('express');
-const config = require('config');
-const jwt = require('jsonwebtoken');
 const {check, validationResult} = require('express-validator');
 const auth = require('../middleware/auth.middleware');
-const DataSubject = require('../models/DataSubject');
-const Table = require('../models/Table');
-const DataClassroom = require('../models/DataClassroom');
 const School = require('../models/School');
 const User = require('../models/User');
-const Time = require('../models/Time');
-const Classroom = require('../models/Classroom');
 const Director = require('../models/Director');
-const SpecialDate = require('../models/SpecialDate');
-const crypto = require('crypto');
 const fs = require('fs');
 const multer = require('multer');
 const upload = multer({dest: 'public/images/Dir'});
@@ -33,7 +24,6 @@ router.post('/add', auth,
                     message: 'Некорректный данные при регистрации'
                 });
             }
-            let id;
             const {name, phone, email} = req.body;
             const user = await User.findById(req.user.userId);
             const candidateArr = await Director.find({school: user.school});

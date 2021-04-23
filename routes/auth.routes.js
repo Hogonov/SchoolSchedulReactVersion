@@ -8,6 +8,7 @@ const router = Router();
 
 
 // /api/auth/register
+/*
 router.post(
     '/register',
     [
@@ -44,6 +45,7 @@ router.post(
             res.status(500).json({message: 'Что-то пошло не так, попробуйте снова'})
         }
     });
+*/
 
 // /api/auth/login
 router.post(
