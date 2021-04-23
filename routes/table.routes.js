@@ -90,7 +90,7 @@ router.get('/get_checked_classroom', auth, async (req, res) => {
             let lastLetter = 'A'
             classrooms[0].classes.forEach(e => {
                 let letter = e.charAt(e.length - 1)
-                if (letter > lastLetter){
+                if (letter > lastLetter) {
                     lastLetter = letter
                 }
             })
@@ -110,7 +110,8 @@ router.get('/get_checked_classroom', auth, async (req, res) => {
 router.get('/get_subject', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.userId)
-        const subjects = await DataSubject.find({school: user.school})
+        const subjects = await DataSubject.find({school: user.school}).sort({name: 1})
+            .collation({locale: "en_US", numericOrdering: true})
         let readySend = []
         while (subjects.length > 0) readySend.push(subjects.splice(0, 5))
         res.json(readySend)
@@ -264,8 +265,10 @@ router.get('/get_data_class/:classname', auth, async (req, res) => {
                 school: candidate[0].school,
                 days: daysArr
             }
-            res.json({candidateData: prepareData, candidate: true,
-                maxLength: Math.max(timeObj.firstSession.length, timeObj.secondSession.length)});
+            res.json({
+                candidateData: prepareData, candidate: true,
+                maxLength: Math.max(timeObj.firstSession.length, timeObj.secondSession.length)
+            });
         } else {
             res.json({candidate: false});
         }
@@ -318,8 +321,10 @@ router.get('/get_data_class/:classname/:id', async (req, res) => {
                 school: candidate[0].school,
                 days: daysArr
             }
-            res.json({candidateData: prepareData, candidate: true,
-                maxLength: Math.max(timeObj.firstSession.length, timeObj.secondSession.length)});
+            res.json({
+                candidateData: prepareData, candidate: true,
+                maxLength: Math.max(timeObj.firstSession.length, timeObj.secondSession.length)
+            });
         } else {
             res.json({candidate: false});
         }
@@ -378,7 +383,15 @@ router.post('/editor', auth, async (req, res) => {
                     daysArr.push({
                         day: form[i].day,
                         session: {value: 'firstSession', label: 'Первая смена', name: 'session'},
-                        subjects: [{index: 1, name: '', option: null, office: '', time: '', update: false, date: new Date()}]
+                        subjects: [{
+                            index: 1,
+                            name: '',
+                            option: null,
+                            office: '',
+                            time: '',
+                            update: false,
+                            date: new Date()
+                        }]
                     })
                 }
             }
@@ -417,7 +430,15 @@ router.post('/editor', auth, async (req, res) => {
                     daysArr.push({
                         day: form[i].day,
                         session: {value: 'firstSession', label: 'Первая смена', name: 'session'},
-                        subjects: [{index: 1, name: '', option: null, office: '', time: '', update: false, date: new Date()}]
+                        subjects: [{
+                            index: 1,
+                            name: '',
+                            option: null,
+                            office: '',
+                            time: '',
+                            update: false,
+                            date: new Date()
+                        }]
                     })
                 }
             }
@@ -443,9 +464,13 @@ router.get('/get_all_data', auth, async (req, res) => {
     try {
 
         const user = await User.findById(req.user.userId);
-        const subjects = await DataSubject.find({school: user.school});
-        const classrooms = (await DataClassroom.find({school: user.school}))[0].classes;
+        const subjects = await DataSubject.find({school: user.school})
+        const classrooms = (await DataClassroom.findOne({school: user.school})).classes;
         const times = await Time.find({school: user.school});
+
+        const collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+        classrooms.sort(collator.compare)
+
         let newArrSubjects = []
         for (let i = 0; i < subjects.length; i++) {
             newArrSubjects.push({value: subjects[i].name, label: subjects[i].name, name: 'subject'});

@@ -15,7 +15,7 @@ const Announcement = require('../models/Announcement');
 const router = Router();
 
 // /api/view/get/:school
-router.get('/get/:id', async (req, res) => {
+router.get('/get/:id/:size', async (req, res) => {
 
     try {
 
@@ -61,7 +61,8 @@ router.get('/get/:id', async (req, res) => {
             }
         }
 
-        const classrooms = await Classroom.find({school: school.name}).sort({name: 1});
+        const classrooms = await Classroom.find({school: school.name}).sort({name: 1})
+            .collation({locale: "en_US", numericOrdering: true})
         let nowIndexDay = new Date().getDay() - 1
         let editDate = new Date().toJSON().split('T')[0];
         let classroomsArr = []
@@ -99,7 +100,7 @@ router.get('/get/:id', async (req, res) => {
 
                 for (let i = 0; i < classroomDay.subjects.length; i++) {
                     let subDate = classroomDay.subjects[i].date.toJSON().split('T')[0];
-                    if (subDate <= editDate) {
+                    if (subDate >= editDate) {
                         editDate = subDate;
                     }
                     if (classroomDay.subjects[i].update && (new Date() - classroomDay.subjects[i].date >= 3600000)) {
@@ -137,27 +138,31 @@ router.get('/get/:id', async (req, res) => {
         }
         let indexClassroom = classroomsArr.length
         let subjectsClassroom = []
-        for (let i = 0; i <timeForSend.length; i++) {
+        const numberOfClass = req.params.size
+        for (let i = 0; i < timeForSend.length; i++) {
             subjectsClassroom.push({...emptySubject, index: i + 1})
         }
-        const numberOfClass = 8
-        while (classroomsArr.length < numberOfClass * 2) {
-            classroomsArr.push({
-                name: '-',
-                index: indexClassroom++,
-                day: classroomsArr[0].day,
-                session: classroomsArr[0].session,
-                subjects: subjectsClassroom
-            })
+
+        let subClassroomArr = []
+        while (classroomsArr.length > 0){
+            subClassroomArr.push(classroomsArr.splice(0, numberOfClass))
         }
-        let firstTable = classroomsArr.slice(0, numberOfClass)
-        let secondTable = []
-        for (let i = numberOfClass; i < classroomsArr.length; i++) {
-           secondTable.push(classroomsArr[i])
+        if(subClassroomArr.length < 2){
+            subClassroomArr.push([])
+        }
+        while (subClassroomArr[subClassroomArr.length - 1].length < numberOfClass) {
+                subClassroomArr[subClassroomArr.length - 1].push({
+                    name: '-',
+                    index: indexClassroom++,
+                    day: subClassroomArr[0][0].day,
+                    session: subClassroomArr[0][0].session,
+                    subjects: subjectsClassroom
+                })
+
         }
 
         res.json({
-            classrooms: [firstTable, secondTable],
+            classrooms: subClassroomArr,
             times: timeForSend,
             session: session,
             editDate: editDate,
