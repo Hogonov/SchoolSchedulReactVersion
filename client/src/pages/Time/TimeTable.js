@@ -41,12 +41,10 @@ export const TimeTable = (props) => {
             }
         }
         props.setForm({...props.form, times: subArr})
-        console.log(subArr)
     }
 
     const changeHandler = event => {
         try {
-            console.log(props.form)
             let firstTimes = props.form.times.firstSession;
             let secondTimes = props.form.times.secondSession;
             let firstSpecialTimes = props.form.times.specialFirstSession;

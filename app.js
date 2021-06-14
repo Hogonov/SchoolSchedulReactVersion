@@ -33,7 +33,7 @@ app.use('/api/ad', require('./routes/ad.routes'));
 app.use('/api/quarter', require('./routes/quarters.routes'));
 //Расписание звонков
 app.use('/api/time', require('./routes/time.routes'))
-//Спец курсы
+//Спецкурсы
 app.use('/api/special_course', require('./routes/special_course.routes'))
 
 if (process.env.NODE_ENV === 'production') {

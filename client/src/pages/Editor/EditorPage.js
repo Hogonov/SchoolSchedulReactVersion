@@ -277,7 +277,6 @@ export const EditorPage = () => {
         } else {
             message('Выберете класс')
         }
-
     }
 
     const byDaysChangeHandler = (event, action) => {
@@ -307,7 +306,6 @@ export const EditorPage = () => {
 
     const selectHandler = (event, action) => {
         if (action.name.indexOf('subject') !== -1) {
-            console.log(event)
             let index = +action.name.split('-')[1]
             let subjectsArr = []
             for (let i = 0; i < form.subjects.length; i++) {
@@ -317,7 +315,6 @@ export const EditorPage = () => {
                     subjectsArr.push(form.subjects[i])
                 }
             }
-            console.log(subjectsArr)
             setForm({...form, subjects: subjectsArr})
         } else {
             setForm({...form, [action.name]: event})

@@ -45,7 +45,7 @@ export const ClassForm = props => {
     }
 
     return (<div className={style.formClass}>
-        <h3>Добавление нового предмета <svg className={style.arrowUp}
+        <h3>Добавление классов <svg className={style.arrowUp}
                                             id="classes"
                                             onClick={props.changeFlag}/></h3>
         <div className={style.inputBlock}>
