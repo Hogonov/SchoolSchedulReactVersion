@@ -38,7 +38,7 @@ router.put('/edit/:id', auth, async (req, res) => {
         await Ad.findByIdAndUpdate({_id:req.params.id},{
             _id:req.params.id, name, school: school.label
         })
-        res.status(200).json({message: 'OK', id: savedAd.id})
+        res.status(200).json({message: 'OK'})
     } catch (e) {
         console.log(e);
         res.status(500).json({message: 'Что-то пошло не так, попробуйте снова '})
